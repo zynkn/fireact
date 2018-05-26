@@ -4,9 +4,10 @@
     height: 420px;
     box-shadow: 2px 2px 10px $oc-gray-2;
     background-color: #fff;
-    margin: 50px 0 0 50px;
     display: flex;
     flex-direction: column;
+    text-align: center;
+    justify-content: center;
     .pane+.pane {
         border-top: 1px solid $oc-gray-2;
     }

@@ -2,10 +2,9 @@
 
 ## To Do
 
-1. Login
+### 1. Login
 
-- **Sign up** with `Firebase Authentication`. (`Facebook`, `Google`)
-- Get an additional data. (`nickname`)
-- **Store** login history in `Firebase Cloud Firestore`.
-- **Sign out**
-
+- [x] **Sign up** with `Firebase Authentication`. (`Facebook`, `Google`)
+- [x] **Display** user information. (name, email, uid)
+- [ ] **Store** login history in `Firebase Cloud Firestore`.
+- [x] **Sign out**

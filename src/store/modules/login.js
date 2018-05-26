@@ -13,15 +13,16 @@ export const loginCheck = createAction(LOGIN_CHECK);
 const initialState = Map({
   isLogin: false,
   platform: null,
+  user: null,
 });
 
 // reducer
 export default handleActions({
   [LOGIN_CHECK]: (state, action) => {
     const { payload } = action;
-    console.log(action);
-    return state.set('isLogin', true)
-                .set('platform', 'facebook')
+    return state.set('isLogin', payload.isLogin)
+                .set('platform', payload.platform)
+                .set('user', payload.user)
   }
 }, initialState);
 

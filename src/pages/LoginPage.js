@@ -1,11 +1,9 @@
 import React from 'react';
-import LoginBox from 'components/Login/LoginBox';
+import LoginContainer from 'containers/LoginContainer';
 
 const LoginPage = () => {
   return (
-    <div>
-      <LoginBox />
-    </div>
+      <LoginContainer />
   );
 };
 
