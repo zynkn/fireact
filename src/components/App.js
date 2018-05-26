@@ -4,13 +4,11 @@ import { LoginPage, NotFoundPage } from 'pages';
 
 const App = () => {
   return (
-    <div>
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route component={NotFoundPage} />
       </Switch>
-    </div>
   )
 };
 

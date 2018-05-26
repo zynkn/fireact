@@ -6,6 +6,8 @@
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    text-align: center;
+    justify-content: center;
     .pane+.pane {
         border-top: 1px solid $oc-gray-2;
     }

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Google, Facebook } from 'components/Common/Icons';
+import LogoutButton from 'components/Login/LogoutButton';
 
 import styles from './LoginBox.scss';
 import classNames from 'classnames/bind';
@@ -15,21 +16,15 @@ var FacebookProvider = new firebase.auth.FacebookAuthProvider();
 GoogleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 FacebookProvider.addScope('user_birthday');
 
-const LoginBox = ({isLogin, uid, loginCheck, user}) => {
+const LoginBox = ({isLogin, uid, loginCheck, user, platform}) => {
   const signUpGoogle = () => {
     firebase.auth().signInWithPopup(GoogleProvider).then(function (result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
-      // The signed-in user info.
       var user = result.user;
-      // ...
-      console.log('token', token);
       console.log('user', user);
-      console.log('userUID', user.uid);
       let data = {
         isLogin: true,
-        platform: 'google',
-        uid: user.uid,
+        platform: 'Google',
         user: {
           displayName: user.displayName,
           uid: user.uid,
@@ -51,18 +46,12 @@ const LoginBox = ({isLogin, uid, loginCheck, user}) => {
   }
   const signUpFacebook = () => {
     firebase.auth().signInWithPopup(FacebookProvider).then(function (result) {
-      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
       var token = result.credential.accessToken;
-      // The signed-in user info.
       var user = result.user;
-      // ...
-      console.log('token', token);
       console.log('user', user);
-      console.log('userUID', user.uid);
       let data = {
         isLogin: true,
-        platform: 'google',
-        uid: user.uid,
+        platform: 'Facebook',
         user: {
           displayName: user.displayName,
           uid: user.uid,
@@ -82,24 +71,42 @@ const LoginBox = ({isLogin, uid, loginCheck, user}) => {
       console.log(error);
     });
   }
+  const signOut = () => {
+    firebase.auth().signOut().then(function() {
+      let data = {
+        isLogin: false,
+        platform: null,
+        user: null
+      };
+      loginCheck(data);
+    }).catch(function(error) {
+      // An error happened.
+      console.log(error);
+    });
+  }
   return (
-    isLogin ? 
-    <div>
-      <h2>Success Login</h2>
-      <p>{uid}</p>
-      <p>{user.displayName}</p>
-      <p>{user.email}</p>
-    </div>
-    :
     <div className={cx('LoginBox')}>
-      <div className={cx('pane')} onClick={signUpGoogle}>
-        <Google width="48px" />
-        <p className={cx('txt')}>Google</p>
-      </div>
-      <div className={cx('pane')} onClick={signUpFacebook}>
-        <Facebook width="48px" />
-        <p className={cx('txt')}>Facebook</p>
-      </div>
+      {
+        isLogin ?
+        <div>
+          <h2>Success Login with {platform}</h2>
+          <p>{user.uid}</p>
+          <p>{user.displayName}</p>
+          <p>{user.email}</p>
+          <LogoutButton onClick={signOut} />
+        </div>
+        :
+        <Fragment>
+          <div className={cx('pane')} onClick={signUpGoogle}>
+            <Google width="48px" />
+            <p className={cx('txt')}>Google</p>
+          </div>
+          <div className={cx('pane')} onClick={signUpFacebook}>
+            <Facebook width="48px" />
+            <p className={cx('txt')}>Facebook</p>
+          </div>
+        </Fragment>
+      }
     </div>
   )
 }

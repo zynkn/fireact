@@ -7,4 +7,4 @@
 - [x] **Sign up** with `Firebase Authentication`. (`Facebook`, `Google`)
 - [x] **Display** user information. (name, email, uid)
 - [ ] **Store** login history in `Firebase Cloud Firestore`.
-- [ ] **Sign out**
+- [x] **Sign out**

@@ -13,7 +13,6 @@ export const loginCheck = createAction(LOGIN_CHECK);
 const initialState = Map({
   isLogin: false,
   platform: null,
-  uid: null,
   user: null,
 });
 
@@ -23,7 +22,6 @@ export default handleActions({
     const { payload } = action;
     return state.set('isLogin', payload.isLogin)
                 .set('platform', payload.platform)
-                .set('uid', payload.uid)
                 .set('user', payload.user)
   }
 }, initialState);

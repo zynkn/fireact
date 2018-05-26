@@ -17,7 +17,7 @@ class LoginContainer extends Component {
   render() {
     const { loginCheck } = this;
     return (
-      <section style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <section style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
         <LoginBox loginCheck = {loginCheck} {...this.props} />
       </section>
       
@@ -29,7 +29,6 @@ export default connect(
   (state) => ({
     isLogin: state.login.get('isLogin'),
     platform: state.login.get('platform'),
-    uid: state.login.get('uid'),
     user: state.login.get('user'),
   }),
   (dispatch) => ({
