@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Google = ({ width }) => (
+const Facebook = (props) => (
 
   // <?xml version="1.0" encoding="utf-8"?>
   // <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
   // <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-     width={width}  viewBox="0 0 266.893 266.895" enableBackground="new 0 0 266.893 266.895"
+    {...props}  viewBox="0 0 266.893 266.895" enableBackground="new 0 0 266.893 266.895"
      xmlSpace="preserve">
   <path id="Blue_1_" fill="#3C5A99" d="M248.082,262.307c7.854,0,14.223-6.369,14.223-14.225V18.812
     c0-7.857-6.368-14.224-14.223-14.224H18.812c-7.857,0-14.224,6.367-14.224,14.224v229.27c0,7.855,6.366,14.225,14.224,14.225
@@ -19,4 +19,4 @@ const Google = ({ width }) => (
 );
 
 
-export default Google;
+export default Facebook;

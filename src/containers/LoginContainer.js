@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import LoginBox from 'components/Login/LoginBox';
+import LoginPane from 'components/Login/LoginPane';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
+
+import Button from '@material-ui/core/Button';
+
+
 
 import * as loginActions from 'store/modules/login';
 
@@ -17,10 +21,10 @@ class LoginContainer extends Component {
   render() {
     const { loginCheck } = this;
     return (
-      <section style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-        <LoginBox loginCheck = {loginCheck} {...this.props} />
+      <section>
+        Login Container
       </section>
-      
+
     );
   }
 };
