@@ -6,5 +6,10 @@
 
 - [x] **Sign up** with `Firebase Authentication`. (`Facebook`, `Google`)
 - [x] **Display** user information. (name, email, uid)
-- [ ] **Store** login history in `Firebase Cloud Firestore`.
 - [x] **Sign out**
+
+
+
+### 2. Admin 
+
+- [ ] be watched signed up **Users** as `table` or `list` 

@@ -14,9 +14,9 @@ const styles = theme => ({
   },
 });
 function LoginButton(props) {
-  const { classes, color, styles } = props;
+  const { classes, color, styles, onClick } = props;
   return (
-    <Button variant="raised" className={classes.button} color={color} style={styles}>
+    <Button variant="raised" className={classes.button} color={color} style={styles} onClick={onClick}>
       {props.children}
     </Button>
   );

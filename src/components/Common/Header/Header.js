@@ -6,13 +6,11 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 
 
 import Modal from '@material-ui/core/Modal';
 import Grid from '@material-ui/core/Grid';
-import LoginButton from 'components/Login/LoginButton';
+import LoginContainer from 'containers/LoginContainer';
 import { GooglePlus, Facebook2 } from 'components/Common/Icons';
 
 import Zoom from '@material-ui/core/Zoom';
@@ -66,12 +64,10 @@ class Header extends Component {
           <Typography variant="title" color="inherit" className={classes.flex}>
             Fireact
           </Typography>
-          <IconButton aria-label="login" onClick={this.handleOpen}>
-            <AccountCircle style={{ fill: 'white' }} />
-          </IconButton >
-          <span>Username</span>
+          <LoginContainer />
         </Toolbar>
-        <Modal
+
+        {/* <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
           open={this.state.open}
@@ -79,7 +75,8 @@ class Header extends Component {
         >
           <Grid style={getModalStyle()} className={classes.paper} xs={10} sm={8} md={2} lg={2}>
             <Typography variant="title" id="modal-title" style={{ marginBottom: '16px' }}>
-              Firebase Authentication
+              <FirebaseIcon height="24px" style={{ marginRight: '16px' }} />
+              Authentication
             </Typography>
             <LoginButton color="primary" styles={{ backgroundColor: '#DD4B39' }}>
               <GooglePlus width="24px" style={{ marginRight: '12px' }} />Sign up with Google
@@ -88,7 +85,7 @@ class Header extends Component {
               <Facebook2 height="24px" fill="white" style={{ marginRight: '12px' }} />Sign up with Facebook
               </LoginButton>
           </Grid>
-        </Modal>
+        </Modal> */}
       </AppBar>
     );
   }
