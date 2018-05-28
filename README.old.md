@@ -1,2 +1,0 @@
-# fireact
-🔥 Firebase + ⚛️React JS
