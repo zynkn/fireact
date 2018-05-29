@@ -16,8 +16,7 @@ import * as loginActions from 'store/modules/login';
 
 import 'fire';
 import * as firebase from 'firebase';
-import * as admin from 'firebase-admin';
-var app = admin.initializeApp();
+
 
 var GoogleProvider = new firebase.auth.GoogleAuthProvider();
 var FacebookProvider = new firebase.auth.FacebookAuthProvider();
@@ -50,14 +49,6 @@ class LoginContainer extends Component {
     });
   }
   signOut = () => {
-    admin.auth().getUser(this.props.user.uid)
-      .then(function (userRecord) {
-        // See the UserRecord reference doc for the contents of userRecord.
-        console.log("Successfully fetched user data:", userRecord.toJSON());
-      })
-      .catch(function (error) {
-        console.log("Error fetching user data:", error);
-      });
     firebase.auth().signOut().then(() => {
       let data = {
         isLogin: false,
