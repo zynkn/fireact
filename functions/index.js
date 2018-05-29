@@ -25,3 +25,13 @@ exports.getUser = functions.https.onRequest((req, res) => {
     });
 })
 
+exports.getUsers = functions.https.onRequest((req, res) => {
+  admin.auth().getUser()
+    .then((userRecord) => {
+      return res.send(userRecord.toJSON());
+    })
+    .catch((error) => {
+      console.log("Error fetching user data:", error);
+      return res.send(error.toString())
+    });
+})
