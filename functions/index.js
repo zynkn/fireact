@@ -7,9 +7,9 @@ admin.initializeApp();
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+exports.helloWorld = functions.https.onRequest((request, response) => {
+ response.send("Hello from Firebase!");
+});
 
 exports.getUser = functions.https.onRequest((req, res) => {
   const uid = req.query.uid;
@@ -25,13 +25,13 @@ exports.getUser = functions.https.onRequest((req, res) => {
     });
 })
 
-exports.getUsers = functions.https.onRequest((req, res) => {
-  admin.auth().getUser()
-    .then((userRecord) => {
-      return res.send(userRecord.toJSON());
-    })
-    .catch((error) => {
-      console.log("Error fetching user data:", error);
-      return res.send(error.toString())
-    });
-})
+// exports.getUsers = functions.https.onRequest((req, res) => {
+//   admin.auth().getUser()
+//     .then((userRecord) => {
+//       return res.send(userRecord.toJSON());
+//     })
+//     .catch((error) => {
+//       console.log("Error fetching user data:", error);
+//       return res.send(error.toString())
+//     });
+// })
