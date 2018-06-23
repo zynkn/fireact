@@ -1,5 +1,10 @@
 import React from 'react';
 
+import styles from './Button.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
+
 const Google = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" {...props}>
     <defs>
@@ -15,5 +20,12 @@ const Google = (props) => (
   </svg>
 );
 
+const Button = () => (
+  <button className={cx('button')}>
+    <Google width="32px" style={{marginRight: '10px'}} />
+    <span>Sign in with Google </span>
+  </button>
+);
 
-export default Google;
+
+export default Button;

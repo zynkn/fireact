@@ -1,2 +1,2 @@
-export { default as LoginPage } from './LoginPage';
-export { default as NotFoundPage } from './NotFoundPage';
+export { default as Authentication } from './Authentication';
+export { default as Main } from './Main';
