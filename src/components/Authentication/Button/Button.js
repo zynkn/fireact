@@ -20,9 +20,9 @@ const Google = (props) => (
   </svg>
 );
 
-const Button = () => (
-  <button className={cx('button')}>
-    <Google width="32px" style={{marginRight: '10px'}} />
+const Button = ({ onClick }) => (
+  <button className={cx('button')} onClick={onClick}>
+    <Google width="32px" style={{ marginRight: '10px' }} />
     <span>Sign in with Google </span>
   </button>
 );
