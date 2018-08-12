@@ -1,0 +1,44 @@
+
+.Header{
+  background-color: #2196f3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  .content{
+    text-align: left;
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title{
+      font-size: 16pt;
+      color: white;
+      padding-left: 16px;
+    }
+    .menu-wrap{
+      list-style: none;
+      padding-right: 8px;
+
+      li{
+        display: inline;
+        padding: 0 8px;
+        color: white;
+        font-size: 11pt;
+        a{
+          opacity: 0.6;
+        }
+        &:hover > a{
+          opacity: 1;
+        }
+        a.active{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

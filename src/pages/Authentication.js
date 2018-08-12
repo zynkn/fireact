@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
+
+import Header from 'components/Common/Header';
 import Pane from 'components/Common/Pane';
 import Button from 'components/Authentication/Button';
 import 'fire';
@@ -6,9 +8,20 @@ import * as firebase from 'firebase';
 
 var GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
-const Authentication = () => {
-  const signUpGoogle = () => {
-    firebase.auth().signInWithPopup(GoogleProvider).then(function (result) {
+class Authentication extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      isLoading: false,
+      isLogin: false,
+      data: null,
+    }
+  }
+  signUpGoogle = () => {
+    this.setState({
+      isLoading: true
+    })
+    firebase.auth().signInWithPopup(GoogleProvider).then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
       var token = result.credential.accessToken;
       // The signed-in user info.
@@ -18,7 +31,6 @@ const Authentication = () => {
       console.log('user', user);
       console.log('userUID', user.uid);
       let data = {
-        isLogin: true,
         platform: 'google',
         uid: user.uid,
         user: {
@@ -27,6 +39,11 @@ const Authentication = () => {
           email: user.email
         }
       };
+      this.setState({
+        isLoading: false,
+        isLogin: true,
+        data: data,
+      })
     }).catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -39,14 +56,20 @@ const Authentication = () => {
       console.log(error);
     });
   }
-  return (
-    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-      <h1><span role="img" aria-label="fire">🔥</span>Fireact Auth<span role="img" aria-label="atom">⚛️</span></h1>
-      <Pane>
-        <Button onClick={signUpGoogle} />
-      </Pane>
-    </div>
-  );
+
+  render() {
+    return (
+      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Header />
+        <h1><span role="img" aria-label="fire">🔥</span>Fireact Auth<span role="img" aria-label="atom">⚛️</span></h1>
+        <Pane>
+          {this.state.isLogin ? null : (<Button onClick={this.signUpGoogle} />) } 
+          {this.state.isLoading ? (<p>Now Loading..</p>) : null}
+          {this.state.data ? (<p>{this.state.data.platform}</p>) : null}
+        </Pane>
+      </div>
+    );
+  }
 };
 
 export default Authentication;
