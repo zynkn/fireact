@@ -1,0 +1,44 @@
+
+.LoginPane{
+
+  max-width: 720px;
+  width: 100%;
+  height: 480px;
+  box-shadow: 1px 1px 5px #e0e0e0;
+
+  display: flex;
+  flex-direction: row;
+
+  div{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .content{
+
+
+  }
+  .bg{
+
+    .title{
+      font-size: 16pt;
+    }
+    .spin{
+      animation: spin 10s infinite;
+    }
+  }
+}
+
+@keyframes spin{
+  0%{
+    transform: rotate(0deg);
+  }
+  50%{
+    transform: rotate(360deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+}
