@@ -3,7 +3,8 @@ import React from 'react';
 import HeaderContainer from 'containers/HeaderContainer';
 import Header from 'components/Common/Header';
 
-const Authentication = () => {
+const Main = () => {
+  console.log(this.props);
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <HeaderContainer />
@@ -12,4 +13,4 @@ const Authentication = () => {
   );
 };
 
-export default Authentication;
+export default Main;

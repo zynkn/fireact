@@ -55,6 +55,7 @@ class Header extends Component {
 
           <div className={cx('right')}>
             <ul className={cx('menu-wrap')}>
+              <li><NavLink to="/today" activeClassName={cx('active')}>Today</NavLink></li>
               <li><NavLink to="/db" activeClassName={cx('active')}>Database</NavLink></li>
             </ul>
             <ul className={cx('user-wrap')}>

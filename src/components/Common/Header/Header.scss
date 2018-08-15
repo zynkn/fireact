@@ -1,3 +1,4 @@
+@import 'utils';
 
 .Header{
   background-color: #2196f3;
@@ -33,13 +34,11 @@
           padding: 0 8px;
           color: white;
           font-size: 11pt;
-          a{
             opacity: 0.6;
-          }
-          &:hover > a{
+          &:hover{
             opacity: 1;
           }
-          a.active{
+          &.active{
             opacity: 1;
           }
         }
