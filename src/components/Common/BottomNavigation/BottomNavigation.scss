@@ -1,0 +1,66 @@
+
+@import 'utils';
+
+@media (min-width: 1024px){
+
+}
+@media (max-width: 1024px) {
+
+  .side{
+    padding: 0 8px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
+
+
+
+.nav-wrap{
+  background-color: $header_theme;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  box-sizing: border-box;
+  .nav{
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    .item{
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      .txt{
+        position: absolute;
+        font-size: 8pt;
+        color: white;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s;
+      }
+      a{
+        opacity: 0.5;
+        font-size: 0;
+        transform: translateY(0px);
+        transition: all 0.5s;
+      }
+
+      a.active{
+        transform: translateY(-4px);
+        opacity: 1;
+      }
+
+      a.active + .txt{
+        opacity: 1;
+        transform: translateY(14px);
+      }
+    }
+  }
+}

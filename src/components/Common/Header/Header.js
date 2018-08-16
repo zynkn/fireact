@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Header.scss';
 import classNames from 'classnames/bind';
@@ -6,6 +6,7 @@ import classNames from 'classnames/bind';
 import { Icon } from 'react-icons-kit'
 import { ic_account_circle } from 'react-icons-kit/md/ic_account_circle'
 import { ic_keyboard_arrow_down } from 'react-icons-kit/md/ic_keyboard_arrow_down'
+import { ic_menu } from 'react-icons-kit/md/ic_menu'
 
 
 const cx = classNames.bind(styles);
@@ -40,40 +41,68 @@ class Dropdown extends Component {
   }
 }
 
+class Navigation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    }
+  }
+  render() {
+    return (
+      <nav className={cx('Navigation')}>
+        Nav
+      </nav>
+    )
+  }
+}
 
-// TODO: state component로 변경해야한다잉 
 class Header extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      navOpen: false,
+    }
+  }
+  toggle = () => {
+    this.setState({
+      navOpen: !this.state.navOpen
+    })
+  }
+  close = () => {
+    if (this.state.navOpen) {
+      this.setState({
+        navOpen: false
+      })
+    }
   }
   render() {
     const { props } = this;
     return (
-      <div className={cx('Header')}>
-        <div className={cx('content')}>
-          <span className={cx('title')}><NavLink to="/">🔥Fireact⚛️</NavLink></span>
-
-          <div className={cx('right')}>
-            <ul className={cx('menu-wrap')}>
-              <li><NavLink to="/today" activeClassName={cx('active')}>Today</NavLink></li>
-              <li><NavLink to="/db" activeClassName={cx('active')}>Database</NavLink></li>
-            </ul>
-            <ul className={cx('user-wrap')}>
-              {
-                props.isLogin ?
-                  (<Dropdown name='지녕군' logout={this.props.googleLogout} />)
-                  // (<span className={cx('name')}>zynkn <Icon icon={ic_keyboard_arrow_down} size={20} style={{color: 'white', marginLeft: '8px'}}/> </span>) 
-                  :
-                  (<li><NavLink to="/auth"><Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} /></NavLink></li>)
-              }
-            </ul>
+      <Fragment>
+        <header className={cx('header-wrap')}>
+          <div className={cx('header')}>
+            <div className={cx('side')}>
+              <span className={cx('icon-wrap')} onClick={this.toggle}>
+                <Icon icon={ic_menu} size={24} style={{ color: 'white' }} />
+              </span>
+            </div>
+            <div className={cx('appname')}>
+              Fireact
           </div>
-        </div>
-      </div>
+            <div className={cx('side')}>
+              <NavLink to="/auth" className={cx('icon-wrap')} onClick={this.close}>
+                <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
+              </NavLink>
+            </div>
+          </div>
+        </header>
+        {this.state.navOpen ? <Navigation /> : null}
+      </Fragment>
+
     )
   }
-
-};
+}
 
 
 export default Header;
