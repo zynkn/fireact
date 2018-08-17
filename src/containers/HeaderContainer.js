@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Header from 'components/Common/Header';
 import LoginPane from 'components/Authentication/LoginPane'
 import Button from 'components/Authentication/Button';
@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 class Auth extends Component {
 
   renderRedirect = () => {
+    console.log(this.props.isLogin);
     if (!this.props.isLogin) {
       return <Redirect to='/auth' />
     }

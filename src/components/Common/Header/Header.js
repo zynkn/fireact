@@ -91,7 +91,7 @@ class Header extends Component {
               Fireact
           </div>
             <div className={cx('side')}>
-              <NavLink to="/auth" className={cx('icon-wrap')} onClick={this.close}>
+              <NavLink to={props.isLogin ? "info" : "/auth"} className={cx('icon-wrap')} onClick={this.close}>
                 <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
               </NavLink>
             </div>

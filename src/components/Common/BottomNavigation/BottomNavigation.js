@@ -7,6 +7,8 @@ import { Icon } from 'react-icons-kit'
 import { ic_add_circle_outline } from 'react-icons-kit/md/ic_add_circle_outline'
 import { ic_timeline } from 'react-icons-kit/md/ic_timeline'
 import { ic_home } from 'react-icons-kit/md/ic_home'
+import { ic_add_box } from 'react-icons-kit/md/ic_add_box'
+import { ic_assignment } from 'react-icons-kit/md/ic_assignment'
 
 const cx = classNames.bind(styles);
 
@@ -23,10 +25,10 @@ class BottomNavigation extends Component {
             <span className={cx('txt')}>home</span>
           </div>
           <div className={cx('item')}>
-            <NavLink exact to="/auth" activeClassName={cx('active')}>
-              <Icon icon={ic_add_circle_outline} size={24} style={{ color: 'white' }} />
+            <NavLink exact to="/calendar" activeClassName={cx('active')}>
+              <Icon icon={ic_assignment} size={24} style={{ color: 'white' }} />
             </NavLink>
-            <span className={cx('txt')}>add</span>
+            <span className={cx('txt')}>calendar</span>
           </div>
           <div className={cx('item')}>
             <NavLink exact to="/today" activeClassName={cx('active')}>
