@@ -43,6 +43,8 @@ class DateView extends Component {
       year: today.getFullYear()
     })
   }
+
+
   generate = () => {
     const { now } = this.state;
     let rows = [];
