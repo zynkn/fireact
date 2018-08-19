@@ -21,13 +21,17 @@ const initialState = Map({
 
 // reducer
 export default handleActions({
-
-  ...pender({
-    type: GET_RECORD,
-    onSuccess: (state, action) => {
-      console.log('GET_RECORD');
+  [GET_RECORD]: (state, action) => {
+    console.log('GET_RECORD');
       console.log(action);
-      return state.set('data', 'data');
-    }
-  })
+    return state.set('logged', true);
+  },
+  // ...pender({
+  //   type: GET_RECORD,
+  //   onSuccess: (state, action) => {
+  //     console.log('GET_RECORD');
+  //     console.log(action);
+  //     return state.set('data', 'data');
+  //   }
+  // })
 }, initialState);

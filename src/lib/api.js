@@ -1,7 +1,58 @@
 import 'fire';
 import * as firebase from 'firebase';
-
+const db = firebase.firestore();
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+
+const getQuery = (date)=>{
+  const ref = db.collection("record");
+  const arr = [];
+  const query = ref.where("date", "==", date);
+  query.get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+      console.log(doc.data())
+      arr.push(doc.data())
+    });
+  }).then(()=>{
+    console.log(arr);
+    return arr
+  }).catch((error)=>{
+    console.log(error);
+    return error;
+  })
+}
+
+export const getRecord = ({date}) => getQuery(date)
+// {
+//   const ref = db.collection("record");
+//   const arr = [];
+//   const query = ref.where("date", "==", date);
+//   query.get().then((querySnapshot) => {
+//     querySnapshot.forEach((doc) => {
+//       console.log(`${doc.id} => ${doc.data()}`);
+//       console.log(doc.data())
+//       arr.push(doc.data())
+//     });
+//   }).then(()=>{
+//     console.log(arr);
+//     return arr
+//   }).catch((error)=>{
+//     console.log(error);
+//     return error;
+//   })
+// }
+// db.collection("record").get().then((querySnapshot) => {
+//   querySnapshot.forEach((doc) => {
+//     console.log(`${doc.id} => ${doc.data()}`);
+//     console.log(doc.data())
+//   });
+//   console.log(querySnapshot);
+//   return querySnapshot;
+// }).catch((error) => {
+//   console.log(error);
+//   return error;
+// })
+
 
 
 export const googleLogin = () =>
