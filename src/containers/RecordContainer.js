@@ -8,9 +8,11 @@ import { bindActionCreators } from 'redux';
 
 class RecordContainer extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     const now = moment().format('YYYYMMDD');
-    this.props.Actions.getRecord({date: now});
+    console.log(this.props.Actions);
+    this.props.Actions.getTest();
+    this.props.Actions.getRecord({ date: now });
   }
   render() {
     const { props } = this;
