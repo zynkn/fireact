@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from 'components/Common/Header';
-import LoginPane from 'components/Authentication/LoginPane'
-import Button from 'components/Authentication/Button';
 
 import * as actions from 'store/modules/login';
 import { connect } from 'react-redux';

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
+import DateView from 'components/Calendar/DateView';
+import ScheduleList from 'components/Calendar/ScheduleList';
 
-import moment from 'moment';
 
 import * as actions from 'store/modules/record';
 import { connect } from 'react-redux';
@@ -8,18 +9,17 @@ import { bindActionCreators } from 'redux';
 
 class RecordContainer extends Component {
 
-  componentDidMount() {
-    const now = moment().format('YYYYMMDD');
-    console.log(this.props.Actions);
-    this.props.Actions.getTest();
-    this.props.Actions.getRecord({ date: now });
-  }
+  // componentWillMount() {
+  //   const now = moment().format('YYYYMMDD');
+  //   this.props.Actions.getRecord({ date: now });
+  // }
   render() {
     const { props } = this;
-    console.log(moment().format("YYYYMMDD"));
+    console.log(props)
     return (
       <Fragment>
-        <p onClick={props.Actions.getRecord}>Record Container</p>
+        <DateView getData={props.Actions.getRecord} uid={props.userUID} />
+        <ScheduleList list={props.data} />
       </Fragment>
     )
   }
@@ -27,7 +27,9 @@ class RecordContainer extends Component {
 
 export default connect(
   (state) => ({
-    //data: state.record.get('data'),
+    data: state.record.get('data'),
+    selectedDate: state.record.get('selectedDate'),
+    userUID: state.login.get('userUID'),
   }),
   (dispatch) => ({
     Actions: bindActionCreators(actions, dispatch)

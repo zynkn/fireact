@@ -4,10 +4,8 @@ import styles from './BottomNavigation.scss';
 import classNames from 'classnames/bind';
 
 import { Icon } from 'react-icons-kit'
-import { ic_add_circle_outline } from 'react-icons-kit/md/ic_add_circle_outline'
 import { ic_timeline } from 'react-icons-kit/md/ic_timeline'
 import { ic_home } from 'react-icons-kit/md/ic_home'
-import { ic_add_box } from 'react-icons-kit/md/ic_add_box'
 import { ic_assignment } from 'react-icons-kit/md/ic_assignment'
 
 const cx = classNames.bind(styles);

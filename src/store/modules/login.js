@@ -17,6 +17,7 @@ export const googleLogout = createAction(GOOGLE_LOGOUT, api.googleLogout);
 const initialState = Map({
   isLogin: false,
   user: null,
+  userUID: null,
 });
 
 // reducer
@@ -33,9 +34,10 @@ export default handleActions({
   ...pender({
     type: GOOGLE_LOGIN,
     onSuccess: (state, action) => {
-      console.log('ggg')
-      console.log(action.payload);
+      console.log('login')
+      console.log(action.payload.user.uid);
       return state.set('isLogin', true)
+                  .set('userUID',action.payload.user.uid)
     }
   })
 }, initialState);

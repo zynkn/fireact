@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { Icon } from 'react-icons-kit'
 import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left'
@@ -24,7 +24,6 @@ class DateView extends Component {
     if (first < 0) {
       first = first + 6;
     }
-    console.log('first', first);
   }
 
   previousMonth = () => {
@@ -44,14 +43,16 @@ class DateView extends Component {
     })
   }
 
-
   generate = () => {
     const { now } = this.state;
+    const { props } = this;
+    console.log(props.uid);
     let rows = [];
     let first = now.getDay() - (now.getDate() % 7 - 1);
     let month = now.getMonth();
     let year = now.getFullYear();
     let last = null;
+    let date = year + '' + (month + 1).toString().padStart(2, '0');
     if (first < 0) {
       first = first + 7;
     }
@@ -82,9 +83,9 @@ class DateView extends Component {
     let columns = [];
     let ans = [];
     for (let i = 1; i <= rows.length; i++) {
-      columns.push(<td key={i} data={rows[i - 1] != '' ? rows[i - 1] : null}>{rows[i - 1]}</td>);
+      columns.push(<td key={i} onClick={() => props.getData({ date: date + '' + rows[i - 1].toString().padStart(2, '0'), uid: props.uid})}>{rows[i - 1]}</td>);
       if (i % 7 === 0 && i !== 0) {
-        ans.push(<tr>{columns}</tr>);
+        ans.push(<tr key={'TR'+i}>{columns}</tr>);
         columns = [];
       }
     }
@@ -94,7 +95,6 @@ class DateView extends Component {
 
 
   render() {
-    const { now } = this.state;
     let data = this.generate();
     return (
       <section className={cx('calendar')}>

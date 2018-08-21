@@ -15,7 +15,7 @@ const LoginPane = ({ children }) => (
     </div>
     <div className={cx('bg')}>
       <p className={cx('title')}>Welcome to Fireact</p>
-      <img className={cx('spin')} src={fireact} width="150" />
+      <img className={cx('spin')} src={fireact} width="150" alt="fireact" />
       <span />
     </div>
   </section>

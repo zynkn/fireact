@@ -1,7 +1,5 @@
 import React from 'react';
 
-import HeaderContainer from 'containers/HeaderContainer';
-import BottomNavigation from 'components/Common/BottomNavigation';
 
 const Main = () => {
   console.log(this.props);

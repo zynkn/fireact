@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 
 import Auth from 'containers/auth';
-import HeaderContainer from 'containers/HeaderContainer';
-import BottomNavigation from 'components/Common/BottomNavigation';
 
 class Authentication extends Component {
-  constructor(props) {
-    super(props);
-  }
 
 
   render() {

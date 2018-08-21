@@ -1,35 +1,32 @@
 import 'fire';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
+
 const db = firebase.firestore();
+const settings = {/* your settings... */ timestampsInSnapshots: true};
+db.settings(settings);
+
+
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
-// const ref = db.collection("record");
-// const arr = [];
-// const query = ref.where("date", "==", '20180819');
-// export const getRecord = () =>
 
-//   query.get().then((querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//       console.log(`${doc.id} => ${doc.data()}`);
-//       console.log(doc.data())
-//       arr.push(doc.data())
-//     });
-//   }).then(() => {
-//     console.log(arr);
-//     return arr;
-//   }).catch((error) => {
-//     console.log(error);
-//     return error;
-//   })
-
-async function tgg(date) {
-  console.log('date', date);
-  return date;
+async function records(date,uid) {
+  const ref = db.collection("record");
+  const arr = [];
+  const query = ref.where("date", "==", date).where("userID", "==", uid);
+  await query.get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+      console.log(doc.data())
+      arr.push(doc.data())
+    });
+  }).catch((error) => {
+    console.log(error);
+    return error;
+  })
+  return arr;
 }
-export const getRecord = ({ date }) => {
-  console.log('ggg');
-  return tgg(date);
-}
+export const getRecord = ({ date, uid }) => records(date,uid)
 
 export const googleLogin = () =>
   //var data = null;
@@ -37,12 +34,12 @@ export const googleLogin = () =>
     return result;
   }).catch(function (error) {
     // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
+    // var errorCode = error.code;
+    // var errorMessage = error.message;
     // The email of the user's account used.
-    var email = error.email;
+    // var email = error.email;
     // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
+    // var credential = error.credential;
     // ...
     console.log(error);
     return error;
