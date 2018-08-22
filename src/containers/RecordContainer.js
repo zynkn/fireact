@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import DateView from 'components/Calendar/DateView';
 import ScheduleList from 'components/Calendar/ScheduleList';
-
+import AddButton from 'components/Calendar/AddButton';
 
 import * as actions from 'store/modules/record';
 import { connect } from 'react-redux';
@@ -19,6 +19,7 @@ class RecordContainer extends Component {
     return (
       <Fragment>
         <DateView getData={props.Actions.getRecord} uid={props.userUID} />
+        {/* <AddButton /> */}
         <ScheduleList list={props.data} />
       </Fragment>
     )
