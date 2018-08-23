@@ -61,13 +61,14 @@ class ScheduleItem extends Component {
   }
   toggle = () => {
     this.setState({
-      selected: !this.state.selected
+      editMode: !this.state.editMode
     })
   }
   render() {
     const { props } = this;
+    console.log(props);
     return (
-      <div key={props.key} className={cx('list-item', this.state.selected ? 'selected' : '')} onClick={this.toggle}>
+      <div key={props.key} className={cx('list-item', this.state.selected ? 'selected' : '')} >
         {
           this.state.selected ?
             <div className={cx('item-tooltab')}>
@@ -89,13 +90,13 @@ class ScheduleItem extends Component {
               <input type="number" className={cx('list-input')} placeholder="reps" />
             </div>
             <div style={{ padding: '16px 8px' }}>
-              <button>ADD</button>
+              <button onClick={props.addData}>ADD</button>
               <button>SAVE</button>
             </div>
 
           </Fragment>
           :
-          <span className={cx('txt')}>{props.name}</span>}
+          <span className={cx('txt')} onClick={this.toggle}>{props.name}</span>}
         <div className={cx('tag-wrap')}>
           {props.children}
         </div>
@@ -151,7 +152,7 @@ class ScheduleList extends Component {
         //     {tags}
         //   </div>
         // </div>
-        <ScheduleItem key={i} name={list[i].name}>{tags}</ScheduleItem>
+        <ScheduleItem key={i} name={list[i].name} addData={this.props.addData}>{tags}</ScheduleItem>
       )
       tags = [];
     }

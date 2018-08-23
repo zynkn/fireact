@@ -3,14 +3,33 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 const db = firebase.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
+const settings = {/* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
 
 
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
 
-async function records(date,uid) {
+export const addRecord = () =>
+  db.collection("record").doc("20180823").set({
+    name: "Pull Up",
+    date: "20180823",
+    detail: [
+      { reps: '10', weight: '15' }, { reps: '10', weight: '15' }, { reps: '10', weight: '15' }, { reps: '10', weight: '15' }, { reps: '10', weight: '15' }
+    ],
+    userID: 'VcZblxmPQdhe23FjXjlmg7vm90K3'
+  }, { merge: true })
+    .then((res) => {
+      console.log("Document successfully written!");
+      return res;
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error);
+      return error;
+    });
+
+
+async function records(date, uid) {
   const ref = db.collection("record");
   const arr = [];
   const query = ref.where("date", "==", date).where("userID", "==", uid);
@@ -26,7 +45,7 @@ async function records(date,uid) {
   })
   return arr;
 }
-export const getRecord = ({ date, uid }) => records(date,uid)
+export const getRecord = ({ date, uid }) => records(date, uid)
 
 export const googleLogin = () =>
   //var data = null;
