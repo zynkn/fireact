@@ -29,7 +29,8 @@ export default handleActions({
       console.log(state);
       console.log(action);
       console.log(action.payload);
-      return state.set('data', action.payload);
+      return state.set('data', action.payload.data)
+        .set('selectedDate', action.payload.date)
 
     },
     onError: (state, action) => {

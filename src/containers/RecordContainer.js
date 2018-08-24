@@ -20,7 +20,7 @@ class RecordContainer extends Component {
       <Fragment>
         <DateView getData={props.Actions.getRecord} uid={props.userUID} />
         {/* <AddButton /> */}
-        <ScheduleList list={props.data} addData={props.Actions.addRecord} />
+        <ScheduleList list={props.data} selectedDate={props.selectedDate} addData={props.Actions.addRecord} />
       </Fragment>
     )
   }

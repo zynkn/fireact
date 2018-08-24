@@ -10,15 +10,14 @@ db.settings(settings);
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
 
-export const addRecord = () =>
-  db.collection("record").doc("20180823").set({
-    name: "Pull Up",
-    date: "20180823",
+export const addRecord = ({ date, id }) =>
+
+  db.collection("record").doc('VcZblxmPQdhe23FjXjlmg7vm90K3').collection(date).doc(id).update({
+    name: "Check!",
     detail: [
-      { reps: '10', weight: '15' }, { reps: '10', weight: '15' }, { reps: '10', weight: '15' }, { reps: '10', weight: '15' }, { reps: '10', weight: '15' }
+      { reps: '10', weight: '15' }, { reps: '10', weight: '15' },
     ],
-    userID: 'VcZblxmPQdhe23FjXjlmg7vm90K3'
-  }, { merge: true })
+  })
     .then((res) => {
       console.log("Document successfully written!");
       return res;
@@ -45,7 +44,31 @@ async function records(date, uid) {
   })
   return arr;
 }
-export const getRecord = ({ date, uid }) => records(date, uid)
+
+async function test(date, uid) {
+  const ref = db.collection("record");
+  const ans = {};
+  ans['date'] = date;
+  const arr = [];
+  const query = ref.doc(uid).collection(date);
+
+  await query.get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.id} => ${doc.data()}`);
+      console.log(doc.data())
+      let temp = doc.data();
+      temp['id'] = doc.id;
+      console.log(temp);
+      arr.push(temp);
+    });
+  }).catch((error) => {
+    console.log(error);
+    return error;
+  })
+  ans['data'] = arr;
+  return ans;
+}
+export const getRecord = ({ date, uid }) => test(date, uid)
 
 export const googleLogin = () =>
   //var data = null;
