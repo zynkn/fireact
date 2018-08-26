@@ -157,3 +157,22 @@
   height: 48px;
   z-index: 999;
 }
+
+.ScheduleNewAdd {
+  background-color: white;
+  padding: 16px 24px;
+  width: 100%;
+  text-align: center;
+  .addButton{
+    font-size: 0;
+    width: 100%;
+    padding: 8px 0;
+    border: 1px solid #f0f0f0;
+    background-color: transparent;
+    user-select: none;
+    outline: none;
+    &:active{
+      background-color: #f9f9f9;
+    }
+  }
+}

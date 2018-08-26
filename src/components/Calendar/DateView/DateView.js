@@ -16,6 +16,7 @@ class DateView extends Component {
     super(props);
     this.state = {
       now: new Date(),
+      selected: '',
     }
   }
   componentWillMount() {
@@ -46,7 +47,8 @@ class DateView extends Component {
   generate = () => {
     const { now } = this.state;
     const { props } = this;
-    console.log(props.uid);
+    let selected = props.selectedDate.substring(6, 8);
+    console.log(selected);
     let rows = [];
     let first = now.getDay() - (now.getDate() % 7 - 1);
     let month = now.getMonth();
@@ -83,9 +85,10 @@ class DateView extends Component {
     let columns = [];
     let ans = [];
     for (let i = 1; i <= rows.length; i++) {
-      columns.push(<td key={i} onClick={() => props.getData({ date: date + '' + rows[i - 1].toString().padStart(2, '0'), uid: props.uid})}>{rows[i - 1]}</td>);
+      columns.push(<td key={i} className={selected == rows[i - 1] ? cx('selected') : ''} onClick={() => { props.loading(); props.getData({ date: date + '' + rows[i - 1].toString().padStart(2, '0'), uid: props.uid }) }
+      }> {rows[i - 1]}</td >);
       if (i % 7 === 0 && i !== 0) {
-        ans.push(<tr key={'TR'+i}>{columns}</tr>);
+        ans.push(<tr key={'TR' + i}>{columns}</tr>);
         columns = [];
       }
     }
