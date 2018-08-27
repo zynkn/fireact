@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import DateView from 'components/Calendar/DateView';
 import ScheduleList from 'components/Calendar/ScheduleList';
 import AddButton from 'components/Calendar/AddButton';
+import Loading from 'components/Common/Loading';
 import moment from 'moment';
 
 import * as actions from 'store/modules/record';
@@ -26,8 +27,11 @@ class RecordContainer extends Component {
       <Fragment>
         <DateView getData={props.Actions.getRecord} uid={props.userUID} selectedDate={props.selectedDate} loading={props.Actions.loading} />
         {/* <AddButton /> */}
-        {props.isLoading ? <p>loading...</p> : ''}
-        <ScheduleList list={props.data ? props.data : new Array()} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={props.Actions.addRecord} newData={props.Actions.newRecord} />
+        {props.isLoading ?
+          <Loading />
+          :
+          <ScheduleList list={props.data ? props.data : new Array()} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={props.Actions.addRecord} newData={props.Actions.newRecord} />
+        }
       </Fragment>
     )
   }
