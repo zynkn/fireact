@@ -43,6 +43,12 @@ class ScheduleNewAdd extends Component {
       reps: e.target.value
     })
   }
+
+  newData = () => {
+    const { state } = this
+    this.props.newData({ date: this.props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps });
+    this.toggle();
+  }
   render() {
     const { state } = this;
     console.log(this.props);
@@ -62,7 +68,7 @@ class ScheduleNewAdd extends Component {
           ''
         }
 
-        <button className={cx('addButton')} onClick={state.isOpen ? () => { this.props.newData({ date: this.props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps }) } : this.toggle}>
+        <button className={cx('addButton')} onClick={state.isOpen ? this.newData : this.toggle}>
           <Icon icon={ic_add} size={24} style={{ color: '#e0e0e0' }} />
         </button>
       </section>
@@ -127,9 +133,10 @@ class ScheduleItem extends Component {
               <Icon icon={ic_repeat} size={24} style={{ color: '#e0e0e0' }} />
               <input type="number" className={cx('list-input')} placeholder="reps" value={state.reps} onChange={this.handleRepsChange} />
             </div>
-            <div style={{ padding: '16px 8px' }}>
-              <button onClick={() => { props.addData({ id: props.id, date: props.selectedDate, name: state.value, timestamp: moment().format(), weight: state.weight, reps: state.reps }) }}>ADD</button>
-              <button>SAVE</button>
+            <div style={{ padding: '16px 24px' }}>
+              <button className={cx('addButton')} onClick={() => { props.addData({ id: props.id, date: props.selectedDate, name: state.value, timestamp: moment().format(), weight: state.weight, reps: state.reps }) }}>
+                <Icon icon={ic_add} size={24} style={{ color: '#e0e0e0' }} />
+              </button>
             </div>
 
           </Fragment>

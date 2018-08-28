@@ -19,6 +19,20 @@ class RecordContainer extends Component {
 
     this.props.Actions.getRecord({ date: selectedDate, uid: userUID });
   }
+  update = ({ id, date, name, timestamp, weight, reps }) => {
+    let { userUID, selectedDate } = this.props;
+    const now = moment().format('YYYYMMDD');
+    if (selectedDate === '') { selectedDate = now };
+    this.props.Actions.addRecord({ id, date, name, timestamp, weight, reps });
+    this.props.Actions.getRecord({ date: selectedDate, uid: userUID });
+  }
+  create = ({ date, name, timestamp, weight, reps }) => {
+    let { userUID, selectedDate } = this.props;
+    const now = moment().format('YYYYMMDD');
+    if (selectedDate === '') { selectedDate = now };
+    this.props.Actions.newRecord({ date, name, timestamp, weight, reps });
+    this.props.Actions.getRecord({ date: selectedDate, uid: userUID });
+  }
   render() {
     const { props } = this;
     console.log('RENDER!')
@@ -30,7 +44,7 @@ class RecordContainer extends Component {
         {props.isLoading ?
           <Loading />
           :
-          <ScheduleList list={props.data ? props.data : new Array()} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={props.Actions.addRecord} newData={props.Actions.newRecord} />
+          <ScheduleList list={props.data ? props.data : new Array()} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={this.update} newData={this.create} />
         }
       </Fragment>
     )
