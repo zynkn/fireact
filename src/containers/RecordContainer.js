@@ -8,6 +8,7 @@ import moment from 'moment';
 import * as actions from 'store/modules/record';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import AddPopup from '../components/Calendar/AddPopup/AddPopup';
 
 class RecordContainer extends Component {
 
@@ -39,12 +40,13 @@ class RecordContainer extends Component {
     console.log(props)
     return (
       <Fragment>
+        {/* <AddPopup /> */}
         <DateView getData={props.Actions.getRecord} uid={props.userUID} selectedDate={props.selectedDate} loading={props.Actions.loading} />
         {/* <AddButton /> */}
         {props.isLoading ?
           <Loading />
           :
-          <ScheduleList list={props.data ? props.data : new Array()} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={this.update} newData={this.create} />
+          <ScheduleList list={props.data ? props.data : new Array()} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={this.update} newData={this.create} changeName={props.Actions.changeName} />
         }
       </Fragment>
     )

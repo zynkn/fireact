@@ -10,6 +10,7 @@ import * as api from 'lib/api';
 const GET_RECORD = 'record/GET_RECORD';
 const ADD_RECORD = 'record/ADD_RECORD';
 const NEW_RECORD = 'record/NEW_RECORD';
+const CHANGE_NAME = 'record/CHANGE_NAME';
 const LOADING = 'record/LOADING';
 
 
@@ -17,6 +18,7 @@ const LOADING = 'record/LOADING';
 export const getRecord = createAction(GET_RECORD, api.getRecord);
 export const addRecord = createAction(ADD_RECORD, api.addRecord);
 export const newRecord = createAction(NEW_RECORD, api.newRecord);
+export const changeName = createAction(CHANGE_NAME, api.changeName);
 export const loading = createAction(LOADING);
 
 //initial state
@@ -31,6 +33,17 @@ export default handleActions({
   [LOADING]: (state, action) => {
     return state.set('isLoading', true);
   },
+  ...pender({
+    type: CHANGE_NAME,
+    onSuccess: (state, action) => {
+      console.log('CHANGE_NAME');
+      return state
+    },
+    onError: (state, action) => {
+      console.log(action);
+      console.log('error');
+    }
+  }),
   ...pender({
     type: NEW_RECORD,
     onSuccess: (state, action) => {

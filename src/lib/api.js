@@ -14,6 +14,19 @@ db.settings(settings);
 
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
+export const changeName = ({ date, name, id }) =>
+  db.collection("record").doc('VcZblxmPQdhe23FjXjlmg7vm90K3').collection(date).doc(id).update({
+    name: name
+  })
+    .then((res) => {
+      console.log('Change Name Success!');
+      return res;
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error);
+      return error;
+    });
+
 export const newRecord = ({ date, name, timestamp, weight, reps }) =>
   db.collection("record").doc('VcZblxmPQdhe23FjXjlmg7vm90K3').collection(date).doc().set({
     name: name,

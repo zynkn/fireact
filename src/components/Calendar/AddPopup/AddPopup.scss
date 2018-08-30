@@ -1,0 +1,128 @@
+
+
+.AddPopup {
+  overflow: hidden;
+  .bg{
+    background-color: rgba(0,0,0,0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    animation: bgFadeIn 0.5s;
+    &.leave{
+      animation: bgFadeOut 0.5s;
+    }
+  }
+
+
+  .pane{
+    background-color: white;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 240px;
+    padding: 8px 16px;
+    padding-bottom: 0;
+    z-index: 100;
+    animation: enter 0.5s;
+    &.leave{
+      animation: leave 0.5s;
+    }
+    .title-wrap {
+      padding: 8px 0;
+      text-align: center;
+      input{
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 8px 16px;
+        outline: none;
+        &:focus{
+          border-bottom: 1px solid red;
+        }
+      }
+    }
+    .record-wrap {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 0;
+      //border: 1px solid #f0f0f0;
+      .count-button{
+        background-color: transparent;
+        border: none;
+        padding: 0 8px;
+        border: 1px solid #f0f0f0;
+        font-size: 0;
+        align-self: stretch;
+        &:active{
+          background-color: rgba(0,0,0,0.1);
+        }
+      }
+      .title{
+        font-size: 9pt;
+        width: 80px;
+      }
+      .numberCounter{
+        padding: 8px 16px;
+        width: 100px;
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f0f0f0;
+        text-align: center;
+      }
+    }
+    .button-wrap{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 48px;
+      background-color: #f0f0f0;
+      .addbutton{
+        height: 100%;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+}
+
+@keyframes bgFadeIn{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+@keyframes bgFadeOut{
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+@keyframes enter{
+  0%{
+    transform: translateY(300px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+@keyframes leave{
+  0%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(300px);
+  }
+}
