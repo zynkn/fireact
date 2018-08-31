@@ -34,7 +34,10 @@
       animation: leave 0.5s;
     }
     .title-wrap {
+      display: flex;
       padding: 8px 0;
+      justify-content: center;
+      align-items: center;
       text-align: center;
       input{
         border: none;
@@ -44,6 +47,13 @@
         &:focus{
           border-bottom: 1px solid red;
         }
+      }
+      .saveButton{
+        background-color: transparent;
+        border: 1px solid #f0f0f0;
+        font-size: 0;
+        align-self: stretch;
+        margin-left: 16px;
       }
     }
     .record-wrap {

@@ -31,7 +31,10 @@ const initialState = Map({
 // reducer
 export default handleActions({
   [LOADING]: (state, action) => {
-    return state.set('isLoading', true);
+    console.log('LOADING')
+    console.log(action.payload);
+    return state.set('isLoading', true)
+                .set('selectedDate', action.payload)
   },
   ...pender({
     type: CHANGE_NAME,
@@ -60,7 +63,6 @@ export default handleActions({
     onSuccess: (state, action) => {
       console.log('GET_RECORD');
       return state.set('data', action.payload.data)
-        .set('selectedDate', action.payload.date)
         .set('isLoading', false)
 
     },
