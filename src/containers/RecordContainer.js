@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import DateView from 'components/Calendar/DateView';
 import ScheduleList from 'components/Calendar/ScheduleList';
+import { Redirect } from 'react-router-dom';
 import AddButton from 'components/Calendar/AddButton';
 import Loading from 'components/Common/Loading';
 import moment from 'moment';
@@ -12,26 +13,35 @@ import AddPopup from '../components/Calendar/AddPopup/AddPopup';
 
 class RecordContainer extends Component {
 
+  renderRedirect = () => {
+    console.log('RenderRedirect');
+    console.log(this.props.isLogin);
+    if (!this.props.isLogin) {
+      return <Redirect to='/auth' />
+    }
+  }
   componentDidMount() {
-    let { userUID, selectedDate } = this.props;
+    let { userUID, selectedDate, isLogin } = this.props;
     const now = moment().format('YYYYMMDD');
     if (selectedDate === '') { selectedDate = now };
     console.log(selectedDate);
+    if (isLogin) {
+      this.props.Actions.getRecord({ date: selectedDate, uid: userUID });
+    }
 
-    this.props.Actions.getRecord({ date: selectedDate, uid: userUID });
   }
-  update = ({ id, date, name, timestamp, weight, reps }) => {
+  update = ({ id, date, name, timestamp, weight, reps, uid }) => {
     let { userUID, selectedDate } = this.props;
     const now = moment().format('YYYYMMDD');
     if (selectedDate === '') { selectedDate = now };
-    this.props.Actions.addRecord({ id, date, name, timestamp, weight, reps });
+    this.props.Actions.addRecord({ id, date, name, timestamp, weight, reps, uid });
     this.props.Actions.getRecord({ date: selectedDate, uid: userUID });
   }
-  create = ({ date, name, timestamp, weight, reps }) => {
+  create = ({ date, name, timestamp, weight, reps, uid }) => {
     let { userUID, selectedDate } = this.props;
     const now = moment().format('YYYYMMDD');
     if (selectedDate === '') { selectedDate = now };
-    this.props.Actions.newRecord({ date, name, timestamp, weight, reps });
+    this.props.Actions.newRecord({ date, name, timestamp, weight, reps, uid });
     this.props.Actions.getRecord({ date: selectedDate, uid: userUID });
   }
   render() {
@@ -41,12 +51,13 @@ class RecordContainer extends Component {
     return (
       <Fragment>
         {/* <AddPopup /> */}
+        {this.renderRedirect()}
         <DateView getData={props.Actions.getRecord} uid={props.userUID} selectedDate={props.selectedDate} loading={props.Actions.loading} />
         {/* <AddButton /> */}
         {props.isLoading ?
           <Loading />
           :
-          <ScheduleList list={props.data ? props.data : new Array()} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={this.update} newData={this.create} changeName={props.Actions.changeName} />
+          <ScheduleList list={props.data ? props.data : new Array()} uid={props.userUID} selectedDate={props.selectedDate} loading={props.Actions.loading} addData={this.update} newData={this.create} changeName={props.Actions.changeName} />
         }
       </Fragment>
     )
@@ -58,6 +69,7 @@ export default connect(
     data: state.record.get('data'),
     selectedDate: state.record.get('selectedDate'),
     userUID: state.login.get('userUID'),
+    isLogin: state.login.get('isLogin'),
     isLoading: state.record.get('isLoading'),
   }),
   (dispatch) => ({

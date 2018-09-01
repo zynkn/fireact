@@ -6,9 +6,10 @@ import * as actions from 'store/modules/login';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-class Auth extends Component {
+class HeaderContainer extends Component {
 
   renderRedirect = () => {
+    console.log('RenderRedirect');
     console.log(this.props.isLogin);
     if (!this.props.isLogin) {
       return <Redirect to='/auth' />
@@ -19,7 +20,7 @@ class Auth extends Component {
     const { isLogin } = this.props;
     return (
       <Fragment>
-        {/* {this.renderRedirect()} */}
+        {this.renderRedirect()}
         <Header isLogin={isLogin} googleLogout={this.props.Actions.googleLogout} />
       </Fragment>
     )
@@ -34,4 +35,4 @@ export default connect(
   (dispatch) => ({
     Actions: bindActionCreators(actions, dispatch)
   })
-)(Auth);
+)(HeaderContainer);

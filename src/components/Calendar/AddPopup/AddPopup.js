@@ -55,13 +55,14 @@ class AddPopup extends Component {
   }
   add = () => {
     const { state, props } = this;
-    props.addData({ date: props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps, id: state.id });
+    console.log(this.props.uid);
+    props.addData({ date: props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps, id: state.id, uid: props.uid });
     this.close();
   }
   nameEditFunc = () => {
     const { state, props } = this;
 
-    this.props.changeName({ date: props.selectedDate, name: state.name, id: state.id });
+    this.props.changeName({ date: props.selectedDate, name: state.name, id: state.id, uid: props.uid });
     this.setState({
       editName: !this.state.editName
     })
@@ -105,6 +106,8 @@ class AddPopup extends Component {
   }
   render() {
     const { state } = this;
+    console.log('ADDPOPUP');
+    console.log(this.props.uid);
     return (
       <div className={cx('AddPopup')} >
         <div id="bg" className={cx('bg')} onClick={this.close} />

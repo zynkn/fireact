@@ -43,14 +43,14 @@ class DateView extends Component {
       year: today.getFullYear()
     })
   }
-  
+
   changeBg = (e) => {
     e.target.classList.add(cx('selected'));
   }
 
   dateClickFunc = (date, item) => {
-    const {props} = this;
-    props.loading(date + '' + item.toString().padStart(2, '0')); 
+    const { props } = this;
+    props.loading(date + '' + item.toString().padStart(2, '0'));
     props.getData({ date: date + '' + item.toString().padStart(2, '0'), uid: props.uid })
   }
 
@@ -95,7 +95,7 @@ class DateView extends Component {
     let columns = [];
     let ans = [];
     for (let i = 1; i <= rows.length; i++) {
-      columns.push(<td key={i}  className={selected == rows[i - 1] ? cx('selected') : ''} onClick={(e) => { this.dateClickFunc(date,rows[i - 1]); }
+      columns.push(<td key={i} className={selected == rows[i - 1] ? cx('selected') : ''} onClick={(e) => { this.dateClickFunc(date, rows[i - 1]); }
       }> {rows[i - 1]}</td >);
       if (i % 7 === 0 && i !== 0) {
         ans.push(<tr key={'TR' + i}>{columns}</tr>);

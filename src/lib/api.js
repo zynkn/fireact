@@ -1,12 +1,12 @@
 import 'fire';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import admin from 'firebase-admin';
+// import admin from 'firebase-admin';
 
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  databaseURL: "https://fireact-b8dc7.firebaseio.com",
-});
+// admin.initializeApp({
+//   credential: admin.credential.applicationDefault(),
+//   databaseURL: "https://fireact-b8dc7.firebaseio.com",
+// });
 const db = firebase.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
@@ -14,8 +14,8 @@ db.settings(settings);
 
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
-export const changeName = ({ date, name, id }) =>
-  db.collection("record").doc('VcZblxmPQdhe23FjXjlmg7vm90K3').collection(date).doc(id).update({
+export const changeName = ({ date, name, id, uid }) =>
+  db.collection("record").doc(uid + '').collection(date).doc(id).update({
     name: name
   })
     .then((res) => {
@@ -27,8 +27,8 @@ export const changeName = ({ date, name, id }) =>
       return error;
     });
 
-export const newRecord = ({ date, name, timestamp, weight, reps }) =>
-  db.collection("record").doc('VcZblxmPQdhe23FjXjlmg7vm90K3').collection(date).doc().set({
+export const newRecord = ({ date, name, timestamp, weight, reps, uid }) =>
+  db.collection("record").doc(uid + '').collection(date).doc().set({
     name: name,
     detail: [
       { reps: reps, weight: weight, timestamp: timestamp }
@@ -44,11 +44,11 @@ export const newRecord = ({ date, name, timestamp, weight, reps }) =>
     });
 
 
-export const addRecord = ({ date, id, name, timestamp, weight, reps }) =>
+export const addRecord = ({ date, id, name, timestamp, weight, reps, uid }) =>
 
-  db.collection("record").doc('VcZblxmPQdhe23FjXjlmg7vm90K3').collection(date).doc(id).set({
+  db.collection("record").doc(uid + '').collection(date).doc(id).set({
     name: name,
-    detail: firebase.firestore.FieldValue._arrayUnion(
+    detail: firebase.firestore.FieldValue.arrayUnion(
       { reps: reps, weight: weight, timestamp: timestamp }
     ),
   }, { merge: true })
@@ -62,20 +62,20 @@ export const addRecord = ({ date, id, name, timestamp, weight, reps }) =>
     });
 
 
-async function records(date, uid) {
-  const ref = db.collection("record");
-  const arr = [];
-  const query = ref.where("date", "==", date).where("userID", "==", uid);
-  await query.get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      arr.push(doc.data())
-    });
-  }).catch((error) => {
-    console.log(error);
-    return error;
-  })
-  return arr;
-}
+// async function records(date, uid) {
+//   const ref = db.collection("record");
+//   const arr = [];
+//   const query = ref.where("date", "==", date).where("userID", "==", uid);
+//   await query.get().then((querySnapshot) => {
+//     querySnapshot.forEach((doc) => {
+//       arr.push(doc.data())
+//     });
+//   }).catch((error) => {
+//     console.log(error);
+//     return error;
+//   })
+//   return arr;
+// }
 
 async function test(date, uid) {
 
@@ -83,7 +83,8 @@ async function test(date, uid) {
   const ans = {};
   ans['date'] = date;
   const arr = [];
-  const query = ref.doc(uid).collection(date);
+  const query = ref.doc(uid + '').collection(date);
+  console.log(firebase)
 
   await query.get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {

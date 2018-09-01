@@ -5,8 +5,6 @@ import classNames from 'classnames/bind';
 
 import moment from 'moment';
 import { Icon } from 'react-icons-kit'
-import { ic_fitness_center } from 'react-icons-kit/md/ic_fitness_center'
-import { ic_repeat } from 'react-icons-kit/md/ic_repeat'
 import { ic_build } from 'react-icons-kit/md/ic_build'
 import { ic_add } from 'react-icons-kit/md/ic_add'
 
@@ -47,7 +45,7 @@ class ScheduleNewAdd extends Component {
 
   newData = () => {
     const { state } = this
-    this.props.newData({ date: this.props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps });
+    this.props.newData({ date: this.props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps, uid: this.props.uid });
     this.toggle();
   }
   render() {
@@ -65,7 +63,7 @@ class ScheduleNewAdd extends Component {
           //     <input type="number" className={cx('list-input')} placeholder="reps" value={state.reps} onChange={this.handleRepsChange} />
           //   </div>
           // </Fragment>
-          <AddPopup close={this.toggle} name='' weight='' reps='' addData={this.props.newData} selectedDate={this.props.selectedDate} />
+          <AddPopup uid={this.props.uid} close={this.toggle} name='' weight='' reps='' addData={this.props.newData} selectedDate={this.props.selectedDate} />
           :
           ''
         }
@@ -143,7 +141,7 @@ class ScheduleItem extends Component {
           //   </div>
 
           // </Fragment>
-          <AddPopup changeName={this.props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={this.props.addData} selectedDate={this.props.selectedDate} />
+          <AddPopup uid={this.props.uid} changeName={this.props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={this.props.addData} selectedDate={this.props.selectedDate} />
           :
           ''
         }
@@ -195,7 +193,7 @@ class ScheduleList extends Component {
         )
       }
       items.push(
-        <ScheduleItem key={list[i].id} id={list[i].id} name={list[i].name} weight={list[i].detail[list[i].detail.length - 1].weight} reps={list[i].detail[list[i].detail.length - 1].reps} addData={this.props.addData} selectedDate={this.props.selectedDate} changeName={this.props.changeName}>{tags}</ScheduleItem>
+        <ScheduleItem uid={this.props.uid} key={list[i].id} id={list[i].id} name={list[i].name} weight={list[i].detail[list[i].detail.length - 1].weight} reps={list[i].detail[list[i].detail.length - 1].reps} addData={this.props.addData} selectedDate={this.props.selectedDate} changeName={this.props.changeName}>{tags}</ScheduleItem>
       )
       tags = [];
     }
@@ -203,9 +201,11 @@ class ScheduleList extends Component {
   }
   render() {
     const { list } = this.props;
+    console.log('SchedulList');
+    console.log(this.props.uid);
     return (
       <Fragment>
-        <ScheduleNewAdd newData={this.props.newData} selectedDate={this.props.selectedDate} />
+        <ScheduleNewAdd newData={this.props.newData} selectedDate={this.props.selectedDate} uid={this.props.uid} />
         <section className={cx('scheduleList')}>
           {this.create()}
         </section >
