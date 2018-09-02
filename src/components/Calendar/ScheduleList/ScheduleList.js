@@ -108,6 +108,12 @@ class ScheduleItem extends Component {
       reps: e.target.value
     })
   }
+  nameChange = (name) => {
+
+    this.setState({
+      value: name
+    })
+  }
   render() {
     const { props, state } = this;
     console.log(props);
@@ -124,7 +130,7 @@ class ScheduleItem extends Component {
             :
             null
         }
-        <span className={cx('txt')} onClick={this.toggle}>{props.name}</span>
+        <span className={cx('txt')} onClick={this.toggle}>{state.value}</span>
         {this.state.editMode ?
           // <Fragment>
           //   <input type="text" className={cx('list-input')} value={state.value} onChange={this.handleNameChange} />
@@ -141,7 +147,7 @@ class ScheduleItem extends Component {
           //   </div>
 
           // </Fragment>
-          <AddPopup uid={this.props.uid} changeName={this.props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={this.props.addData} selectedDate={this.props.selectedDate} />
+          <AddPopup uid={this.props.uid} nameChange={this.nameChange} changeName={this.props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={this.props.addData} selectedDate={this.props.selectedDate} />
           :
           ''
         }

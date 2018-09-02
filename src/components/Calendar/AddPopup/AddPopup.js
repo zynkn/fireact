@@ -61,7 +61,8 @@ class AddPopup extends Component {
   }
   nameEditFunc = () => {
     const { state, props } = this;
-
+    console.log(state.name);
+    this.props.nameChange(state.name);
     this.props.changeName({ date: props.selectedDate, name: state.name, id: state.id, uid: props.uid });
     this.setState({
       editName: !this.state.editName
