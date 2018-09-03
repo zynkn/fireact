@@ -29,3 +29,6 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 
 - [ ] Code Refactoying
 
+## Project History
+
+- Sep 02 2018 : starting to write it.

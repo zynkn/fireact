@@ -59,6 +59,7 @@ class DateView extends Component {
     const { props } = this;
     let selected = props.selectedDate.substring(6, 8);
     console.log(selected);
+    console.log(now);
     let rows = [];
     let first = now.getDay() - (now.getDate() % 7 - 1);
     let month = now.getMonth();

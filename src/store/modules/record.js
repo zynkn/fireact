@@ -8,77 +8,50 @@ import * as api from 'lib/api';
 // action types
 
 const GET_RECORD = 'record/GET_RECORD';
-const ADD_RECORD = 'record/ADD_RECORD';
-const NEW_RECORD = 'record/NEW_RECORD';
+const SET_RECORD = 'record/SET_RECORD';
 const CHANGE_NAME = 'record/CHANGE_NAME';
 const LOADING = 'record/LOADING';
 
 
 // action creators
 export const getRecord = createAction(GET_RECORD, api.getRecord);
-export const addRecord = createAction(ADD_RECORD, api.addRecord);
-export const newRecord = createAction(NEW_RECORD, api.newRecord);
 export const changeName = createAction(CHANGE_NAME, api.changeName);
 export const loading = createAction(LOADING);
 
+export const setRecord = createAction(SET_RECORD, api.setRecord);
+
+
 //initial state
 const initialState = Map({
-  data: null,
+  data: [],
   selectedDate: moment().format('YYYYMMDD'),
   isLoading: true,
 });
 
 // reducer
 export default handleActions({
+  ...pender({
+    type: SET_RECORD,
+    onSuccess: (state, action) => {
+      return state
+    }
+  }),
   [LOADING]: (state, action) => {
-    console.log('LOADING')
-    console.log(action.payload);
     return state.set('isLoading', true)
-                .set('selectedDate', action.payload)
+      .set('selectedDate', action.payload)
   },
   ...pender({
     type: CHANGE_NAME,
     onSuccess: (state, action) => {
-      console.log('CHANGE_NAME');
       return state
-    },
-    onError: (state, action) => {
-      console.log(action);
-      console.log('error');
-    }
-  }),
-  ...pender({
-    type: NEW_RECORD,
-    onSuccess: (state, action) => {
-      console.log('NEW_RECORD');
-      return state
-    },
-    onError: (state, action) => {
-      console.log(action);
-      console.log('error');
     }
   }),
   ...pender({
     type: GET_RECORD,
     onSuccess: (state, action) => {
-      console.log('GET_RECORD');
       return state.set('data', action.payload.data)
         .set('isLoading', false)
 
-    },
-    onError: (state, action) => {
-      console.log(action);
-      console.log('error');
     }
   }),
-  ...pender({
-    type: ADD_RECORD,
-    onSuccess: (state, action) => {
-      console.log(action.payload);
-      return state
-    },
-    onError: (state, action) => {
-      console.log('error', action);
-    }
-  })
 }, initialState);

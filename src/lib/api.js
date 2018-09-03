@@ -1,16 +1,10 @@
 import 'fire';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-// import admin from 'firebase-admin';
 
-// admin.initializeApp({
-//   credential: admin.credential.applicationDefault(),
-//   databaseURL: "https://fireact-b8dc7.firebaseio.com",
-// });
 const db = firebase.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
-
 
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -27,65 +21,34 @@ export const changeName = ({ date, name, id, uid }) =>
       return error;
     });
 
-export const newRecord = ({ date, name, timestamp, weight, reps, uid }) =>
-  db.collection("record").doc(uid + '').collection(date).doc().set({
+
+export const setRecord = ({ id, uid, date, name, detail }) => setRecordAsync(id, uid, date, name, detail)
+
+async function setRecordAsync(id, uid, date, name, detail) {
+  const ref = id === '' ?
+    db.collection("record").doc(uid).collection(date).doc()
+    :
+    db.collection("record").doc(uid).collection(date).doc(id);
+  ref.set({
     name: name,
-    detail: [
-      { reps: reps, weight: weight, timestamp: timestamp }
-    ],
-  })
-    .then((res) => {
-      console.log("Document successfully written!");
-      return res;
-    })
-    .catch((error) => {
-      console.error("Error writing document: ", error);
-      return error;
-    });
-
-
-export const addRecord = ({ date, id, name, timestamp, weight, reps, uid }) =>
-
-  db.collection("record").doc(uid + '').collection(date).doc(id).set({
-    name: name,
-    detail: firebase.firestore.FieldValue.arrayUnion(
-      { reps: reps, weight: weight, timestamp: timestamp }
-    ),
+    detail: firebase.firestore.FieldValue.arrayUnion(detail),
   }, { merge: true })
     .then((res) => {
-      console.log("Document successfully written!");
       return res;
     })
     .catch((error) => {
-      console.error("Error writing document: ", error);
       return error;
-    });
+    })
+}
 
+export const getRecord = ({ date, uid }) => getRecordAsync(date, uid)
 
-// async function records(date, uid) {
-//   const ref = db.collection("record");
-//   const arr = [];
-//   const query = ref.where("date", "==", date).where("userID", "==", uid);
-//   await query.get().then((querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//       arr.push(doc.data())
-//     });
-//   }).catch((error) => {
-//     console.log(error);
-//     return error;
-//   })
-//   return arr;
-// }
-
-async function test(date, uid) {
-
+async function getRecordAsync(date, uid) {
   const ref = db.collection("record");
   const ans = {};
   ans['date'] = date;
   const arr = [];
   const query = ref.doc(uid + '').collection(date);
-  console.log(firebase)
-
   await query.get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       let temp = doc.data();
@@ -99,7 +62,15 @@ async function test(date, uid) {
   ans['data'] = arr;
   return ans;
 }
-export const getRecord = ({ date, uid }) => test(date, uid)
+
+
+
+
+
+
+/*
+** Below codes are untouchable.
+*/
 
 export const googleLogin = () =>
   //var data = null;
@@ -117,10 +88,6 @@ export const googleLogin = () =>
     console.log(error);
     return error;
   });
-
-
-
-
 export const googleLogout = () =>
   firebase.auth().signOut().then((result) => {
     // Sign-out successful.

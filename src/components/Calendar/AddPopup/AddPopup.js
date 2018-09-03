@@ -1,8 +1,4 @@
 import React, { Component, Fragment } from 'react';
-
-import styles from './AddPopup.scss';
-import classNames from 'classnames/bind';
-
 import moment from 'moment';
 
 import { Icon } from 'react-icons-kit'
@@ -10,8 +6,10 @@ import { ic_mode_edit } from 'react-icons-kit/md/ic_mode_edit'
 import { ic_add } from 'react-icons-kit/md/ic_add'
 import { ic_remove } from 'react-icons-kit/md/ic_remove'
 
-const cx = classNames.bind(styles);
+import styles from './AddPopup.scss';
+import classNames from 'classnames/bind';
 
+const cx = classNames.bind(styles);
 
 class AddPopup extends Component {
   constructor(props) {
@@ -24,8 +22,6 @@ class AddPopup extends Component {
       id: props.id ? props.id : '',
     }
   }
-
-
   nameToggle = () => {
     this.setState({
       editName: !this.state.editName
@@ -38,27 +34,6 @@ class AddPopup extends Component {
       this.props.close();
     }, 400)
   }
-  changeName = (e) => {
-    this.setState({
-      name: e.target.value
-    })
-  }
-  changeWeight = (e) => {
-    this.setState({
-      weight: e.target.value
-    })
-  }
-  changeReps = (e) => {
-    this.setState({
-      reps: e.target.value
-    })
-  }
-  add = () => {
-    const { state, props } = this;
-    console.log(this.props.uid);
-    props.addData({ date: props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps, id: state.id, uid: props.uid });
-    this.close();
-  }
   nameEditFunc = () => {
     const { state, props } = this;
     console.log(state.name);
@@ -68,47 +43,38 @@ class AddPopup extends Component {
       editName: !this.state.editName
     })
   }
-
-  decreaseReps = () => {
-    if (this.state.reps <= 0) {
-      return 0;
-    } else {
+  add = () => {
+    const { state, props } = this;
+    if (state.name === '' || state.weight === '' || state.reps === '') {
+      return;
+    }
+    const detail = { weight: state.weight, reps: state.reps, timestamp: moment().format() };
+    props.addData({ date: props.selectedDate, name: state.name, detail: detail, id: state.id, uid: props.uid });
+    this.close();
+  }
+  handleChange = (e, name) => {
+    this.setState({
+      [name]: e.target.value
+    })
+  }
+  control = (name, dir) => {
+    if (dir === 'increase') {
       this.setState({
-        reps: parseInt(this.state.reps) - 1,
-      })
+        [name]: parseFloat(this.state[name]) + 1
+      });
+    } else if (dir === 'decrease') {
+      if (this.state[name] > 0) {
+        this.setState({
+          [name]: parseFloat(this.state[name]) - 1
+        })
+      }
+    } else {
+      console.log('Check your code...');
     }
-  }
-  increaseReps = () => {
-    this.setState({
-      reps: parseInt(this.state.reps) + 1,
-    })
-  }
-  decreaseWeight = () => {
-    let num = 0;
-    if (this.state.weight <= 10) {
-      num = 1;
-    } else if (this.state.weight > 10) {
-      num = 2.5;
-    }
-    this.setState({
-      weight: parseFloat(this.state.weight) - num
-    })
-  }
-  increaseWeight = () => {
-    let num = 0;
-    if (this.state.weight < 10) {
-      num = 1;
-    } else if (this.state.weight >= 10) {
-      num = 2.5;
-    }
-    this.setState({
-      weight: parseFloat(this.state.weight) + num
-    })
   }
   render() {
     const { state } = this;
-    console.log('ADDPOPUP');
-    console.log(this.props.uid);
+    console.log(this.props.name);
     return (
       <div className={cx('AddPopup')} >
         <div id="bg" className={cx('bg')} onClick={this.close} />
@@ -117,10 +83,13 @@ class AddPopup extends Component {
             {
               state.editName ?
                 <Fragment>
-                  <input type="text" onChange={this.changeName} value={state.name} />
-                  <button className={cx('saveButton')} onClick={this.nameEditFunc}>
-                    <Icon icon={ic_mode_edit} size={16} style={{ color: '#000' }} />
-                  </button>
+                  <input type="text" onChange={(e) => { this.handleChange(e, 'name') }} value={state.name} />
+                  {this.props.name == '' ? null :
+                    <button className={cx('saveButton')} onClick={this.nameEditFunc}>
+                      <Icon icon={ic_mode_edit} size={16} style={{ color: '#000' }} />
+                    </button>
+                  }
+
                 </Fragment>
                 :
                 <span onClick={this.nameToggle}>{state.name}</span>
@@ -128,21 +97,21 @@ class AddPopup extends Component {
           </div>
           <div className={cx('record-wrap')}>
             <span className={cx('title')}>Weight</span>
-            <button className={cx('count-button')} onClick={this.decreaseWeight}>
+            <button className={cx('count-button')} onClick={() => { this.control('weight', 'decrease') }}>
               <Icon icon={ic_remove} size={16} style={{ color: '#000' }} />
             </button>
-            <input type="number" className={cx('numberCounter')} onChange={this.changeWeight} value={this.state.weight} />
-            <button className={cx('count-button')} onClick={this.increaseWeight}>
+            <input type="number" className={cx('numberCounter')} onChange={(e) => { this.handleChange(e, 'weight') }} value={this.state.weight} />
+            <button className={cx('count-button')} onClick={() => { this.control('weight', 'increase') }}>
               <Icon icon={ic_add} size={16} style={{ color: '#000' }} />
             </button>
           </div>
           <div className={cx('record-wrap')}>
             <span className={cx('title')}>Reps</span>
-            <button className={cx('count-button')} onClick={this.decreaseReps}>
+            <button className={cx('count-button')} onClick={() => { this.control('reps', 'decrease') }}>
               <Icon icon={ic_remove} size={16} style={{ color: '#000' }} />
             </button>
-            <input type="number" className={cx('numberCounter')} onChange={this.changeReps} value={this.state.reps} />
-            <button className={cx('count-button')} onClick={this.increaseReps}>
+            <input type="number" className={cx('numberCounter')} onChange={(e) => { this.handleChange(e, 'reps') }} value={this.state.reps} />
+            <button className={cx('count-button')} onClick={() => { this.control('reps', 'increase') }}>
               <Icon icon={ic_add} size={16} style={{ color: '#000' }} />
             </button>
           </div>

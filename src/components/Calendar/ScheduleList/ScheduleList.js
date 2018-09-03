@@ -3,9 +3,7 @@ import React, { Component, Fragment } from 'react';
 import styles from './ScheduleList.scss';
 import classNames from 'classnames/bind';
 
-import moment from 'moment';
 import { Icon } from 'react-icons-kit'
-import { ic_build } from 'react-icons-kit/md/ic_build'
 import { ic_add } from 'react-icons-kit/md/ic_add'
 
 import AddPopup from 'components/Calendar/AddPopup';
@@ -17,9 +15,6 @@ class ScheduleNewAdd extends Component {
     super(props);
     this.state = {
       isOpen: false,
-      name: '',
-      weight: '',
-      reps: '',
     }
   }
   toggle = () => {
@@ -27,52 +22,19 @@ class ScheduleNewAdd extends Component {
       isOpen: !this.state.isOpen
     })
   }
-  handleNameChange = (e) => {
-    this.setState({
-      name: e.target.value
-    })
-  }
-  handleWeightChange = (e) => {
-    this.setState({
-      weight: e.target.value
-    })
-  }
-  handleRepsChange = (e) => {
-    this.setState({
-      reps: e.target.value
-    })
-  }
-
-  newData = () => {
-    const { state } = this
-    this.props.newData({ date: this.props.selectedDate, name: state.name, timestamp: moment().format(), weight: state.weight, reps: state.reps, uid: this.props.uid });
-    this.toggle();
-  }
   render() {
-    const { state } = this;
-    console.log(this.props);
+    const { state, props } = this;
     return (
       <section className={cx('ScheduleNewAdd')}>
         {state.isOpen ?
-          // <Fragment>
-          //   <input type="text" className={cx('list-input')} value={state.name} onChange={this.handleNameChange} />
-          //   <div className={cx('input-wrap')}>
-          //     <Icon icon={ic_fitness_center} size={24} style={{ color: '#e0e0e0' }} />
-          //     <input type="text" className={cx('list-input')} placeholder="weight" value={state.weight} onChange={this.handleWeightChange} />
-          //     <Icon icon={ic_repeat} size={24} style={{ color: '#e0e0e0' }} />
-          //     <input type="number" className={cx('list-input')} placeholder="reps" value={state.reps} onChange={this.handleRepsChange} />
-          //   </div>
-          // </Fragment>
-          <AddPopup uid={this.props.uid} close={this.toggle} name='' weight='' reps='' addData={this.props.newData} selectedDate={this.props.selectedDate} />
+          <AddPopup uid={props.uid} close={this.toggle} name='' weight='' reps='' addData={props.add} selectedDate={props.selectedDate} />
           :
-          ''
+          null
         }
-
-        <button className={cx('addButton')} onClick={state.isOpen ? this.newData : this.toggle}>
+        <button className={cx('addButton')} onClick={state.isOpen ? null : this.toggle}>
           <Icon icon={ic_add} size={24} style={{ color: '#e0e0e0' }} />
         </button>
       </section>
-
     )
   }
 }
@@ -82,10 +44,6 @@ class ScheduleItem extends Component {
     super(props);
     this.state = {
       editMode: false,
-      selected: false,
-      value: props.name,
-      weight: props.weight,
-      reps: props.reps,
     }
   }
   toggle = () => {
@@ -93,65 +51,16 @@ class ScheduleItem extends Component {
       editMode: !this.state.editMode
     })
   }
-  handleNameChange = (e) => {
-    this.setState({
-      value: e.target.value
-    })
-  }
-  handleWeightChange = (e) => {
-    this.setState({
-      weight: e.target.value
-    })
-  }
-  handleRepsChange = (e) => {
-    this.setState({
-      reps: e.target.value
-    })
-  }
-  nameChange = (name) => {
-
-    this.setState({
-      value: name
-    })
-  }
   render() {
     const { props, state } = this;
-    console.log(props);
     return (
-      <div key={props.key} className={cx('list-item', this.state.selected ? 'selected' : '')} >
-        {
-          this.state.selected ?
-            <div className={cx('item-tooltab')}>
-              <button className={cx('tool-button')}>
-                <Icon icon={ic_build} size={12} style={{ color: '#fff' }} />
-              </button>
-
-            </div>
-            :
-            null
-        }
-        <span className={cx('txt')} onClick={this.toggle}>{state.value}</span>
-        {this.state.editMode ?
-          // <Fragment>
-          //   <input type="text" className={cx('list-input')} value={state.value} onChange={this.handleNameChange} />
-          //   <div className={cx('input-wrap')}>
-          //     <Icon icon={ic_fitness_center} size={24} style={{ color: '#e0e0e0' }} />
-          //     <input type="text" className={cx('list-input')} placeholder="weight" value={state.weight} onChange={this.handleWeightChange} />
-          //     <Icon icon={ic_repeat} size={24} style={{ color: '#e0e0e0' }} />
-          //     <input type="number" className={cx('list-input')} placeholder="reps" value={state.reps} onChange={this.handleRepsChange} />
-          //   </div>
-          //   <div style={{ padding: '16px 24px' }}>
-          //     <button className={cx('addButton')} onClick={() => { props.addData({ id: props.id, date: props.selectedDate, name: state.value, timestamp: moment().format(), weight: state.weight, reps: state.reps }) }}>
-          //       <Icon icon={ic_add} size={24} style={{ color: '#e0e0e0' }} />
-          //     </button>
-          //   </div>
-
-          // </Fragment>
-          <AddPopup uid={this.props.uid} nameChange={this.nameChange} changeName={this.props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={this.props.addData} selectedDate={this.props.selectedDate} />
+      <div key={props.key} className={cx('list-item')} >
+        <span className={cx('txt')} onClick={this.toggle}>{props.name}</span>
+        {state.editMode ?
+          <AddPopup uid={props.uid} changeName={props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={props.add} selectedDate={props.selectedDate} />
           :
-          ''
+          null
         }
-
         <div className={cx('tag-wrap')}>
           {props.children}
         </div>
@@ -163,11 +72,7 @@ class ScheduleItem extends Component {
 class ScheduleTag extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: false,
-    };
   }
-
   render() {
     const { props } = this;
     return (
@@ -177,17 +82,6 @@ class ScheduleTag extends Component {
 }
 
 class ScheduleList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      addOpen: true,
-    }
-  }
-  toggle = () => {
-    this.setState({
-      addOpen: !this.state.addOpen
-    })
-  }
   create = () => {
     const { list } = this.props;
     let items = [];
@@ -199,25 +93,23 @@ class ScheduleList extends Component {
         )
       }
       items.push(
-        <ScheduleItem uid={this.props.uid} key={list[i].id} id={list[i].id} name={list[i].name} weight={list[i].detail[list[i].detail.length - 1].weight} reps={list[i].detail[list[i].detail.length - 1].reps} addData={this.props.addData} selectedDate={this.props.selectedDate} changeName={this.props.changeName}>{tags}</ScheduleItem>
+        <ScheduleItem add={this.props.add} uid={this.props.uid} key={list[i].id} id={list[i].id} name={list[i].name} weight={list[i].detail[list[i].detail.length - 1].weight} reps={list[i].detail[list[i].detail.length - 1].reps} addData={this.props.addData} selectedDate={this.props.selectedDate} changeName={this.props.changeName}>{tags}</ScheduleItem>
       )
       tags = [];
     }
     return items;
   }
   render() {
-    const { list } = this.props;
-    console.log('SchedulList');
-    console.log(this.props.uid);
+    const { props } = this;
+    console.log('ScheduleList');
+    console.log(props);
     return (
       <Fragment>
-        <ScheduleNewAdd newData={this.props.newData} selectedDate={this.props.selectedDate} uid={this.props.uid} />
+        <ScheduleNewAdd add={props.add} selectedDate={props.selectedDate} uid={props.uid} />
         <section className={cx('scheduleList')}>
           {this.create()}
         </section >
-        {/* <AddPopup /> */}
       </Fragment>
-
     );
   }
 }
