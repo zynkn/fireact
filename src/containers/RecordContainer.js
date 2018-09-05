@@ -25,9 +25,19 @@ class RecordContainer extends Component {
     }
   }
 
-  add = ({ id, uid, date, name, detail }) => {
+  add = ({ id, date, name, detail }) => {
     const { userUID, selectedDate, Actions } = this.props;
-    Actions.setRecord({ id, uid, date, name, detail });
+    Actions.setRecord({ id, uid: userUID, date, name, detail });
+    Actions.getRecord({ date: selectedDate, uid: userUID });
+  }
+  get = ({ date }) => {
+    const uid = this.props.userUID;
+    this.props.Actions.loading(date);
+    this.props.Actions.getRecord({ uid: uid, date: date });
+  }
+  edit = ({ name, id }) => {
+    const { userUID, selectedDate, Actions } = this.props;
+    Actions.changeName({ uid: userUID, date: selectedDate, name, id });
     Actions.getRecord({ date: selectedDate, uid: userUID });
   }
 
@@ -36,11 +46,11 @@ class RecordContainer extends Component {
     return (
       <Fragment>
         {this.renderRedirect()}
-        <DateView getData={props.Actions.getRecord} uid={props.userUID} selectedDate={props.selectedDate} loading={props.Actions.loading} />
+        <DateView get={this.get} selectedDate={props.selectedDate} />
         {props.isLoading ?
           <Loading />
           :
-          <ScheduleList list={props.data} uid={props.userUID} selectedDate={props.selectedDate} loading={props.Actions.loading} add={this.add} changeName={props.Actions.changeName} />
+          <ScheduleList list={props.data} selectedDate={props.selectedDate} add={this.add} changeName={this.edit} />
         }
       </Fragment>
     )

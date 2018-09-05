@@ -27,7 +27,7 @@ class ScheduleNewAdd extends Component {
     return (
       <section className={cx('ScheduleNewAdd')}>
         {state.isOpen ?
-          <AddPopup uid={props.uid} close={this.toggle} name='' weight='' reps='' addData={props.add} selectedDate={props.selectedDate} />
+          <AddPopup close={this.toggle} name='' weight='' reps='' addData={props.add} selectedDate={props.selectedDate} />
           :
           null
         }
@@ -57,7 +57,7 @@ class ScheduleItem extends Component {
       <div key={props.key} className={cx('list-item')} >
         <span className={cx('txt')} onClick={this.toggle}>{props.name}</span>
         {state.editMode ?
-          <AddPopup uid={props.uid} changeName={props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={props.add} selectedDate={props.selectedDate} />
+          <AddPopup changeName={props.changeName} close={this.toggle} name={props.name} weight={props.weight} reps={props.reps} id={props.id} addData={props.add} selectedDate={props.selectedDate} />
           :
           null
         }
@@ -93,7 +93,7 @@ class ScheduleList extends Component {
         )
       }
       items.push(
-        <ScheduleItem add={this.props.add} uid={this.props.uid} key={list[i].id} id={list[i].id} name={list[i].name} weight={list[i].detail[list[i].detail.length - 1].weight} reps={list[i].detail[list[i].detail.length - 1].reps} addData={this.props.addData} selectedDate={this.props.selectedDate} changeName={this.props.changeName}>{tags}</ScheduleItem>
+        <ScheduleItem add={this.props.add} key={list[i].id} id={list[i].id} name={list[i].name} weight={list[i].detail[list[i].detail.length - 1].weight} reps={list[i].detail[list[i].detail.length - 1].reps} addData={this.props.addData} selectedDate={this.props.selectedDate} changeName={this.props.changeName}>{tags}</ScheduleItem>
       )
       tags = [];
     }
@@ -105,7 +105,7 @@ class ScheduleList extends Component {
     console.log(props);
     return (
       <Fragment>
-        <ScheduleNewAdd add={props.add} selectedDate={props.selectedDate} uid={props.uid} />
+        <ScheduleNewAdd add={props.add} selectedDate={props.selectedDate} />
         <section className={cx('scheduleList')}>
           {this.create()}
         </section >

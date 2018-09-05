@@ -36,9 +36,7 @@ class AddPopup extends Component {
   }
   nameEditFunc = () => {
     const { state, props } = this;
-    console.log(state.name);
-    this.props.nameChange(state.name);
-    this.props.changeName({ date: props.selectedDate, name: state.name, id: state.id, uid: props.uid });
+    this.props.changeName({ name: state.name, id: state.id });
     this.setState({
       editName: !this.state.editName
     })
@@ -49,7 +47,7 @@ class AddPopup extends Component {
       return;
     }
     const detail = { weight: state.weight, reps: state.reps, timestamp: moment().format() };
-    props.addData({ date: props.selectedDate, name: state.name, detail: detail, id: state.id, uid: props.uid });
+    props.addData({ date: props.selectedDate, name: state.name, detail: detail, id: state.id });
     this.close();
   }
   handleChange = (e, name) => {

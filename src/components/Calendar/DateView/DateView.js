@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import moment from 'moment';
+
 import { Icon } from 'react-icons-kit'
 import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left'
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right'
@@ -16,32 +18,23 @@ class DateView extends Component {
     super(props);
     this.state = {
       now: new Date(),
-      selected: '',
     }
   }
-  componentWillMount() {
-    const { now } = this.state;
-    let first = now.getDay() - (now.getDate() % 7 - 1);
-    if (first < 0) {
-      first = first + 6;
-    }
-  }
-
   previousMonth = () => {
     let today = this.state.now;
     today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
     this.setState({
       now: today,
-    })
+    });
+    this.props.get({ date: moment(today).format('YYYYMMDD') });
   }
   nextMonth = () => {
     let today = this.state.now;
     today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
     this.setState({
       now: today,
-      month: month[today.getMonth()],
-      year: today.getFullYear()
-    })
+    });
+    this.props.get({ date: moment(today).format('YYYYMMDD') })
   }
 
   changeBg = (e) => {
@@ -50,16 +43,12 @@ class DateView extends Component {
 
   dateClickFunc = (date, item) => {
     const { props } = this;
-    props.loading(date + '' + item.toString().padStart(2, '0'));
-    props.getData({ date: date + '' + item.toString().padStart(2, '0'), uid: props.uid })
+    props.get({ date: date + '' + item.toString().padStart(2, '0') });
   }
 
   generate = () => {
     const { now } = this.state;
-    const { props } = this;
-    let selected = props.selectedDate.substring(6, 8);
-    console.log(selected);
-    console.log(now);
+    let selected = this.props.selectedDate.substring(6, 8);
     let rows = [];
     let first = now.getDay() - (now.getDate() % 7 - 1);
     let month = now.getMonth();
@@ -96,20 +85,18 @@ class DateView extends Component {
     let columns = [];
     let ans = [];
     for (let i = 1; i <= rows.length; i++) {
-      columns.push(<td key={i} className={selected == rows[i - 1] ? cx('selected') : ''} onClick={(e) => { this.dateClickFunc(date, rows[i - 1]); }
+      columns.push(<td key={i} className={selected == rows[i - 1] ? cx('selected') : ''} onClick={(e) => { this.changeBg(e); this.dateClickFunc(date, rows[i - 1]); }
       }> {rows[i - 1]}</td >);
       if (i % 7 === 0 && i !== 0) {
         ans.push(<tr key={'TR' + i}>{columns}</tr>);
         columns = [];
       }
     }
-
     return ans;
   }
 
 
   render() {
-    let data = this.generate();
     return (
       <section className={cx('calendar')}>
         <div className={cx('header')}>
@@ -135,7 +122,7 @@ class DateView extends Component {
               </tr>
             </thead>
             <tbody>
-              {data}
+              {this.generate()}
             </tbody>
           </table>
         </div>
