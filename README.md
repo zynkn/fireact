@@ -32,3 +32,5 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 ## Project History
 
 - Sep 02 2018 : starting to write it.
+
+- Sep 05 2018 : 1st code refactoring is completed. 
