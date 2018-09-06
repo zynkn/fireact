@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+
 import Header from 'components/Common/Header';
 
 import * as actions from 'store/modules/login';
@@ -8,19 +8,12 @@ import { bindActionCreators } from 'redux';
 
 class HeaderContainer extends Component {
 
-  // renderRedirect = () => {
-  //   console.log('RenderRedirect');
-  //   console.log(this.props.isLogin);
-  //   if (!this.props.isLogin) {
-  //     return <Redirect to='/auth' />
-  //   }
-  // }
+
 
   render() {
     const { isLogin } = this.props;
     return (
       <Fragment>
-        {/* {this.renderRedirect()} */}
         <Header isLogin={isLogin} googleLogout={this.props.Actions.googleLogout} />
       </Fragment>
     )

@@ -21,6 +21,18 @@ export const changeName = ({ date, name, id, uid }) =>
       return error;
     });
 
+export const delRecord = ({ id, uid, date, detail, flag }) => delRecordAysnc(id, uid, date, detail, flag)
+
+async function delRecordAysnc(id, uid, date, detail, flag) {
+  const ref = db.collection("record").doc(uid).collection(date).doc(id)
+  if (flag) {
+    return ref.delete();
+  } else {
+    return ref.update({
+      detail: firebase.firestore.FieldValue.arrayRemove(detail)
+    })
+  }
+}
 
 export const setRecord = ({ id, uid, date, name, detail }) => setRecordAsync(id, uid, date, name, detail)
 

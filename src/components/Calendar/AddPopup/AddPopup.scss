@@ -45,7 +45,7 @@
         padding: 8px 16px;
         outline: none;
         &:focus{
-          border-bottom: 1px solid red;
+          border-bottom: 1px solid #F50057;
         }
       }
       .saveButton{
@@ -97,8 +97,12 @@
       .addbutton{
         height: 100%;
         width: 100%;
-        background-color: transparent;
+          background-color: transparent;
+        color: white;
         border: none;
+        &.selected{
+          background-color: #F50057;
+        }
       }
     }
   }

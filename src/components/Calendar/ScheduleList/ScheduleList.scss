@@ -55,7 +55,10 @@
         padding: 2px 4px;
         background-color: $header-theme;
         margin: 2px 2px;
-        transition: all 0.5s;
+        transition: background-color 2s;
+        &.selected{
+          background-color: #ff1744;
+        }
       }
     }
     
@@ -135,15 +138,6 @@
     width: 40%;
   }
 }
-.add{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 48px;
-  z-index: 999;
-}
 
 .ScheduleNewAdd {
   background-color: white;
@@ -154,12 +148,12 @@
     font-size: 0;
     width: 100%;
     padding: 8px 0;
-    border: 1px solid #f0f0f0;
-    background-color: transparent;
+    border: 1px solid #F50057;
+    background-color: #F50057;
     user-select: none;
     outline: none;
     &:active{
-      background-color: #f9f9f9;
+      background-color: #C51162;
     }
   }
 }

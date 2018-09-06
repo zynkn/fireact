@@ -18,7 +18,7 @@ const initialState = Map({
   isLogin: true,
   user: null,
   userUID: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
-  // userUID: null,
+  //userUID: null,
 });
 
 // reducer

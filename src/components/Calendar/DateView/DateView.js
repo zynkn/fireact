@@ -38,12 +38,16 @@ class DateView extends Component {
   }
 
   changeBg = (e) => {
-    e.target.classList.add(cx('selected'));
+    if (e.target.innerText !== '')
+      e.target.classList.add(cx('selected'));
   }
 
   dateClickFunc = (date, item) => {
     const { props } = this;
-    props.get({ date: date + '' + item.toString().padStart(2, '0') });
+    if (item !== '') {
+      props.get({ date: date + '' + item.toString().padStart(2, '0') });
+    }
+
   }
 
   generate = () => {
@@ -85,7 +89,7 @@ class DateView extends Component {
     let columns = [];
     let ans = [];
     for (let i = 1; i <= rows.length; i++) {
-      columns.push(<td key={i} className={selected == rows[i - 1] ? cx('selected') : ''} onClick={(e) => { this.changeBg(e); this.dateClickFunc(date, rows[i - 1]); }
+      columns.push(<td key={i} className={parseInt(selected, 10) === rows[i - 1] ? cx('selected') : ''} onClick={(e) => { this.changeBg(e); this.dateClickFunc(date, rows[i - 1]); }
       }> {rows[i - 1]}</td >);
       if (i % 7 === 0 && i !== 0) {
         ans.push(<tr key={'TR' + i}>{columns}</tr>);

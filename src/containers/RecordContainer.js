@@ -11,6 +11,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 class RecordContainer extends Component {
+  constructor(props) {
+    super(props);
+  }
   renderRedirect = () => {
     if (!this.props.isLogin) {
       return <Redirect to='/auth' />
@@ -40,9 +43,30 @@ class RecordContainer extends Component {
     Actions.changeName({ uid: userUID, date: selectedDate, name, id });
     Actions.getRecord({ date: selectedDate, uid: userUID });
   }
+  del = ({ id, detail, flag }) => {
+    const { userUID, selectedDate, Actions } = this.props;
+    Actions.delRecord({ id, uid: userUID, date: selectedDate, detail, flag });
+    Actions.getRecord({ date: selectedDate, uid: userUID });
+  }
+  goBack = () => {
+
+    console.log('goBack')
+  }
+  historyPush = () => {
+    const { history, location } = this.props;
+    history.push(location.pathname, 'test');
+  }
+  historyPop = () => {
+    const { history, location } = this.props;
+    history.goBack();
+  }
+
+
 
   render() {
     const { props } = this;
+    //console.log('RecordContainer');
+    // console.log(props.history);
     return (
       <Fragment>
         {this.renderRedirect()}
@@ -50,7 +74,7 @@ class RecordContainer extends Component {
         {props.isLoading ?
           <Loading />
           :
-          <ScheduleList list={props.data} selectedDate={props.selectedDate} add={this.add} changeName={this.edit} />
+          <ScheduleList history={props.history} historyPop={this.historyPop} historyPush={this.historyPush} list={props.data} selectedDate={props.selectedDate} add={this.add} changeName={this.edit} del={this.del} />
         }
       </Fragment>
     )

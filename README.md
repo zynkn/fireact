@@ -20,17 +20,20 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 
 - [x] Seeing your previous workout history
 
+- [x] Deleting workout history
+
 
 ## Things what I have to develop
 
-- [ ] Deleting workout history
-
 - [ ] Developing UI for desktop
 
-- [ ] Code Refactoying
 
 ## Project History
 
 - Sep 02 2018 : starting to write it.
 
 - Sep 05 2018 : 1st code refactoring is completed. 
+
+- Sep 06 2018 : Delete Function is added.
+
+- Sep 06 2018 : 2rd firebase deploy.
