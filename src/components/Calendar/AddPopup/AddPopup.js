@@ -24,7 +24,6 @@ class AddPopup extends Component {
   }
   componentWillUnmount() {
     console.log('componentWillUnmount');
-
   }
   nameToggle = () => {
     this.setState({
