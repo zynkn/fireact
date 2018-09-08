@@ -37,3 +37,5 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 - Sep 06 2018 : Delete Function is added.
 
 - Sep 06 2018 : 2rd firebase deploy.
+
+- Sep 08 2018 : Desktop UI developing is started.

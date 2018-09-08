@@ -1,11 +1,15 @@
 
 @import 'utils';
 
-@media (min-width: 1024px){
-
+@media (min-width: 1400px){
+  .nav-wrap{
+    display: none;
+  }
 }
-@media (max-width: 1024px) {
-
+@media (max-width: 1400px) {
+  .nav-wrap{
+    display: block;
+  }
   .side{
     padding: 0 8px;
     height: 100%;

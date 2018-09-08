@@ -10,6 +10,11 @@ import * as actions from 'store/modules/record';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import styles from './RecordContainer.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
+
 class RecordContainer extends Component {
   constructor(props) {
     super(props);
@@ -70,12 +75,14 @@ class RecordContainer extends Component {
     return (
       <Fragment>
         {this.renderRedirect()}
-        <DateView get={this.get} selectedDate={props.selectedDate} />
-        {props.isLoading ?
-          <Loading />
-          :
-          <ScheduleList history={props.history} historyPop={this.historyPop} historyPush={this.historyPush} list={props.data} selectedDate={props.selectedDate} add={this.add} changeName={this.edit} del={this.del} />
-        }
+        <div className={cx('container')}>
+          <DateView get={this.get} selectedDate={props.selectedDate} />
+          {props.isLoading ?
+            <Loading />
+            :
+            <ScheduleList history={props.history} historyPop={this.historyPop} historyPush={this.historyPush} list={props.data} selectedDate={props.selectedDate} add={this.add} changeName={this.edit} del={this.del} />
+          }
+        </div>
       </Fragment>
     )
   }

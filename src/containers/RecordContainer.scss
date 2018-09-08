@@ -1,0 +1,20 @@
+
+@import 'utils';
+
+@media (min-width: 1400px){
+  .container{
+    flex-direction: row;
+  }
+}
+@media (max-width: 1400px) {
+  .container{
+    flex-direction: column;
+  }
+}
+
+.container{
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+}

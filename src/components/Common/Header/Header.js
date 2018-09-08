@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 
 import { Icon } from 'react-icons-kit'
 import { ic_account_circle } from 'react-icons-kit/md/ic_account_circle'
+import { ic_keyboard_arrow_down } from 'react-icons-kit/md/ic_keyboard_arrow_down'
 import { ic_menu } from 'react-icons-kit/md/ic_menu'
 
 
@@ -86,17 +87,28 @@ class Header extends Component {
               </span>
             </div>
             <div className={cx('appname')}>
-              Fireact
-          </div>
+              <NavLink exact to="/" >
+                <span role="img" aria-label="fire" style={{ marginRight: '8px' }}>🔥</span>
+                Fireact
+              </NavLink>
+
+            </div>
             <div className={cx('side')}>
               <NavLink to={props.isLogin ? "info" : "/auth"} className={cx('icon-wrap')} onClick={this.close}>
                 <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
               </NavLink>
             </div>
+            <ul className={cx('menu-wrap')}>
+              <li>
+                <NavLink exact to="/calendar" >
+                  Calendar
+                </NavLink>
+              </li>
+            </ul>
           </div>
         </header>
         {this.state.navOpen ? <Navigation /> : null}
-      </Fragment>
+      </Fragment >
 
     )
   }
