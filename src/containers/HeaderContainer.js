@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
 import Header from 'components/Common/Header';
+import Header2 from 'components/Common/Header2';
+import DesktopNav from 'components/Common/DesktopNav';
 
 import * as actions from 'store/modules/login';
 import { connect } from 'react-redux';
@@ -14,8 +16,10 @@ class HeaderContainer extends Component {
     const { isLogin } = this.props;
     return (
       <Fragment>
-        <Header isLogin={isLogin} googleLogout={this.props.Actions.googleLogout} />
-      </Fragment>
+        {/* <Header isLogin={isLogin} googleLogout={this.props.Actions.googleLogout} /> */}
+        <Header2 />
+        <DesktopNav />
+      </Fragment >
     )
   }
 }

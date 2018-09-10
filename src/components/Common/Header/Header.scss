@@ -5,7 +5,7 @@
     display: none;
   }
   .menu-wrap{
-    display: block;
+    display: flex;
   }
 }
 @media (max-width: 1400px) {
@@ -63,6 +63,10 @@
     .menu-wrap{
       color: white;
       list-style-type: none;
+      flex-direction: row;
+      li{
+        display: block;
+      }
     }
   }
 }

@@ -5,40 +5,10 @@ import classNames from 'classnames/bind';
 
 import { Icon } from 'react-icons-kit'
 import { ic_account_circle } from 'react-icons-kit/md/ic_account_circle'
-import { ic_keyboard_arrow_down } from 'react-icons-kit/md/ic_keyboard_arrow_down'
 import { ic_menu } from 'react-icons-kit/md/ic_menu'
 
 
 const cx = classNames.bind(styles);
-
-// class Dropdown extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       isOpen: false,
-//     }
-//   }
-//   open = () => {
-//     this.setState({
-//       isOpen: !this.state.isOpen
-//     })
-//   }
-//   render() {
-//     const { name } = this.props;
-//     const { isOpen } = this.state;
-//     return (
-//       <div className={cx('Dropdown')}>
-//         <span className={cx('name')} onClick={this.open}>
-//           {name} <Icon icon={ic_keyboard_arrow_down} size={20} style={{ color: 'white', marginLeft: '8px' }} />
-//         </span>
-//         {isOpen ? (<ul className={cx('dropdown-wrap')}>
-//           <li onClick={this.props.logout}>Logout</li>
-//         </ul>) : ''}
-
-//       </div>
-//     )
-//   }
-// }
 
 class Navigation extends Component {
   constructor(props) {
@@ -91,7 +61,6 @@ class Header extends Component {
                 <span role="img" aria-label="fire" style={{ marginRight: '8px' }}>🔥</span>
                 Fireact
               </NavLink>
-
             </div>
             <div className={cx('side')}>
               <NavLink to={props.isLogin ? "info" : "/auth"} className={cx('icon-wrap')} onClick={this.close}>
@@ -104,12 +73,16 @@ class Header extends Component {
                   Calendar
                 </NavLink>
               </li>
+              <li style={{ marginLeft: '128px' }}>
+                <NavLink to={props.isLogin ? "info" : "/auth"} className={cx('icon-wrap')} onClick={this.close}>
+                  <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
+                </NavLink>
+              </li>
             </ul>
           </div>
         </header>
         {this.state.navOpen ? <Navigation /> : null}
       </Fragment >
-
     )
   }
 }
