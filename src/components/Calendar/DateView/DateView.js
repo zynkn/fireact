@@ -89,7 +89,7 @@ class DateView extends Component {
     let columns = [];
     let ans = [];
     for (let i = 1; i <= rows.length; i++) {
-      columns.push(<td key={i} className={parseInt(selected, 10) === rows[i - 1] ? cx('selected') : ''} onClick={(e) => { this.changeBg(e); this.dateClickFunc(date, rows[i - 1]); }
+      columns.push(<td key={i} data={rows[i - 1] === '' ? null : rows[i - 1]} className={parseInt(selected, 10) === rows[i - 1] ? cx('selected') : null} onClick={(e) => { this.changeBg(e); this.dateClickFunc(date, rows[i - 1]); }
       }> {rows[i - 1]}</td >);
       if (i % 7 === 0 && i !== 0) {
         ans.push(<tr key={'TR' + i}>{columns}</tr>);

@@ -1,11 +1,37 @@
 
 @import 'utils';
 
-@media (min-width: 1281px){
 
+@keyframes slidedown{
+  0%{
+    transform: translateY(-64px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
 }
-@media (max-width: 1280px) {
+@keyframes slideup{
+  0%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(-64px);
+    display: none;
+  }
+}
 
+@media (min-width: 769px){
+  .nav-wrap{
+    display: block;
+    animation: slidedown 0.5s;
+  }
+}
+@media (max-width: 768px) {
+  .nav-wrap{
+    //display: none;
+    animation: slideup 0.5s;
+    -webkit-animation-fill-mode:both;
+  }
 }
 
 .nav-wrap{

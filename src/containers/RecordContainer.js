@@ -5,6 +5,7 @@ import moment from 'moment';
 import DateView from 'components/Calendar/DateView';
 import ScheduleList from 'components/Calendar/ScheduleList';
 import Loading from 'components/Common/Loading';
+import AddButton from 'components/Calendar/AddButton';
 
 import * as actions from 'store/modules/record';
 import { connect } from 'react-redux';
@@ -70,13 +71,15 @@ class RecordContainer extends Component {
 
   render() {
     const { props } = this;
-    //console.log('RecordContainer');
-    // console.log(props.history);
     return (
       <Fragment>
         {this.renderRedirect()}
         <div className={cx('container')}>
-          <DateView get={this.get} selectedDate={props.selectedDate} />
+          <div className={cx('wrap')}>
+            <DateView get={this.get} selectedDate={props.selectedDate} />
+            <AddButton />
+          </div>
+
           {props.isLoading ?
             <Loading />
             :

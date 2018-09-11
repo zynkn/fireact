@@ -7,7 +7,7 @@ class Authentication extends Component {
 
   render() {
     return (
-      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ height: '100vh', display: 'flex', background: '#f3f5f7', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         {/* <HeaderContainer /> */}
         <Auth />
         {/* <BottomNavigation /> */}

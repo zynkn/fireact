@@ -1,14 +1,32 @@
 
 @import 'utils';
 
-@media (min-width: 1400px){
-  .nav-wrap{
+@keyframes slidedown{
+  0%{
+    transform: translateY(0px);
+  }
+  100%{
+    transform: translateY(64px);
     display: none;
   }
 }
-@media (max-width: 1400px) {
+@keyframes slideup{
+  0%{
+    transform: translateY(64px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+@media (min-width: 769px){
+  .nav-wrap{
+    animation: slidedown 1s both;
+  }
+}
+@media (max-width: 768px) {
   .nav-wrap{
     display: block;
+    animation: slideup 1s;
   }
   .side{
     padding: 0 8px;
@@ -21,7 +39,7 @@
 
 
 .nav-wrap{
-  background-color: $header_theme;
+  background-color: $red2;
   position: fixed;
   bottom: 0;
   left: 0;

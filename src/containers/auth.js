@@ -2,11 +2,15 @@ import React, { Component, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Button from 'components/Authentication/Button';
-import fireact from 'assets/images/fireact.png';
 
 import * as actions from 'store/modules/login';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import styles from './auth.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles);
 
 class Auth extends Component {
   renderRedirect = () => {
@@ -18,9 +22,15 @@ class Auth extends Component {
     return (
       <Fragment>
         {this.renderRedirect()}
-        <p>Welcome to Fireact</p>
-        <img src={fireact} width="100" style={{ marginBottom: '64px' }} alt="fireact" />
-        <Button onClick={this.props.Actions.googleLogin} />
+        <div className={cx('pane')}>
+          <div className={cx('header')}>
+            <span role="img" aria-label="fire" style={{ marginRight: '8px' }}>🔥</span>
+            Login
+          </div>
+          <div className={cx('btn-wrap')}>
+            <Button onClick={this.props.Actions.googleLogin} />
+          </div>
+        </div>
       </Fragment>
     )
   }

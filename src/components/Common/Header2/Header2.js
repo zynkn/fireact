@@ -41,7 +41,7 @@ class Header2 extends Component {
             Fireact
           </NavLink>
           <div className={cx('login-wrap')}>
-            <NavLink exact to="/auth" activeClassName={cx('active')} className={cx('login-button')}>
+            <NavLink exact to={this.props.isLogin ? "info" : "/auth"} activeClassName={cx('active')}>
               <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
             </NavLink>
             {/* <Dropdown /> */}

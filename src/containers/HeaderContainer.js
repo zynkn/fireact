@@ -17,7 +17,7 @@ class HeaderContainer extends Component {
     return (
       <Fragment>
         {/* <Header isLogin={isLogin} googleLogout={this.props.Actions.googleLogout} /> */}
-        <Header2 />
+        <Header2 isLogin={isLogin} />
         <DesktopNav />
       </Fragment >
     )

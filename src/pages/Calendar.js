@@ -6,7 +6,7 @@ import RecordContainer from 'containers/RecordContainer';
 
 const Calendar = (props) => {
   return (
-    <div style={{ marginTop: '64px', marginBottom: '48px', overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#fff', height: '100%' }}>
+    <div style={{ overflowY: 'auto', padding: '0 16px', display: 'flex', background: '#f3f5f7', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
       <RecordContainer {...props} />
     </div>
   );

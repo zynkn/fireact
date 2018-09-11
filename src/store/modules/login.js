@@ -15,10 +15,10 @@ export const googleLogout = createAction(GOOGLE_LOGOUT, api.googleLogout);
 
 //initial state
 const initialState = Map({
-  isLogin: false,
+  isLogin: true,
   user: null,
-  // userUID: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
-  userUID: null,
+  userUID: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
+  // userUID: null,
 });
 
 // reducer
