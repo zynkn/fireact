@@ -134,12 +134,10 @@ class ScheduleList extends Component {
 
     return (
       <Fragment>
-        <div className={cx('wrap')}>
-          <ScheduleNewAdd history={props.history} historyPop={props.historyPop} historyPush={props.historyPush} add={props.add} selectedDate={props.selectedDate} />
-          <section className={cx('scheduleList')}>
-            {this.create()}
-          </section >
-        </div>
+        {/* <ScheduleNewAdd history={props.history} historyPop={props.historyPop} historyPush={props.historyPush} add={props.add} selectedDate={props.selectedDate} /> */}
+        <section className={cx('scheduleList')}>
+          {this.create()}
+        </section >
 
 
       </Fragment>

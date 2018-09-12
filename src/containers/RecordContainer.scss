@@ -2,29 +2,43 @@
 @import 'utils';
 
 @media (min-width: 769px){
-  .container{
+  .pane{
     margin-top: 132px;
     flex-direction: row;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
   }
+  .record_container{
+    padding: 0 16px;
+  }
 }
 @media (max-width: 768px) {
-  .container{
+  .pane{
     padding-top: 56px;
     flex-direction: column;
   }
+  .record_container{
+    padding: 0;
+  }
+}
+.record_container{
+  width: 100%;
+  text-align: center;
 }
 
-.container{
+.pane{
   display: flex;
+  justify-content: space-between;
   width: 100%;
-  max-width: 1280px;
-  // margin: auto;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
   height: 100%;
   max-height: 720px;
+  background-color: white;
   .wrap{
     background-color: white;
     text-align: center;
+    padding: 16px;
   }
 
 }

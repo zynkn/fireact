@@ -18,8 +18,9 @@
     justify-content: space-around;
     width: 100%;
     padding: 24px 0;
-    width: 480px;
+    max-width: 480px;
     user-select: none;
+    margin: auto;
     .icon-wrap{
       display: flex;
       align-items: center;
@@ -42,8 +43,8 @@
       th, td{
         font-size: 12pt;
         text-align: center;
-        width: 56px;
-        height: 56px;
+        // width: 56px;
+        // height: 56px;
         border-radius: 100%;
       }
       th:first-child, td:first-child{
@@ -159,52 +160,74 @@
 //     }
 //   }
 // }
-// @media (min-width: 481px) and (max-width: 720px) {
+
+// @media (min-width: 481px){
 //   .header{
 //     width: calc( 70px * 7 + 2px);
 //   }
 //   .calendar-table{
 //     th,td{
-//       width: 68px;
-//       height: 68px;
+//       width: 56px;
+//       height: 56px;
 //     }
 //   }
-  
 // }
-// @media (min-width: 421px) and (max-width: 480px) {
+// @media (min-width: 769px) and (max-width: 944px){
 //   .header{
-//     width: calc( 62px * 7 + 2px);
+//     width: calc( 48px * 7 + 2px);
 //   }
 //   .calendar-table{
 //     th,td{
-//       width: 60px;
-//       height: 60px;
+//       width: 48px;
+//       height: 48px;
 //     }
 //   }
-  
 // }
-// @media (min-width: 361px) and (max-width: 420px) {
-//   .header{
-//     width: calc( 53px * 7 + 2px);
-//   }
-//   .calendar-table{
-//     th,td{
-//       width: 51px;
-//       height: 51px;
-//     }
-//   }
+@media (min-width: 481px){
+  .header{
+    width: calc( 70px * 7 + 2px);
+  }
+  .calendar-table{
+    th,td{
+      width: 56px;
+      height: 56px;
+    }
+  }
+}
+@media (min-width: 421px) and (max-width: 480px) {
+  .header{
+    width: calc( 62px * 7 + 2px);
+  }
+  .calendar-table{
+    th,td{
+      width: 52px;
+      height: 52px;
+    }
+  }
   
-// }
+}
+@media (min-width: 361px) and (max-width: 420px) {
+  .header{
+    width: calc( 53px * 7 + 2px);
+  }
+  .calendar-table{
+    th,td{
+      width: 48px;
+      height: 48px;
+    }
+  }
+  
+}
 
-// @media (max-width: 360px) {
-//   .header{
-//     width: calc( 47px * 7 + 2px);
-//   }
-//   .calendar-table{
-//     th,td{
-//       width: 45px;
-//       height: 45px;
-//     }
-//   }
-// }
+@media (max-width: 360px) {
+  .header{
+    width: calc( 47px * 7 + 2px);
+  }
+  .calendar-table{
+    th,td{
+      width: 45px;
+      height: 45px;
+    }
+  }
+}
 

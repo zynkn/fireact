@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 import DateView from 'components/Calendar/DateView';
-import ScheduleList from 'components/Calendar/ScheduleList';
+import ScheduleList2 from 'components/Calendar/ScheduleList2';
 import Loading from 'components/Common/Loading';
 import AddButton from 'components/Calendar/AddButton';
 
@@ -72,21 +72,24 @@ class RecordContainer extends Component {
   render() {
     const { props } = this;
     return (
-      <Fragment>
+      <div className={cx('record_container')}>
         {this.renderRedirect()}
-        <div className={cx('container')}>
+        <div className={cx('pane')}>
           <div className={cx('wrap')}>
             <DateView get={this.get} selectedDate={props.selectedDate} />
             <AddButton />
           </div>
+          <div className={cx('wrap')}>
+            <ScheduleList2 list={props.data} />
+            {/* {props.isLoading ?
+              <Loading />
+              :
+              <ScheduleList history={props.history} historyPop={this.historyPop} historyPush={this.historyPush} list={props.data} selectedDate={props.selectedDate} add={this.add} changeName={this.edit} del={this.del} />
+            } */}
+          </div>
 
-          {props.isLoading ?
-            <Loading />
-            :
-            <ScheduleList history={props.history} historyPop={this.historyPop} historyPush={this.historyPush} list={props.data} selectedDate={props.selectedDate} add={this.add} changeName={this.edit} del={this.del} />
-          }
         </div>
-      </Fragment>
+      </div>
     )
   }
 }

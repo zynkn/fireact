@@ -1,15 +1,33 @@
 
 @import 'utils';
 
+@media (min-width: 769px){
+
+  .container{
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    .wrap{
+      display: flex;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .container{
+    box-shadow: none;
+    .wrap{
+      display: none;
+    }
+  }
+}
 .container{
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
-  width: 405px;
+  // box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+  max-width: 405px;
+  width: 100%;
   margin: auto;
   padding: 16px;
 }
 .wrap{
   padding: 8px 0;
-  display: flex;
+  // display: flex;
   flex-direction: row;
   margin: auto;
 }
