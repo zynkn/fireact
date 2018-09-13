@@ -34,9 +34,9 @@ class RecordContainer extends Component {
     }
   }
 
-  add = ({ id, date, name, detail }) => {
+  add = ({ id, name, detail }) => {
     const { userUID, selectedDate, Actions } = this.props;
-    Actions.setRecord({ id, uid: userUID, date, name, detail });
+    Actions.setRecord({ id, uid: userUID, date: selectedDate, name, detail });
     Actions.getRecord({ date: selectedDate, uid: userUID });
   }
   get = ({ date }) => {
@@ -58,16 +58,6 @@ class RecordContainer extends Component {
 
     console.log('goBack')
   }
-  historyPush = () => {
-    const { history, location } = this.props;
-    history.push(location.pathname, 'test');
-  }
-  historyPop = () => {
-    const { history, location } = this.props;
-    history.goBack();
-  }
-
-
 
   render() {
     const { props } = this;
@@ -77,10 +67,15 @@ class RecordContainer extends Component {
         <div className={cx('pane')}>
           <div className={cx('wrap')}>
             <DateView get={this.get} selectedDate={props.selectedDate} />
-            <AddButton />
+            <AddButton add={this.add} edit={this.edit} />
           </div>
           <div className={cx('wrap')}>
-            <ScheduleList2 list={props.data} />
+            {props.isLoading ?
+              <Loading />
+              :
+              <ScheduleList2 del={this.del} list={props.data} add={this.add} edit={this.edit} />
+            }
+
             {/* {props.isLoading ?
               <Loading />
               :

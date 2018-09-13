@@ -4,10 +4,22 @@
   .item-input{
     display: flex;
   }
+  .addBtn{
+    display: block;
+  }
+  .list-item{
+    width: 440px;
+  }
 }
 @media (max-width: 768px) {
   .item-input{
     display: none;
+  }
+  .addBtn{
+    display: none;
+  }
+  .list-item{
+    width: 100%;
   }
 }
 
@@ -25,10 +37,12 @@ $grade7 : #b71c1c;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 440px;
+  //max-width: 440px;
+  //width: 440px;
   height: 100%;
   overflow: auto;
-  padding: 0 8px;
+  padding: 8px;
+  user-select: none;
   .list-item + .list-item{
     margin-top: 16px;
   }
@@ -36,15 +50,49 @@ $grade7 : #b71c1c;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
     padding: 0px 8px;
     cursor: pointer;
+    //width:100%;
     //transition: all 0.4s;
     // &:hover{
     //   transform: translateX(-6px);
     // }
     .item-header{
       padding: 8px 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       .name{
         font-size: 10pt;
         font-weight: bold;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+      .editInput{
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 4px 8px;
+        outline: none;
+      }
+      .editBtn{
+        background-color:#FF9800;
+        color: white;
+        font-size: 0;
+        padding: 6px;
+        outline: none;
+        border: none;
+        height: 100%;
+        margin-left: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+ 
+        &:hover{
+          background-color: #F57C00;
+        }
+        &:active{
+          background-color: #E65100;
+
+        }
       }
     }
     .item-input{
@@ -99,6 +147,8 @@ $grade7 : #b71c1c;
         //ackground-color: $red1;
         border-radius: 4px;
         color: white;
+        transition: opacity 2s;
+        
         &:nth-child(1){
           background-color: $grade1;
         }
@@ -120,6 +170,9 @@ $grade7 : #b71c1c;
         &:nth-child(n+7){
           background-color: $grade7;
         }
+        &.selected{
+          opacity: 0;
+        }
       }
       .tag+.tag{
         margin-left: 4px;
@@ -130,11 +183,20 @@ $grade7 : #b71c1c;
 
 
 .addBtn{
-  background-color: #FF9800;
+  background-color: $red1;
   border: none;
   color: white;
   width: 100%;
   padding: 8px 0;
   text-align: center;
   margin-bottom: 16px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  &:hover{
+    background-color: $red2;
+  }
+  &:active{
+    background-color: $red3;
+  }
 }
