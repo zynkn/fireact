@@ -45,4 +45,4 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 
 ## Latest Update
 
-[PDF](https://github.com/zynkn/fireact/docs/Fireact_3rd_Deploy_Eng.pdf)
+[PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_3rd_Deploy_Eng.pdf)
