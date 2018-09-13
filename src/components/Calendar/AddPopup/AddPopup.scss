@@ -1,5 +1,6 @@
 
 
+@import 'utils';
 .AddPopup {
   overflow: hidden;
   .bg{
@@ -39,21 +40,39 @@
       justify-content: center;
       align-items: center;
       text-align: center;
+      .name{
+        font-size: 10pt;
+        font-weight: bold;
+      }
+      
       input{
         border: none;
         border-bottom: 1px solid #f0f0f0;
         padding: 8px 16px;
         outline: none;
         &:focus{
-          border-bottom: 1px solid #F50057;
+          border-bottom: 1px solid $red1;
         }
       }
       .saveButton{
-        background-color: transparent;
-        border: 1px solid #f0f0f0;
+        background-color:#FF9800;
+        color: white;
         font-size: 0;
-        align-self: stretch;
+        padding: 6px;
+        outline: none;
+        border: none;
+        height: 100%;
         margin-left: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+ 
+        &:hover{
+          background-color: #F57C00;
+        }
+        &:active{
+          background-color: #E65100;
+
+        }
       }
     }
     .record-wrap {
@@ -101,7 +120,7 @@
         color: white;
         border: none;
         &.selected{
-          background-color: #F50057;
+          background-color: $red1;
         }
       }
     }

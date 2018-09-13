@@ -22,9 +22,6 @@ class AddPopup extends Component {
       id: props.id ? props.id : '',
     }
   }
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-  }
   nameToggle = () => {
     this.setState({
       editName: !this.state.editName
@@ -75,7 +72,6 @@ class AddPopup extends Component {
   }
   render() {
     const { state } = this;
-    console.log(this.props);
     return (
       <div className={cx('AddPopup')} >
         <div id="bg" className={cx('bg')} onClick={this.close} />
@@ -87,13 +83,13 @@ class AddPopup extends Component {
                   <input type="text" onChange={(e) => { this.handleChange(e, 'name') }} value={state.name} />
                   {this.props.name === '' ? null :
                     <button className={cx('saveButton')} onClick={this.nameEditFunc}>
-                      <Icon icon={ic_mode_edit} size={16} style={{ color: '#000' }} />
+                      <Icon icon={ic_mode_edit} size={16} style={{ color: '#fff' }} />
                     </button>
                   }
 
                 </Fragment>
                 :
-                <span onClick={this.nameToggle}>{state.name}</span>
+                <span className={cx('name')} onClick={this.nameToggle}>{state.name}</span>
             }
           </div>
           <div className={cx('record-wrap')}>
@@ -117,7 +113,9 @@ class AddPopup extends Component {
             </button>
           </div>
           <div className={cx('button-wrap')}>
-            <button className={state.name !== '' && state.reps > 0 ? cx('addbutton', 'selected') : cx('addbutton')} onClick={state.name !== '' && state.reps > 0 ? this.add : null}>Add</button>
+            <button className={state.name !== '' && state.reps > 0 ? cx('addbutton', 'selected') : cx('addbutton')} onClick={state.name !== '' && state.reps > 0 ? this.add : null}>
+              <Icon icon={ic_add} size={24} style={{ color: '#fff' }} />
+            </button>
           </div>
         </div>
       </div>

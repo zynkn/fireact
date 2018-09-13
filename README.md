@@ -39,3 +39,10 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 - Sep 06 2018 : 2rd firebase deploy.
 
 - Sep 08 2018 : Desktop UI developing is started.
+
+- Sep 14 2018 : the only one step left for 3rd deploying.
+
+
+## Latest Update
+
+[PDF](https://github.com/zynkn/fireact/doc/Fireact_3rd_Deploy_Eng.pdf)

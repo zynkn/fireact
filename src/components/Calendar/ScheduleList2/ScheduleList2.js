@@ -84,9 +84,6 @@ class Item extends Component {
   }
   render() {
     const { props, state } = this;
-    console.log('List Itme Render');
-    //console.log(state);
-    console.log(props);
     return (
       <Fragment>
         <div className={cx('list-item')} >
@@ -146,7 +143,6 @@ class Tag extends Component {
     const detail = { weight: props.weight, reps: props.reps, timestamp: props.timestamp };
     this.buttonPressTimer = setTimeout(() => {
       props.del({ id: props.id, detail, flag });
-      alert('delete complete');
     }, 2000);
   }
   release = (e) => {

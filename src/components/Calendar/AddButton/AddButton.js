@@ -33,7 +33,6 @@ class AddButton extends Component {
   }
   add = () => {
     const { props, state } = this;
-    console.log(window.innerWidth);
     if (window.innerWidth < 769) {
       this.setState({
         mobilePopup: true,
