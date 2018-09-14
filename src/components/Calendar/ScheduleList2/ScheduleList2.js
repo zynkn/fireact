@@ -210,9 +210,21 @@ class ScheduleList2 extends Component {
 
   }
   render() {
+    const { list } = this.props;
+    console.log(list);
     return (
       <div className={cx('list-container')} >
         {this.create()}
+        {list.length === 0 ?
+          <div className={cx('nodata')}>
+            <span className={cx('txt')}>
+              <span role="img" aria-label="arm_muscle">💪</span> No data... <span role="img" aria-label="trophy">🏆</span>
+            </span>
+
+          </div>
+          :
+          null
+        }
       </div >
     );
   }

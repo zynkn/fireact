@@ -10,6 +10,10 @@
   .list-item{
     width: 440px;
   }
+  .nodata{
+    width: 440px;
+    height: 100%;
+  }
 }
 @media (max-width: 768px) {
   .item-input{
@@ -20,6 +24,10 @@
   }
   .list-item{
     width: 100%;
+  }
+  .nodata{
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -198,5 +206,18 @@ $grade7 : #b71c1c;
   }
   &:active{
     background-color: $red3;
+  }
+}
+
+.nodata{
+  // width: 440px;
+  // height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .txt{
+    font-size: 20pt;
+    color: #bebebe;
   }
 }
