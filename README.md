@@ -22,11 +22,15 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 
 - [x] Deleting workout history
 
+- [x] Developing UI for desktop
+
 
 ## Things what I have to develop
 
-- [ ] Developing UI for desktop
+- [ ] Login UI 
 
+- [ ] Code Optimization
+ 
 
 ## Project History
 
@@ -41,6 +45,8 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 - Sep 08 2018 : Desktop UI developing is started.
 
 - Sep 14 2018 : the only one step left for 3rd deploying.
+
+- Sep 14 2018 : 3rd firebase deploy.
 
 
 ## Latest Update
