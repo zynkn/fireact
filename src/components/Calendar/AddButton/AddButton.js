@@ -40,7 +40,7 @@ class AddButton extends Component {
     } else {
       const detail = { weight: state.weight, reps: state.reps, timestamp: moment().format() };
       if (state.name !== '' && state.reps > 0) {
-        props.add({ name: state.name, detail, id: '' });
+        props.add({ name: state.name, detail, id: detail.timestamp });
         this.setState({
           name: '',
           weight: '',

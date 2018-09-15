@@ -22,7 +22,7 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 
 - [x] Deleting workout history
 
-- [x] Developing UI for desktop
+- [x] Using it on the desktop
 
 
 ## Things what I have to develop
