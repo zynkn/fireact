@@ -3,6 +3,17 @@
 
 @import 'utils';
 
+@media (min-width: 769px){
+  .Profile{
+    margin-left: 16px;
+  }
+}
+@media (max-width: 768px) {
+  .Profile{
+    margin-left: 0px;
+    //margin-top: 58px;
+  }
+}
 
 
 .Profile{
@@ -10,5 +21,30 @@
   background-color: white;
   width: 100%;
   height: 100%;
-  margin-left: 16px;
+
+  .profile-wrap{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+      padding: 16px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10pt;
+      &:active{
+        background-color: rgba(0,0,0,0.1);
+      }
+      span{
+        display: flex;
+        align-items: center;
+      }
+    }
+    li+li{
+      border-top: 1px solid #f0f0f0;
+    }
+    li:last-child{
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
 }

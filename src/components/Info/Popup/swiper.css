@@ -1,0 +1,10 @@
+
+
+.swiper-slide-active{
+  color: #2196F3 !important;
+  font-size: 12pt !important;
+}
+.swiper-slide-next, .swiper-slide-prev{
+  font-size: 11pt !important;
+  color: gray !important;
+}

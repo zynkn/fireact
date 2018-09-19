@@ -2,6 +2,16 @@
 
 @import 'utils';
 
+@media (min-width: 769px){
+  .IndexList{
+    display: block;
+  }
+}
+@media (max-width: 768px) {
+  .IndexList{
+    display: none;
+  }
+}
 
 
 .IndexList{

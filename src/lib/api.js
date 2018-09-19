@@ -75,6 +75,38 @@ async function getRecordAsync(date, uid) {
   return ans;
 }
 
+export const setUserInfo = ({ uid, height, DOB, sex }) => setUserInfoAsync(uid, height, DOB, sex)
+
+async function setUserInfoAsync(uid, height, DOB, sex) {
+  const ref = db.collection("users");
+  var ans = null;
+  return ref.doc(uid).set({
+    height: height,
+    DOB: DOB,
+    sex: sex
+  }, { merge: true })
+    .then((res) => {
+      return res;
+    })
+}
+
+export const getUserInfo = ({ uid }) => getUserInfoAsync(uid)
+
+async function getUserInfoAsync(uid) {
+  const ref = db.collection("users");
+  var ans = null;
+  const query = ref.doc(uid);
+  console.log(query);
+  await query.get().then((doc) => {
+    //console.log(doc.data());
+    ans = doc.data();
+  }).catch((error) => {
+    console.log(error);
+    return error;
+  })
+  return ans;
+}
+
 
 
 
