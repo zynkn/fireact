@@ -7,6 +7,7 @@ const settings = {/* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
 
 const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+const userRef = db.collection("users");
 
 export const changeName = ({ date, name, id, uid }) =>
   db.collection("record").doc(uid + '').collection(date).doc(id).update({
@@ -75,19 +76,39 @@ async function getRecordAsync(date, uid) {
   return ans;
 }
 
-export const setUserInfo = ({ uid, height, DOB, sex }) => setUserInfoAsync(uid, height, DOB, sex)
+export const setUserInfo = ({ uid, data, flag }) => setUserInfoAsync(uid, data, flag)
 
-async function setUserInfoAsync(uid, height, DOB, sex) {
+async function setUserInfoAsync(uid, data, flag) {
   const ref = db.collection("users");
   var ans = null;
-  return ref.doc(uid).set({
-    height: height,
-    DOB: DOB,
-    sex: sex
-  }, { merge: true })
-    .then((res) => {
-      return res;
+  console.log(data);
+  if (flag === "height") {
+    return ref.doc(uid).set({
+      height: firebase.firestore.FieldValue.arrayUnion(data)
+    }, { merge: true })
+      .then((res) => {
+        return res;
+      })
+  } else {
+    return ref.doc(uid).set({
+      [flag]: data,
+    }, { merge: true })
+      .then((res) => {
+        return res;
+      })
+  }
+
+}
+
+export const setUserHeight = ({ uid, data, timestamp }) => setUserHeightAsync(uid, data, timestamp)
+
+async function setUserHeightAsync(uid, data, timestamp) {
+  return userRef.doc(uid).set({
+    height: firebase.firestore.FieldValue.arrayUnion({
+      data: data,
+      timestamp: timestamp
     })
+  })
 }
 
 export const getUserInfo = ({ uid }) => getUserInfoAsync(uid)

@@ -16,7 +16,7 @@ export const setUserInfo = createAction(SET_USER_INFO, api.setUserInfo);
 //initial state
 const initialState = Map({
   height: null,
-  DOB: null,
+  DOB: '1992Nov',
   sex: null,
   userUID: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
 });
@@ -29,7 +29,7 @@ export default handleActions({
     onSuccess: (state, action) => {
       console.log('GETUSERINFO')
       console.log(action.payload);
-      return state.set('height', action.payload.height)
+      return state.set('height', action.payload.height[action.payload.height.length - 1].data)
         .set('DOB', action.payload.DOB)
         .set('sex', action.payload.sex)
     }

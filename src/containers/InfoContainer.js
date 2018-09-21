@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
+import moment from 'moment';
 import IndexList from 'components/Info/IndexList';
 import Profile from 'components/Info/Profile';
 
@@ -15,19 +16,33 @@ const cx = classNames.bind(styles);
 class InfoContainer extends Component {
 
 
-  set = () => {
-
+  setUserInfo = ({ data, flag }) => {
+    this.props.Actions.setUserInfo({
+      uid: this.props.userUID,
+      data: data,
+      flag: flag,
+    });
+    this.props.Actions.getUserInfo({ uid: this.props.userUID });
   }
   componentDidMount() {
     this.props.Actions.getUserInfo({ uid: this.props.userUID });
-    // this.props.Actions.setUserInfo({ uid: this.props.userUID, height: '123', DOB: '1992-11', sex: 'MALE' })
+    // this.props.Actions.setUserInfo({
+    //   uid: this.props.userUID,
+    //   data: {
+    //     data: '123',
+    //     timestamp: moment().format()
+    //   },
+    //   // DOB: '1992-12',
+    //   // sex: 'FEMALE',
+    //   flag: 'height',
+    // })
   }
   render() {
     console.log(this.props);
     return (
       <div className={cx('info_container')}>
         <IndexList />
-        <Profile info={{ height: this.props.height, DOB: this.props.DOB, sex: this.props.sex }} />
+        <Profile setUserInfo={this.setUserInfo} info={{ height: this.props.height, DOB: this.props.DOB, sex: this.props.sex }} />
       </div>
     )
   }

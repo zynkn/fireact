@@ -11,6 +11,9 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 
+
+const month = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -30,11 +33,11 @@ class Profile extends Component {
   }
   generatePopup = () => {
     if (this.state.popup === 'Gender') {
-      return <Popup close={this.closePopup} title='Gender' />
+      return <Popup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Gender' />
     } else if (this.state.popup === 'DOB') {
-      return <Popup close={this.closePopup} title='Date of Birth' />
+      return <Popup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Date of Birth' DOB={this.props.info.DOB} />
     } else if (this.state.popup === 'Height') {
-      return <Popup close={this.closePopup} title='Height' />
+      return <Popup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Height' height={this.props.info.height} />
     } else {
       return null
     }
@@ -51,7 +54,9 @@ class Profile extends Component {
           </li>
           <li onClick={() => { this.openPopup('DOB') }}>Date of Birth
           <span>
-              {this.props.info.DOB}
+              {this.props.info.DOB.substring(0, 4)}
+              -
+              {this.props.info.DOB.substring(4, 7)}
               <Icon icon={ic_keyboard_arrow_right} size={24} style={{ color: '#bebebe', marginLeft: '8px' }} />
             </span>
           </li>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import moment from 'moment';
 import { Icon } from 'react-icons-kit'
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right'
 
@@ -22,6 +23,35 @@ class Popup extends Component {
       this.props.close();
     }, 400)
   }
+  save = () => {
+    var selected = document.querySelectorAll('.swiper-slide-active');
+    var flag = null;
+    if (this.props.title === "Height") {
+      flag = 'height';
+    } else if (this.props.title === "Date of Birth") {
+      flag = "DOB";
+    } else if (this.props.title === "Gender") {
+      flag = "sex";
+    }
+    var data = '';
+    for (let i = 0; i < selected.length; i++) {
+      if (this.props.title === 'Height') {
+        data = {
+          data: selected[i].innerText,
+          timestamp: moment().format()
+        }
+      } else {
+        data += selected[i].innerText
+      }
+    }
+    this.props.setUserInfo({ data: data, flag: flag });
+
+    document.querySelector('#pane').classList.add(cx('leave'));
+    document.querySelector('#bg').classList.add(cx('leave'));
+    setTimeout(() => {
+      this.props.close();
+    }, 400)
+  }
   componentDidMount() {
     if (this.props.title === "Date of Birth") {
       let mySwiper = new Swiper('.swiper-containerY', {
@@ -36,7 +66,7 @@ class Popup extends Component {
         slidesPerView: 5,
         centeredSlides: true,
       });
-      mySwiper.slideTo(70);
+      mySwiper.slideTo(parseInt(this.props.DOB.substring(0, 4)) - 1900);
     } else if (this.props.title === "Height") {
       let mySwiper = new Swiper('.swiper-container', {
         direction: 'vertical',
@@ -44,7 +74,7 @@ class Popup extends Component {
         slidesPerView: 5,
         centeredSlides: true,
       });
-      mySwiper.slideTo(70);
+      mySwiper.slideTo(this.props.height - 100);
     }
 
   }
@@ -133,7 +163,6 @@ class Popup extends Component {
     }
   }
   render() {
-
     return (
       <div className={cx('Popup')}>
         <div id="bg" className={cx('bg')} onClick={this.close}>
@@ -168,7 +197,7 @@ class Popup extends Component {
           {/*</div> */}
           <div className={cx('footer')}>
             <button className={cx('btn')} onClick={this.close}>Cancel</button>
-            <button className={cx('btn')} onClick={this.close}>Save</button>
+            <button className={cx('btn')} onClick={this.save}>Save</button>
           </div>
         </div>
       </div>
