@@ -16,6 +16,12 @@ const cx = classNames.bind(styles);
 
 
 class Popup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      gender: 'Male',
+    }
+  }
   close = () => {
     document.querySelector('#pane').classList.add(cx('leave'));
     document.querySelector('#bg').classList.add(cx('leave'));
@@ -125,18 +131,38 @@ class Popup extends Component {
     )
   }
 
+  handleGender = (e) => {
+    this.setState({
+      gender: e.target.value
+    })
+  }
+
   contentGenerate = () => {
     if (this.props.title === "Gender") {
       return (
-        <div className={cx('content', 'col')}>
-          <span className={cx('item', 'selected')}>
+        <div className={cx('content', 'col')} onClick={this.handleGender}>
+          <label htmlFor="genderMale">
+            <input type="radio" name="gender" value="Male" id="genderMale" checked={this.state.gender === "Male"} onChange={this.handleGender} />
+            <span className={cx('item')}>
+              <Icon icon={ic_keyboard_arrow_right} size={24} style={{ marginRight: '8px' }} />
+              Male
+            </span>
+          </label>
+          <label htmlFor="genderFemale">
+            <input type="radio" name="gender" value="Female" id="genderFemale" checked={this.state.gender === "Female"} onChange={this.handleGender} />
+            <span className={cx('item')}>
+              <Icon icon={ic_keyboard_arrow_right} size={24} style={{ marginRight: '8px' }} />
+              Female
+            </span>
+          </label>
+          {/* <span className={cx('item', 'selected')}>
             <Icon icon={ic_keyboard_arrow_right} size={24} style={{ marginRight: '8px' }} />
             Male
             </span>
           <span className={cx('item')}>
             <Icon icon={ic_keyboard_arrow_right} size={24} style={{ marginRight: '8px' }} />
             Female
-            </span>
+            </span> */}
         </div>
       )
     } else if (this.props.title === "Date of Birth") {
