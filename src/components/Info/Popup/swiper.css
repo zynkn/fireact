@@ -8,3 +8,14 @@
   font-size: 11pt !important;
   color: gray !important;
 }
+/* .swiper-container-horizontal{
+  height: 100px;
+}
+.swiper-container-horizontal > .swiper-wrapper{
+  display: flex;
+  flex-direction: row;
+}
+.swiper-container-horizontal > .swiper-wrapper > .swiper-slide{
+  height: 100%;
+  margin: 0;
+} */

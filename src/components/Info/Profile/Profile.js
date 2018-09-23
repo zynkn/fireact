@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 import Popup from 'components/Info/Popup';
+
+import RecordPopup from 'components/Info/Popup/RecordPopup';
+
+import GenderPopup from 'components/Info/Popup/GenderPopup';
+import DOBPopup from 'components/Info/Popup/DOBPopup';
+import HeightPopup from 'components/Info/Popup/HeightPopup';
 import { Icon } from 'react-icons-kit'
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right'
 
@@ -33,11 +39,11 @@ class Profile extends Component {
   }
   generatePopup = () => {
     if (this.state.popup === 'Gender') {
-      return <Popup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Gender' />
+      return <RecordPopup setUserInfo={this.props.setUserInfo} gender={this.props.info.sex} close={this.closePopup} />
     } else if (this.state.popup === 'DOB') {
-      return <Popup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Date of Birth' DOB={this.props.info.DOB} />
+      return <DOBPopup setUserInfo={this.props.setUserInfo} close={this.closePopup} DOB={this.props.info.DOB} />
     } else if (this.state.popup === 'Height') {
-      return <Popup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Height' height={this.props.info.height} />
+      return <HeightPopup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Height' height={this.props.info.height} />
     } else {
       return null
     }
@@ -54,15 +60,22 @@ class Profile extends Component {
           </li>
           <li onClick={() => { this.openPopup('DOB') }}>Date of Birth
           <span>
-              {this.props.info.DOB.substring(0, 4)}
-              -
+
               {this.props.info.DOB.substring(4, 7)}
+              {' '}
+              {this.props.info.DOB.substring(0, 4)}
               <Icon icon={ic_keyboard_arrow_right} size={24} style={{ color: '#bebebe', marginLeft: '8px' }} />
             </span>
           </li>
           <li onClick={() => { this.openPopup('Height') }}>Height
           <span>
               {this.props.info.height} cm
+              <Icon icon={ic_keyboard_arrow_right} size={24} style={{ color: '#bebebe', marginLeft: '8px' }} />
+            </span>
+          </li>
+          <li onClick={() => { this.openPopup('Weight') }}>Weight
+          <span>
+              {this.props.info.weight} kg
               <Icon icon={ic_keyboard_arrow_right} size={24} style={{ color: '#bebebe', marginLeft: '8px' }} />
             </span>
           </li>

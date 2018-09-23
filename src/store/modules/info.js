@@ -15,9 +15,10 @@ export const setUserInfo = createAction(SET_USER_INFO, api.setUserInfo);
 
 //initial state
 const initialState = Map({
-  height: null,
-  DOB: '1992Nov',
-  sex: null,
+  height: 'null',
+  DOB: 'null',
+  sex: 'null',
+  weight: 'null',
   userUID: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
 });
 
