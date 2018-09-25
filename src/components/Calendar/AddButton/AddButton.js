@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import moment from 'moment';
 import AddPopup from 'components/Calendar/AddPopup';
+
+import RecordPopup2 from 'components/Info/Popup/RecordPopup2';
+
 import styles from './AddButton.scss';
 import classNames from 'classnames/bind';
 
@@ -70,13 +73,13 @@ class AddButton extends Component {
               <span className={cx('name')}>Reps</span>
             </label>
           </div>
-          <button className={cx('addButton')} {...props} onClick={this.add}>
+          <button className={cx('addButton')} onClick={this.add}>
             <Icon icon={ic_add} size={24} style={{ color: '#fff' }} />
           </button >
         </div>
         {
           state.mobilePopup ?
-            <AddPopup close={this.closePopup} name='' weight='' reps='' id='' add={props.add} edit={props.edit} />
+            <RecordPopup2 close={this.closePopup} name='' weight='' reps='' id='' add={props.add} edit={props.edit} />
             :
             null
         }

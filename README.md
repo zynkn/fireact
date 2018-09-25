@@ -24,6 +24,8 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 
 - [x] Using it on the desktop
 
+- [x] Personal Information Management
+
 
 ## Things what I have to develop
 
@@ -48,7 +50,11 @@ When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use
 
 - Sep 14 2018 : 3rd firebase deploy.
 
+- Sep 25 2018 : 4th firebase deploy.
+
 
 ## Latest Update
 
-[PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_3rd_Deploy_Eng.pdf)
+[3rd deploy PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_3rd_Deploy_Eng.pdf)
+
+[4th deploy PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_4th_Deploy_Eng.pdf)

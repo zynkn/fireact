@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import styles from './Popup.scss';
 import classNames from 'classnames/bind';
-import Swiper from 'swiper';
+import Swiper from 'swiper/dist/js/swiper.js';
 import './swiper.css';
 
 const cx = classNames.bind(styles);
@@ -83,8 +83,11 @@ class DOBPopup extends Component {
       slidesPerView: 5,
       centeredSlides: true,
     });
-    mySwiper.slideTo(parseInt(this.props.DOB.substring(0, 4)) - 1900);
-    mySwiper2.slideTo(this.getMonthNum(this.props.DOB.substring(4, 7)))
+    if (this.props.DOB) {
+      mySwiper.slideTo(parseInt(this.props.DOB.substring(0, 4)) - 1900);
+      mySwiper2.slideTo(this.getMonthNum(this.props.DOB.substring(4, 7)))
+    }
+
   }
   render() {
     return (

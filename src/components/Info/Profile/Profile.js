@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Popup from 'components/Info/Popup';
 
-import RecordPopup2 from 'components/Info/Popup/RecordPopup2';
+import WeightPopup from 'components/Info/Popup/WeightPopup';
 
 import GenderPopup from 'components/Info/Popup/GenderPopup';
 import DOBPopup from 'components/Info/Popup/DOBPopup';
@@ -39,11 +39,13 @@ class Profile extends Component {
   }
   generatePopup = () => {
     if (this.state.popup === 'Gender') {
-      return <RecordPopup2 name="Test" setUserInfo={this.props.setUserInfo} gender={this.props.info.sex} close={this.closePopup} />
+      return <GenderPopup setUserInfo={this.props.setUserInfo} gender={this.props.info.sex} close={this.closePopup} />
     } else if (this.state.popup === 'DOB') {
       return <DOBPopup setUserInfo={this.props.setUserInfo} close={this.closePopup} DOB={this.props.info.DOB} />
     } else if (this.state.popup === 'Height') {
       return <HeightPopup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Height' height={this.props.info.height} />
+    } else if (this.state.popup === 'Weight') {
+      return <WeightPopup setUserInfo={this.props.setUserInfo} close={this.closePopup} title='Weight' weight={this.props.info.weight} />
     } else {
       return null
     }

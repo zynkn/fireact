@@ -7,7 +7,7 @@ import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_ri
 
 import styles from './Popup.scss';
 import classNames from 'classnames/bind';
-import Swiper from 'swiper';
+import Swiper from 'swiper/dist/js/swiper.js';
 import './swiper.css';
 
 

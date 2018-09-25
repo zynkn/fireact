@@ -39,7 +39,7 @@ export const setRecord = ({ id, uid, date, name, detail }) => setRecordAsync(id,
 
 async function setRecordAsync(id, uid, date, name, detail) {
   const ref = id === '' ?
-    db.collection("record").doc(uid).collection(date).doc()
+    db.collection("record").doc(uid).collection(date).doc(detail.timestamp)
     :
     db.collection("record").doc(uid).collection(date).doc(id);
   ref.set({
@@ -89,6 +89,13 @@ async function setUserInfoAsync(uid, data, flag) {
       .then((res) => {
         return res;
       })
+  } else if (flag === "weight") {
+    return ref.doc(uid).set({
+      weight: firebase.firestore.FieldValue.arrayUnion(data)
+    }, { merge: true })
+      .then((res) => {
+        return res;
+      })
   } else {
     return ref.doc(uid).set({
       [flag]: data,
@@ -99,7 +106,16 @@ async function setUserInfoAsync(uid, data, flag) {
   }
 
 }
+export const setUserWeight = ({ uid, data, timestamp }) => setUserWeightAsync(uid, data, timestamp)
 
+async function setUserWeightAsync(uid, data, timestamp) {
+  return userRef.doc(uid).set({
+    weight: firebase.firestore.FieldValue.arrayUnion({
+      data: data,
+      timestamp: timestamp
+    })
+  })
+}
 export const setUserHeight = ({ uid, data, timestamp }) => setUserHeightAsync(uid, data, timestamp)
 
 async function setUserHeightAsync(uid, data, timestamp) {

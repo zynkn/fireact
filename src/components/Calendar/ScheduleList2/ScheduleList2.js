@@ -7,6 +7,8 @@ import { ic_mode_edit } from 'react-icons-kit/md/ic_mode_edit'
 import { ic_add } from 'react-icons-kit/md/ic_add'
 import AddPopup from 'components/Calendar/AddPopup';
 
+import RecordPopup2 from 'components/Info/Popup/RecordPopup2';
+
 const cx = classNames.bind(styles);
 
 class Item extends Component {
@@ -17,6 +19,7 @@ class Item extends Component {
       weight: props.weight,
       reps: props.reps,
       name: props.name,
+      type: props.type,
       id: props.id ? props.id : '',
       mobilePopup: false,
     }
@@ -124,7 +127,7 @@ class Item extends Component {
             {props.children}
           </div>
           {state.mobilePopup ?
-            <AddPopup close={this.closePopup} name={state.name} weight={state.weight} reps={state.reps} id={props.id} add={props.add} edit={props.edit} />
+            <RecordPopup2 close={this.closePopup} name={state.name} weight={state.weight} type={state.type} reps={state.reps} id={props.id} add={props.add} edit={props.edit} />
             :
             null
           }
@@ -143,7 +146,7 @@ class Tag extends Component {
     const detail = { weight: props.weight, reps: props.reps, timestamp: props.timestamp };
     this.buttonPressTimer = setTimeout(() => {
       props.del({ id: props.id, detail, flag });
-    }, 2000);
+    }, 4000);
   }
   release = (e) => {
     e.target.classList.remove(cx('selected'));
@@ -154,7 +157,7 @@ class Tag extends Component {
     return (
       <span onMouseDown={(e) => this.delete(e)} onMouseUp={(e) => this.release(e)}
         onTouchStart={(e) => this.delete(e)} onTouchEnd={(e) => this.release(e)}
-        className={cx('tag')}>{props.weight}kg / {props.reps}reps</span>
+        className={cx('tag')}>{props.weight}{props.type ? props.type : 'kg'} / {props.reps}reps</span>
     )
   }
 }
@@ -173,15 +176,15 @@ class ScheduleList2 extends Component {
     for (let i = 0; i < list.length; i++) {
       for (let j = 0; j < list[i].detail.length; j++) {
         tags.push(
-          <Tag del={this.props.del} length={list[i].detail.length} key={j} weight={list[i].detail[j].weight} id={list[i].id} reps={list[i].detail[j].reps} timestamp={list[i].detail[j].timestamp} />
+          <Tag del={this.props.del} type={list[i].detail[j].type} length={list[i].detail.length} key={j} weight={list[i].detail[j].weight} id={list[i].id} reps={list[i].detail[j].reps} timestamp={list[i].detail[j].timestamp} />
         )
       }
       items.push(
         <Item add={this.props.add}
           edit={this.props.edit}
-          edit={this.props.edit}
           selectItem={this.selectItem}
           key={i} no={i} id={list[i].id}
+          type={list[i].detail[list[i].detail.length - 1].type}
           name={list[i].name}
           weight={list[i].detail[list[i].detail.length - 1].weight}
           reps={list[i].detail[list[i].detail.length - 1].reps}

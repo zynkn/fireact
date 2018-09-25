@@ -42,7 +42,7 @@ class InfoContainer extends Component {
     return (
       <div className={cx('info_container')}>
         <IndexList />
-        <Profile setUserInfo={this.setUserInfo} info={{ height: this.props.height, DOB: this.props.DOB, sex: this.props.sex }} />
+        <Profile setUserInfo={this.setUserInfo} info={{ height: this.props.height, DOB: this.props.DOB, sex: this.props.sex, weight: this.props.weight }} />
       </div>
     )
   }
@@ -54,6 +54,7 @@ export default connect(
     height: state.info.get('height'),
     DOB: state.info.get('DOB'),
     sex: state.info.get('sex'),
+    weight: state.info.get('weight'),
   }),
   (dispatch) => ({
     Actions: bindActionCreators(actions, dispatch)

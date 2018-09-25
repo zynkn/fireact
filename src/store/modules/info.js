@@ -33,6 +33,7 @@ export default handleActions({
       return state.set('height', action.payload.height[action.payload.height.length - 1].data)
         .set('DOB', action.payload.DOB)
         .set('sex', action.payload.sex)
+        .set('weight', action.payload.weight[action.payload.weight.length - 1].data)
     }
   }),
   ...pender({

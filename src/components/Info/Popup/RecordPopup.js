@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import styles from './Popup2.scss';
 import classNames from 'classnames/bind';
-import Swiper from 'swiper';
+import Swiper from 'swiper/dist/js/swiper.js';
 import './swiper.css';
 
 const cx = classNames.bind(styles);
