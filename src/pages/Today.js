@@ -22,15 +22,48 @@ class Today extends Component {
     const { history } = this.props;
     history.goBack();
   }
+  toggle = () => {
+    const { history } = this.props;
+
+    console.log(history);
+    history.push(history.location.pathname, 'historyState');
+    this.setState({
+      isMounted: !this.state.isMounted
+    })
+  }
   modalRenderer = () => {
     const { history } = this.props;
     if (history.location.state === "Modal1") {
-      return <TestModal close={this.historyPop} content='Test01' />
+      return <TestModal close={this.historyPop} content='Test01' in={true} />
     } else if (history.location.state === "Modal2") {
-      return <TestModal close={this.historyPop} content="Test02" />
+      return <TestModal close={this.historyPop} content="Test02" in={true} />
     } else if (history.location.state === "Modal3") {
-      return <TestModal close={this.historyPop} content="Test03" />
+      return <TestModal close={this.historyPop} content="Test03" in={true} />
     }
+  }
+  modalRenderer2 = () => {
+    const { history } = this.props;
+    console.log(history);
+    // if (history.action === "POP" && history.location.state !== undefined) {
+    //   this.setState({
+    //     isMounted: false,
+    //   })
+    // }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    const { history } = this.props;
+    console.log('componentDidUpdate');
+    console.log(prevProps, prevState);
+    if (history.action === "POP" && prevState.isMounted) {
+      this.setState({
+        isMounted: false
+      })
+    }
+  }
+  componentDidMount() {
+    const { history } = this.props;
+    console.log('componentDidMount');
+    console.log(history);
   }
   render() {
     return (
@@ -39,7 +72,9 @@ class Today extends Component {
         <button onClick={() => { this.testHistoryPush('Modal1') }}>Modal01</button>
         <button onClick={() => { this.testHistoryPush('Modal2') }}>Modal02</button>
         <button onClick={() => { this.testHistoryPush('Modal3') }}>Modal03</button>
-        {this.modalRenderer()}
+        <button onClick={this.toggle}>Toggle</button>
+        <TestModal close={this.historyPop} content="cONTENT" in={this.state.isMounted} />
+        {this.modalRenderer2()}
       </div>
     );
   }
