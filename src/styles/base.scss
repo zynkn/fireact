@@ -21,3 +21,10 @@ a {
   text-decoration: inherit;
   color: inherit;
 }
+main{
+  flex-direction: column;
+  display: flex;
+  align-items: center; //
+  margin-top: 56px;
+  min-height: calc(100vh - 56px - 48px);
+}

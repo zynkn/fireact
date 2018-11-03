@@ -1,26 +1,20 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
-
-import { Authentication, Main, Info } from 'pages';
-import Today from 'pages/Today';
-
-import HeaderContainer from 'containers/HeaderContainer';
-import BottomNavigation from 'components/Common/BottomNavigation';
-import Calendar from '../pages/Calendar';
+import { RootPage, HistoryPage, AnalysisPage } from 'pages';
+import Header from 'components/Common/Header';
+import BottomNav from 'components/Common/BottomNav';
 
 const App = () => {
   return (
-    <div>
-      <HeaderContainer />
+    <Fragment>
+      <Header />
       <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/calendar" component={Calendar} />
-        <Route exact path="/auth" component={Authentication} />
-        <Route exact path="/today" component={Today} />
-        <Route exact path="/info" component={Info} />
+        <Route exact path="/" component={RootPage} />
+        <Route exact path="/history" component={HistoryPage} />
+        <Route exact path="/analysis" component={AnalysisPage} />
       </Switch>
-      <BottomNavigation />
-    </div>
+      <BottomNav />
+    </Fragment>
   );
 };
 

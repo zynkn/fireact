@@ -5,84 +5,46 @@ import classNames from 'classnames/bind';
 
 import { Icon } from 'react-icons-kit'
 import { ic_account_circle } from 'react-icons-kit/md/ic_account_circle'
-import { ic_menu } from 'react-icons-kit/md/ic_menu'
 
 
 const cx = classNames.bind(styles);
 
-class Navigation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-    }
-  }
-  render() {
-    return (
-      <nav className={cx('Navigation')}>
-        Nav
-      </nav>
-    )
-  }
-}
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      navOpen: false,
+      isHide: false,
     }
   }
-  toggle = () => {
-    this.setState({
-      navOpen: !this.state.navOpen
-    })
+  hideHeader = () => {
+    const { isHide } = this.state;
+    window.scrollY > this.prev ?
+      !isHide && this.setState({ isHide: true })
+      :
+      isHide && this.setState({ isHide: false });
+    this.prev = window.scrollY;
   }
-  close = () => {
-    if (this.state.navOpen) {
-      this.setState({
-        navOpen: false
-      })
-    }
+  componentDidMount() {
+    window.addEventListener('scroll', this.hideHeader);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.hideHeader);
+  }
+
   render() {
     const { props } = this;
+    const classHide = this.state.isHide ? 'hide' : '';
     return (
-      <Fragment>
-        <header className={cx('header-wrap')}>
-          <div className={cx('header')}>
-            <div className={cx('side')}>
-              <span className={cx('icon-wrap')} onClick={this.toggle}>
-                <Icon icon={ic_menu} size={24} style={{ color: 'white' }} />
-              </span>
-            </div>
-            <div className={cx('appname')}>
-              <NavLink exact to="/" >
-                <span role="img" aria-label="fire" style={{ marginRight: '8px' }}>🔥</span>
-                Fireact
-              </NavLink>
-            </div>
-            <div className={cx('side')}>
-              <NavLink to={props.isLogin ? "info" : "/auth"} className={cx('icon-wrap')} onClick={this.close}>
-                <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
-              </NavLink>
-            </div>
-            <ul className={cx('menu-wrap')}>
-              <li>
-                <NavLink exact to="/calendar" >
-                  Calendar
-                </NavLink>
-              </li>
-              <li style={{ marginLeft: '128px' }}>
-                <NavLink to={props.isLogin ? "info" : "/auth"} className={cx('icon-wrap')} onClick={this.close}>
-                  <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </header>
-        {this.state.navOpen ? <Navigation /> : null}
-      </Fragment >
+      <header className={`${cx('Header')} ${cx(classHide)}`}>
+        <NavLink to="/" className={cx('title')}>
+          <span role="img" aria-label="fire">🔥 </span>Fireact
+        </NavLink>
+        <NavLink to="/login" className={cx('login-icon')} activeClassName={cx('selected')}>
+          <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
+        </NavLink>
+      </header>
     )
   }
 }

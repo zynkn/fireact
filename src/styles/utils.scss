@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Patua+One');
+@import 'colors';
+@import 'base';
 
 $breakpoints: (small: 320px, medium: 768px, large: 1024px, wide: 1400px);
 $header_theme: #2196f3;
@@ -12,3 +14,4 @@ $red3 : #c64236;
 h1{
   font-family: 'Patua One', cursive;
 }
+
