@@ -60,6 +60,9 @@ class Today extends Component {
       })
     }
   }
+  testURL = (e) => {
+    console.log(e.target);
+  }
   componentDidMount() {
     const { history } = this.props;
     console.log('componentDidMount');
@@ -69,6 +72,7 @@ class Today extends Component {
     return (
       <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <h1>Coming Soon...</h1>
+        <input type='file' id="imgInput" onClick={this.testURL} />
         <button onClick={() => { this.testHistoryPush('Modal1') }}>Modal01</button>
         <button onClick={() => { this.testHistoryPush('Modal2') }}>Modal02</button>
         <button onClick={() => { this.testHistoryPush('Modal3') }}>Modal03</button>
