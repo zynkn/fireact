@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import styles from './Calendar.scss';
 import classNames from 'classnames/bind';
 
+import { Icon } from 'react-icons-kit';
+import { ic_keyboard_arrow_left } from 'react-icons-kit/md/ic_keyboard_arrow_left';
+import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
+
 const cx = classNames.bind(styles);
 
 
@@ -11,7 +15,9 @@ class Calendar extends Component {
     return (
       <div className={cx('calendar-wrap')}>
         <div className={cx('header')}>
-          November 2018
+          <Icon icon={ic_keyboard_arrow_left} size={24} style={{ color: '#4b4b4b' }} />
+          <span className={cx('title')}>November 2018</span>
+          <Icon icon={ic_keyboard_arrow_right} size={24} style={{ color: '#4b4b4b' }} />
         </div>
         <table className={cx('calendar')}>
           <thead>
@@ -72,7 +78,6 @@ class Calendar extends Component {
               <td><span></span></td>
             </tr>
           </tbody>
-
         </table>
       </div>
     );

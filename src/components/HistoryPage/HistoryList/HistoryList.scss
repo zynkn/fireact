@@ -1,0 +1,19 @@
+@import 'utils';
+
+.list-wrap{
+  margin-top: 16px;
+  .empty-wrap{
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 48px; //BottomNav 보정
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .txt{
+      margin: 0;
+      font-size: 14pt;
+      color: #9e9e9e;
+    }
+  }
+}
