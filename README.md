@@ -1,6 +1,18 @@
 
 # 🔥 Fireact
 
+[fireact.xyz](https://fireact.xyz)
+
+파이어액트는 개인별 운동 기록을 위한 웹 앱입니다.
+
+Google Chrome으로 접속하는 것을 권장합니다.
+
+## Fuctionality
+
+- Google Social Login
+
+- Workout History Management
+
 ## Tech Stack
 
 - React 
@@ -40,3 +52,12 @@
 [3rd deploy PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_3rd_Deploy_Eng.pdf)
 
 [4th deploy PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_4th_Deploy_Eng.pdf)
+
+## Remake Version ( In Progress )
+
+- Progressive Web App
+
+- Indexed DB
+
+- Improve UX / UI 
+
