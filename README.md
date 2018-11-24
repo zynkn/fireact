@@ -1,38 +1,20 @@
 
-# 🔥⚛️ Fireact
+# 🔥 Fireact
 
-이 프로젝트는 개인 운동 기록을 관리하기 위한 앱입니다.
+## Tech Stack
 
-This project is an app to manage personal workout history.
+- React 
 
-## Getting Started
+- Redux
 
-[웹 사이트](https://fireact-b8dc7.firebaseapp.com)를 방문하시면 로그인 후 사용할 수 있습니다.
+- Sass
 
-When you visit the [website](https://fireact-b8dc7.firebaseapp.com), you can use it after login process.
+- Firebase Authentication
 
+- Cloud Firestore
 
-## Things what you can use
+- Firebase Hosting
 
-- [x] Login with Google
-
-- [x] Recording your workout history
-
-- [x] Seeing your previous workout history
-
-- [x] Deleting workout history
-
-- [x] Using it on the desktop
-
-- [x] Personal Information Management
-
-
-## Things what I have to develop
-
-- [ ] Login UI 
-
-- [ ] Code Optimization
- 
 
 ## Project History
 
