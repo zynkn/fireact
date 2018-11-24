@@ -14,6 +14,7 @@ class HeaderContainer extends Component {
 
   render() {
     const { isLogin } = this.props;
+    console.log(this.props);
     return (
       <Fragment>
         {/* <Header isLogin={isLogin} googleLogout={this.props.Actions.googleLogout} /> */}

@@ -4,7 +4,9 @@ import { RootPage, HistoryPage, AnalysisPage } from 'pages';
 import Header from 'components/Common/Header';
 import BottomNav from 'components/Common/BottomNav';
 
-const App = () => {
+
+const App = (props) => {
+  console.log(props);
   return (
     <Fragment>
       <Header />

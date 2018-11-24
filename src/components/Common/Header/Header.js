@@ -35,6 +35,7 @@ class Header extends Component {
 
   render() {
     const { props } = this;
+    console.log(props);
     const classHide = this.state.isHide ? 'hide' : '';
     return (
       <header className={`${cx('Header')} ${cx(classHide)}`}>
