@@ -17,21 +17,21 @@ class Header extends Component {
       isHide: false,
     }
   }
-  hideHeader = () => {
-    const { isHide } = this.state;
-    window.scrollY > this.prev ?
-      !isHide && this.setState({ isHide: true })
-      :
-      isHide && this.setState({ isHide: false });
-    this.prev = window.scrollY;
-  }
-  componentDidMount() {
-    window.addEventListener('scroll', this.hideHeader);
-  }
+  // hideHeader = () => {
+  //   const { isHide } = this.state;
+  //   window.scrollY > this.prev ?
+  //     !isHide && this.setState({ isHide: true })
+  //     :
+  //     isHide && this.setState({ isHide: false });
+  //   this.prev = window.scrollY;
+  // }
+  // componentDidMount() {
+  //   window.addEventListener('scroll', this.hideHeader);
+  // }
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.hideHeader);
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener('scroll', this.hideHeader);
+  // }
 
   render() {
     const { props } = this;

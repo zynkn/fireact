@@ -9,21 +9,35 @@
     padding: 16px 16px;
     display: flex;
     align-items: center;
-    justify-content: space-between;Z
+    justify-content: space-between;
+    
+    font-size: 1.6em;
     .title{
-
+      font-family: 'Patua One', cursive;
+    }
+    .btn-wrap{
+      //background-color: #e0e0e0;
+      font-size: 0;
+      border-radius: 100%;
+      &:active{
+        background-color: #e0e0e0;
+      }
     }
   }
   .calendar{
     th, td{
+      font-family: 'Patua One', cursive;
       width: calc(100% / 7 );
       text-align: center;
       position: relative;
       height: calc(100vw / 7);
+      font-size: 1.6em;
     }
     td{
       //height: calc(100vw / 7);
+      user-select: none;
       span{
+        font-family: 'Patua One', cursive;
         position: relative;
       }
     }
@@ -49,7 +63,9 @@
       height: 38px;
       background-color: $theme;
       border-radius: 100%;
-
+    }
+    td.past{
+      color: #e0e0e0;
     }
   }
 }

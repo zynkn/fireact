@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Patua+One');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
 @import 'colors';
 @import 'base';
 
@@ -10,8 +11,18 @@ $red1 : #f15e4a;
 $red2 : #de4a3e;
 $red3 : #c64236;
 
-
-h1{
-  font-family: 'Patua One', cursive;
+body{
+  font-size: 62.5%;
 }
 
+h1,h2{
+  font-family: 'Patua One', cursive;
+  margin: 0;
+}
+span{
+  font-family: 'Roboto', sans-serif;
+}
+
+span > a {
+  text-decoration: underline;
+}
