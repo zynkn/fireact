@@ -1,0 +1,17 @@
+@import 'utils';
+
+.btn-wrap{
+  width: 100%;
+  margin-top: 16px;
+  padding: 0 16px;
+  .AddBtn {
+    width: 100%;
+    background-color: $theme;
+    color: white;
+    padding: 8px 0;
+    border: none;
+    &:active{
+      background-color: $themeB;
+    }
+  }
+}

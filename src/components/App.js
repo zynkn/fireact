@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import { Authentication, Main, Info } from 'pages';
-import Today from 'pages/Today';
+import storage from 'lib/storage';
+import * as actions from 'store/modules/login';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import HeaderContainer from 'containers/HeaderContainer';
-import BottomNavigation from 'components/Common/BottomNavigation';
-import Calendar from '../pages/Calendar';
+import { RootPage, WorkoutPage, AnalysisPage, LoginPage, MyPage } from 'pages';
 
-const App = () => {
-  return (
-    <div>
-      <HeaderContainer />
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route exact path="/calendar" component={Calendar} />
-        <Route exact path="/auth" component={Authentication} />
-        <Route exact path="/today" component={Today} />
-        <Route exact path="/info" component={Info} />
-      </Switch>
-      <BottomNavigation />
-    </div>
-  );
+
+class App extends React.Component {
+
+  componentDidMount(){
+    console.log('componentDidMount');
+
+  }
+  render() {
+    return (
+      <div>
+          <Route exact path="/" component={RootPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/mypage" component={MyPage} />
+          <Route exact path="/workout" component={WorkoutPage} />
+          <Route exact path="/analysis" component={AnalysisPage} />
+      </div>
+    );
+  }
 };
 
 export default App;
+// export default connect(
+//   null,
+//   (dispatch) => ({
+//     Actions: bindActionCreators(actions, dispatch)
+//   })
+// )(App);

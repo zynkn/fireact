@@ -1,6 +1,7 @@
 /* body, 타이포그래피 등의 기본 스타일 설정 */
 @import url("//fonts.googleapis.com/earlyaccess/notosanskr.css");
 @import url("//cdn.jsdelivr.net/gh/velopert/font-d2coding@1.2.1/d2coding.css");
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
 
 body {
   margin: 0;
@@ -13,11 +14,19 @@ body {
 // box-sizing 일괄 설정
 * {
   box-sizing: inherit;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 // 링크 스타일 밑줄 및 색상 무효화
 a {
   text-decoration: inherit;
   color: inherit;
+}
+main{
+  flex-direction: column;
+  display: flex;
+  align-items: center; //
+  margin-top: 56px;
+  margin-bottom: 48px;
+  min-height: calc(100vh - 56px - 48px);
 }

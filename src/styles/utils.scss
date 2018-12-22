@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Patua+One');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
+@import 'colors';
+@import 'base';
 
 $breakpoints: (small: 320px, medium: 768px, large: 1024px, wide: 1400px);
 $header_theme: #2196f3;
@@ -8,7 +11,18 @@ $red1 : #f15e4a;
 $red2 : #de4a3e;
 $red3 : #c64236;
 
+body{
+  font-size: 62.5%;
+}
 
-h1{
+h1,h2{
   font-family: 'Patua One', cursive;
+  margin: 0;
+}
+span{
+  font-family: 'Roboto', sans-serif;
+}
+
+span > a {
+  text-decoration: underline;
 }

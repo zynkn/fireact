@@ -80,7 +80,7 @@ export const setUserInfo = ({ uid, data, flag }) => setUserInfoAsync(uid, data, 
 
 async function setUserInfoAsync(uid, data, flag) {
   const ref = db.collection("users");
-  var ans = null;
+  // var ans = null;
   console.log(data);
   if (flag === "height") {
     return ref.doc(uid).set({
