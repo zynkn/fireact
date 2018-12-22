@@ -1,0 +1,22 @@
+
+
+.swiper-slide-active{
+  color: #2196F3 !important;
+  color: #f15e4a !important;
+  font-size: 11pt !important;
+}
+.swiper-slide-next, .swiper-slide-prev{
+  font-size: 10pt !important;
+  color: gray !important;
+}
+/* .swiper-container-horizontal{
+  height: 100px;
+}
+.swiper-container-horizontal > .swiper-wrapper{
+  display: flex;
+  flex-direction: row;
+}
+.swiper-container-horizontal > .swiper-wrapper > .swiper-slide{
+  height: 100%;
+  margin: 0;
+} */

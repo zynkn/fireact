@@ -1,7 +1,12 @@
-import React, { Component, Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
+import { NavLink, Redirect } from 'react-router-dom';
 import styles from './Header.scss';
 import classNames from 'classnames/bind';
+
+import storage from 'lib/storage';
+import * as actions from 'store/modules/login';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { Icon } from 'react-icons-kit'
 import { ic_account_circle } from 'react-icons-kit/md/ic_account_circle'
@@ -10,45 +15,39 @@ import { ic_account_circle } from 'react-icons-kit/md/ic_account_circle'
 const cx = classNames.bind(styles);
 
 
-class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isHide: false,
+const Header = (props) => {
+  // function initUser() {
+  //   const data = storage.get('user');
+  //   if (!data) return;
+  //   props.Actions.setLoggedInfo(data);
+  // }
+  function renderRedirect() {
+    if(storage.get('user') && !props.isLogin){
+      props.Actions.setIslogin();
     }
+    // if (!props.isLogin && props.history.location.pathname !== "/login" && props.history.location.pathname !== "/") {
+    //   return <Redirect to='/login' />
+    // }
   }
-  // hideHeader = () => {
-  //   const { isHide } = this.state;
-  //   window.scrollY > this.prev ?
-  //     !isHide && this.setState({ isHide: true })
-  //     :
-  //     isHide && this.setState({ isHide: false });
-  //   this.prev = window.scrollY;
-  // }
-  // componentDidMount() {
-  //   window.addEventListener('scroll', this.hideHeader);
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('scroll', this.hideHeader);
-  // }
-
-  render() {
-    const { props } = this;
-    console.log(props);
-    const classHide = this.state.isHide ? 'hide' : '';
-    return (
-      <header className={`${cx('Header')} ${cx(classHide)}`}>
-        <NavLink to="/" className={cx('title')}>
-          <span role="img" aria-label="fire">🔥 </span>Fireact
-        </NavLink>
-        <NavLink to="/login" className={cx('login-icon')} activeClassName={cx('selected')}>
-          <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
-        </NavLink>
-      </header>
-    )
-  }
+  return (
+    <header className={`${cx('Header')}`}>
+      {renderRedirect()}
+      <NavLink to="/" className={cx('title')}>
+        <span role="img" aria-label="fire">🔥 </span>Fireact
+      </NavLink>
+      <NavLink to={props.isLogin ? "/mypage" : "/login"} className={cx('login-icon')} activeClassName={cx('selected')}>
+        <Icon icon={ic_account_circle} size={24} style={{ color: 'white' }} />
+      </NavLink>
+    </header>
+  )
 }
 
 
-export default Header;
+export default connect(
+  (state) => ({
+    isLogin: state.login.get('isLogin')
+  }),
+  (dispatch) => ({
+    Actions: bindActionCreators(actions, dispatch)
+  })
+)(Header);

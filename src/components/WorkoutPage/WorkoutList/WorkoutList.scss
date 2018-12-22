@@ -1,0 +1,70 @@
+@import 'utils';
+
+.list-wrap{
+  width: 100%;
+  margin-top: 16px;
+  .empty-wrap{
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-bottom: 48px; //BottomNav 보정
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .txt{
+      margin: 0;
+      font-size: 14pt;
+      color: #9e9e9e;
+    }
+  }
+
+  .ListItem{
+    width: 100%;
+
+    //display: flex;
+    //background-color: red;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 8px;
+    .title{
+      padding-top: 8px;
+      font-size: 14pt;
+      color: #4b4b4b;
+      text-align: center;
+      font-weight: 500;
+    }
+    .tag-wrap{
+      display: flex;
+      flex-wrap: nowrap;
+      padding: 8px;
+      overflow-x: auto;
+      
+      .Tag{
+        font-size: 9pt;
+        background-color: #E64A19;
+        padding: 4px 8px;
+        border-radius: 5px;
+        text-align: center;
+        color: white;
+        min-width: 82px;
+        &:nth-child(1){
+          background-color: #FF7043;
+        }
+        &:nth-child(2){
+          background-color: #FF5722;
+        }
+        &:nth-child(3){
+          background-color: #F4511E;
+        }
+        &:nth-child(4){
+          background-color: #E64A19;
+        }
+        &:nth-child(5){
+          background-color: #E64A19;
+        }
+        & + .Tag {
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+}

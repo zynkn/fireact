@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: space-between;
   transition: transform 0.4s;
+  z-index: 999;
   &.hide{
     transform: translateY(-56px);
   }

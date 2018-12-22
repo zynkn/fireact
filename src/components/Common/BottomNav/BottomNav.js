@@ -12,16 +12,19 @@ const cx = classNames.bind(styles);
 
 
 class BottomNav extends Component {
+  onClickBlock = (e) => {
+    e.preventDefault()
+  }
   render() {
     return (
       <nav className={cx('BottomNav')}>
         <NavLink exact to="/" className={cx('item')} activeClassName={cx('selected')}>
           <Icon icon={ic_home} size={24} style={{ color: 'white' }} />
         </NavLink>
-        <NavLink exact to="/history" className={cx('item')} activeClassName={cx('selected')}>
+        <NavLink exact to="/workout" className={cx('item')} activeClassName={cx('selected')}>
           <Icon icon={ic_event_note} size={24} style={{ color: 'white' }} />
         </NavLink>
-        <NavLink exact to="/analysis" className={cx('item')} activeClassName={cx('selected')}>
+        <NavLink onClick={this.onClickBlock} to="/analysis" className={cx('item')} activeClassName={cx('selected')}>
           <Icon icon={ic_timeline} size={24} style={{ color: 'white' }} />
         </NavLink>
       </nav>

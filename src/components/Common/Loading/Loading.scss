@@ -1,83 +1,88 @@
 
-$green: #008744;
-$blue: #0057e7;
-$red: #d62d20;
-$yellow: #ffa700;
-$white: #eee;
+// This is just a cute animation that cycles through the different hues.
+@keyframes hue-rotate {
+  0% {filter: hue-rotate(0deg)}
+  100% {filter: hue-rotate(360deg)}
+}
 
-$width: 100px;
 
-@media (min-width: 769px){
-  .loader{
-    width: 440px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //margin-top: 300px;
+}
+
+.boxLoading {  
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  &:before {
+    content: '';
+    width: 50px;
+    height: 5px;
+    background: #000;
+    opacity: 0.1;
+    position: absolute;
+    top: 59px;
+    left: 0;
+    border-radius: 50%;
+    animation: shadow .5s linear infinite;
+  }
+  &:after {
+    content: '';
+    width: 50px;
+    height: 50px;
+    background: #f7630c;
+    animation: animate .5s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 3px;
   }
 }
-@media (max-width: 768px) {
-  .loader{
-    display: block;
-    width: 100%;
+.txt{
+  color: #f7630c;
+  color: rgba(0,0,0,0.4);
+  font-size: 9pt;
+  transform: translateY(54px);
+}
+
+@keyframes animate {
+  17% {
+    border-bottom-right-radius: 3px;
+  }
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+  50% {
+    transform: translateY(18px) scale(1, .9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(90deg);
   }
 }
 
-.loader{
-  //position: relative;
-  //width: 100%;
 
-  background-color: white;
-  text-align: center;
-
-  //transform: translate(-50%,-50%);
-}
-
-.circular{
-  animation: rotate 2s linear infinite;
-  height: $width;
-  position: relative;
-  width: $width;
-}
-
-.path {
-  stroke-dasharray: 1,200;
-  stroke-dashoffset: 0;
-  stroke:#B6463A;
-  animation: dash 1.5s ease-in-out infinite, colors 6s ease-in-out infinite;
-  stroke-linecap: round;
-}
-
-@keyframes rotate{
- 100%{
-  transform: rotate(360deg);
- }
-}
-@keyframes dash{
- 0%{
-  stroke-dasharray: 1,200;
-  stroke-dashoffset: 0;
- }
- 50%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -35;
- }
- 100%{
-  stroke-dasharray: 89,200;
-  stroke-dashoffset: -124;
- }
-}
-@keyframes colors{
-  100%, 0%{
-    stroke: $red;
+@keyframes shadow {
+  0%, 100% {
+    transform: scale(1, 1);
   }
-  40%{
-    stroke: $blue;
-  }
-  66%{
-    stroke: $green;
-  }
-  80%, 90%{
-    stroke: $yellow;
+  50% {
+    transform: scale(1.2, 1);
   }
 }
