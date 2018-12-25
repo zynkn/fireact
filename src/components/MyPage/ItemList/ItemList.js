@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import storage from 'lib/storage';
 
 import * as actions from 'store/modules/login';
 import { connect } from 'react-redux';
@@ -65,8 +66,8 @@ class ItemList extends Component {
     // const { providerId } = this.props.user.providerData[0]
     let providerId = null;
     let icon = null;
-    if (this.props.user) {
-      providerId = this.props.user.providerData[0].providerId;
+    if (storage.get('user')) {
+      providerId = storage.get('user').providerId;
     }
     if (providerId === "google.com") {
       icon = GoogleIcon;

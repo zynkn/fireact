@@ -16,18 +16,14 @@ const cx = classNames.bind(styles);
 
 
 const Header = (props) => {
-  // function initUser() {
-  //   const data = storage.get('user');
-  //   if (!data) return;
-  //   props.Actions.setLoggedInfo(data);
-  // }
+
   function renderRedirect() {
-    if(storage.get('user') && !props.isLogin){
+    if (storage.get('user') && !props.isLogin) {
       props.Actions.setIslogin();
     }
-    // if (!props.isLogin && props.history.location.pathname !== "/login" && props.history.location.pathname !== "/") {
-    //   return <Redirect to='/login' />
-    // }
+    if (!props.isLogin && props.history.location.pathname !== '/') {
+      return <Redirect to="/login" />
+    }
   }
   return (
     <header className={`${cx('Header')}`}>

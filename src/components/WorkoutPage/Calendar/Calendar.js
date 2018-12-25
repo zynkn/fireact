@@ -14,13 +14,13 @@ const MONTH = ["JANUARY", "FABRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "
 class Calendar extends Component {
   constructor(props) {
     super(props);
-    // let time = moment();
+    this.props.get({ date: moment(new Date()).format('YYYYMMDD') });
     this.state = {
-      selected: moment().format('D'),
+      selected: moment(new Date()).format('D'),
       date: {
-        time: moment(),
-        month: moment().format('M'),
-        year: moment().format('YYYY'),
+        time: moment(new Date()),
+        month: moment(new Date()).format('M'),
+        year: moment(new Date()).format('YYYY'),
       },
       colorpicker: {
         visible: false,
@@ -39,6 +39,7 @@ class Calendar extends Component {
         year: time.format('YYYY')
       }
     })
+    this.props.get({ date: this.state.date.time.format('YYYYMMDD') });
   }
   next = () => {
     const { time } = this.state.date;
@@ -49,6 +50,7 @@ class Calendar extends Component {
         year: time.format('YYYY')
       }
     });
+    this.props.get({ date: this.state.date.time.format('YYYYMMDD') });
   }
 
   generate = () => {
@@ -61,12 +63,12 @@ class Calendar extends Component {
     let prevLast = prevTime.endOf('month').format('D');
     let prevMonth = prevTime.format('M');
     let prevYear = prevTime.format('YYYY');
-    let prevStr = prevYear + "-" + prevMonth;
+    let prevStr = prevYear + "-" + prevMonth.padStart(2, '0');
 
     let nextTime = moment(date.time).add(1, 'months');
     let nextMonth = nextTime.format('M');
     let nextYear = nextTime.format('YYYY');
-    let nextStr = nextYear + "-" + nextMonth;
+    let nextStr = nextYear + "-" + nextMonth.padStart(2, '0');
 
     let cols = [];
     let rows = [];
@@ -82,7 +84,7 @@ class Calendar extends Component {
     }
     for (let i = 1; i <= 7 - start; i++) {
       rows.push(
-        <td key={i} data-date={date.year + "-" + date.month + "-" + i} className={parseInt(state.selected, 10) === i ? cx('selected') : ''}>
+        <td key={i} data-date={date.year + "-" + date.month.padStart(2, '0') + "-" + i.toString().padStart(2, '0')} className={parseInt(state.selected, 10) === i ? cx('selected') : ''}>
           <span>{i}</span>
         </td>
       )
@@ -94,7 +96,7 @@ class Calendar extends Component {
     for (let i = count + 1; i <= last; i++) {
       SEVEN++;
       rows.push(
-        <td key={i} data-date={date.year + "-" + date.month + "-" + i} className={parseInt(state.selected, 10) === i ? cx('selected') : ''}>
+        <td key={i} data-date={date.year + "-" + date.month.padStart(2, '0') + "-" + i.toString().padStart(2, '0')} className={parseInt(state.selected, 10) === i ? cx('selected') : ''}>
           <span>{i}</span>
         </td>
       )
@@ -107,7 +109,7 @@ class Calendar extends Component {
       let len = 7 - rows.length;
       for (let i = 1; i <= len; i++) {
         rows.push(
-          <td key={nextStr + "-" + i} data-date={nextStr + "-" + i} className={cx('past')}><span>{i}</span></td>
+          <td key={nextStr + "-" + i} data-date={nextStr + "-" + i.toString().padStart(2, '0')} className={cx('past')}><span>{i}</span></td>
         )
       }
     }
@@ -115,10 +117,12 @@ class Calendar extends Component {
     return cols;
   }
   dateHandler = (e) => {
-    if (!this.state.colorpicker.visible) {
+    const { props, state } = this;
+    if (!state.colorpicker.visible) {
       e.preventDefault()
       e.stopPropagation();
       let date = e.target.closest("td").dataset.date.split("-");
+
       this.setState({
         selected: e.target.innerText,
         date: {
@@ -126,16 +130,14 @@ class Calendar extends Component {
           year: date[0],
           month: date[1],
         }
-      })
+      });
+      props.get({ date: date.join('') });
     }
 
   }
 
   datePress = (e) => {
-    //let el = e.target.closest("tr");
     let elTarget = e.target.closest("td");
-    //console.log(elTarget.offsetTop);
-    //console.log(elTarget.offsetLeft);
     this.pressTimer = setTimeout(() => {
       elTarget.classList.add(cx('color'));
       this.setState({
@@ -146,13 +148,6 @@ class Calendar extends Component {
         }
       })
     }, 1000)
-    // this.func = () => {
-    //   console.log(el);
-    //   elTarget.classList.add(cx('color'));
-    //   document.querySelector('#bg').classList.add(cx('on'));
-    // }
-    // this.pressTimer = setTimeout(this.func, 1000)
-
   }
 
   dateRelease = (e) => {
@@ -171,15 +166,14 @@ class Calendar extends Component {
   }
 
   bgClose = () => {
-    //console.log('cc')
     document.querySelector('#bg').classList.remove(cx('on'));
     document.querySelector(`.${cx('color')}`).classList.remove(cx('color'));
     document.querySelector('#colorpicker').parentNode.removeChild(document.querySelector('#colorpicker'))
   }
 
   render() {
-    const { month, year } = this.state.date;
-    console.log(this.state.date);
+    const { props, state } = this;
+    const { month, year } = state.date;
     return (
       <div className={cx('calendar-wrap')}>
         <ColorPicker data={this.state.colorpicker} close={this.pickerClose} />

@@ -38,6 +38,7 @@ export default handleActions({
     type: GOOGLE_LOGOUT,
     onSuccess: (state, action) => {
       storage.remove('user');
+      storage.remove('workout');
       return state.set('isLogin', false)
         .set('user', null);
     }
@@ -45,7 +46,10 @@ export default handleActions({
   ...pender({
     type: GOOGLE_LOGIN,
     onSuccess: (state, action) => {
-      storage.set('user', action.payload.user);
+      storage.set('user', {
+        uid: action.payload.user.uid,
+        providerId: action.payload.user.providerData[0].providerId,
+      });
       return state.set('isLogin', true)
         .set('user', action.payload.user)
         .set('userUID', action.payload.user.uid)

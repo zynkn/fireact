@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import styles from './WorkoutModal.scss';
 import classNames from 'classnames/bind';
@@ -18,7 +19,15 @@ const Overlay = (props) => {
 };
 
 class WorkoutModal extends Component {
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      editMode: props.name ? true : false,
+      name: '',
+      weight: '0.0',
+      reps: '0'
+    }
+  }
   swipeGenerate = (n, char = '') => {
     let items = [];
     for (let i = 0; i <= n; i++) {
@@ -34,12 +43,50 @@ class WorkoutModal extends Component {
     document.querySelector('.bg').classList.remove(cx('enter'));
 
     document.querySelector('.HistoryModal').addEventListener("transitionend", (e) => {
-      console.log(e);
+      // console.log(e);
       this.props.close();
     }, true);
   }
+  handleChange = (e, name) => {
+    this.setState({
+      [name]: e.target.value
+    })
+  };
+  set = () => {
+    const weight = document.querySelector('.weightSwiper1 .swiper-slide-active').innerText + document.querySelector('.weightSwiper2 .swiper-slide-active').innerText;
+    const reps = document.querySelector('.repsSwiper .swiper-slide-active').innerText;
+    const detail = {
+      weight: weight,
+      reps: reps,
+      timestamp: moment().toISOString()
+    }
+    this.props.set({ id: '', detail: detail, name: this.state.name });
+  }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.visible) {
+    const { props } = this;
+    if (props.visible) {
+      const swiper1 = new Swiper('.weightSwiper1', {
+        direction: 'vertical',
+        loop: true,
+        slidesPerView: 5,
+        centeredSlides: true,
+      });
+      const swiper2 = new Swiper('.weightSwiper2', {
+        direction: 'vertical',
+        loop: true,
+        slidesPerView: 5,
+        centeredSlides: true,
+      });
+      const swiper3 = new Swiper('.repsSwiper', {
+        direction: 'horizontal',
+        loop: true,
+        slidesPerView: 5,
+        centeredSlides: true,
+      });
+      swiper1.slideTo(parseInt(props.weight.split('.')[0], 0) + 5);
+      swiper2.slideTo(parseInt(props.weight.split('.')[1], 0) + 5);
+      swiper3.slideTo(parseInt(props.reps, 0) + 5);
+
       setTimeout(
         () => {
           document.querySelector('.HistoryModal').classList.add(cx('enter'));
@@ -48,27 +95,6 @@ class WorkoutModal extends Component {
         1
       )
     }
-  }
-  componentDidMount() {
-    new Swiper('.weightSwiper1', {
-      direction: 'vertical',
-      loop: true,
-      slidesPerView: 5,
-      centeredSlides: true,
-    });
-    new Swiper('.weightSwiper2', {
-      direction: 'vertical',
-      loop: true,
-      slidesPerView: 5,
-      centeredSlides: true,
-    });
-    new Swiper('.repsSwiper', {
-      direction: 'horizontal',
-      loop: true,
-      slidesPerView: 5,
-      centeredSlides: true,
-    });
-
   }
   render() {
 
@@ -80,10 +106,14 @@ class WorkoutModal extends Component {
               <Overlay close={this.close} />
               <div className={`HistoryModal ${cx('HistoryModal')}`}>
                 <div className={cx('header')}>
-                  <input type="text" className={cx('input')} />
-                  <button className={cx('btn')}>
-                    <Icon icon={ic_done} size={16} style={{ color: '#FF7043' }} />
-                  </button>
+                  <input type="text" className={cx('input')} onChange={(e) => { this.handleChange(e, 'name') }} value={this.state.name} />
+                  {this.props.editMode ?
+                    <button className={cx('btn')}>
+                      <Icon icon={ic_done} size={16} style={{ color: '#FF7043' }} />
+                    </button>
+                    : null
+                  }
+
                 </div>
                 <div className={cx('body')}>
                   <div className={cx('item')}>
@@ -122,8 +152,8 @@ class WorkoutModal extends Component {
                   </div>
                 </div>
                 <div className={cx('footer')}>
-                  <button className={cx('btn')}>Cancel</button>
-                  <button className={cx('btn')}>Confirm</button>
+                  <button className={cx('btn')} onClick={this.close}>Cancel</button>
+                  <button className={cx('btn')} onClick={this.set}>Confirm</button>
                 </div>
               </div>
 

@@ -27,7 +27,7 @@
     padding: 0 8px;
     .title{
       padding-top: 8px;
-      font-size: 14pt;
+      font-size: 12pt;
       color: #4b4b4b;
       text-align: center;
       font-weight: 500;
@@ -45,7 +45,7 @@
         border-radius: 5px;
         text-align: center;
         color: white;
-        min-width: 82px;
+        white-space: nowrap;
         &:nth-child(1){
           background-color: #FF7043;
         }

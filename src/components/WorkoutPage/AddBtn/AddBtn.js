@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import TransitionGroup from 'react-transition-group/TransitionGroup';
 import WorkoutModal from 'components/WorkoutPage/WorkoutModal';
 import styles from './AddBtn.scss';
 import classNames from 'classnames/bind';
@@ -40,7 +39,7 @@ class AddBtn extends Component {
     }
   }
   render() {
-    const { state } = this;
+    const { state, props } = this;
     return (
       <React.Fragment>
         <div className={cx('btn-wrap')}>
@@ -48,9 +47,8 @@ class AddBtn extends Component {
             <Icon icon={ic_add} size={24} style={{ color: '#fff' }} />
           </button>
         </div>
-        <TransitionGroup>
-          <WorkoutModal visible={state.clicked} close={this.close} />
-        </TransitionGroup>
+        <WorkoutModal set={props.set} visible={state.clicked} close={this.close} weight='0.0' reps='0' />
+
 
 
 
