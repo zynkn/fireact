@@ -21,11 +21,13 @@ const Overlay = (props) => {
 class WorkoutModal extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      editMode: props.name ? true : false,
-      name: '',
+      editMode: false,
+      name: props.name,
       weight: '0.0',
-      reps: '0'
+      reps: '0',
+      id: '',
     }
   }
   swipeGenerate = (n, char = '') => {
@@ -41,7 +43,6 @@ class WorkoutModal extends Component {
     document.querySelector('.HistoryModal').onclick = null;
     document.querySelector('.HistoryModal').classList.remove(cx('enter'));
     document.querySelector('.bg').classList.remove(cx('enter'));
-
     document.querySelector('.HistoryModal').addEventListener("transitionend", (e) => {
       // console.log(e);
       this.props.close();
@@ -60,7 +61,17 @@ class WorkoutModal extends Component {
       reps: reps,
       timestamp: moment().toISOString()
     }
-    this.props.set({ id: '', detail: detail, name: this.state.name });
+    this.props.set({ id: this.state.id, detail: detail, name: this.state.name });
+    this.close();
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name: nextProps.name,
+      editMode: true,
+      weight: nextProps.weight,
+      reps: nextProps.reps,
+      id: nextProps.id,
+    })
   }
   componentDidUpdate(prevProps, prevState) {
     const { props } = this;
@@ -83,6 +94,7 @@ class WorkoutModal extends Component {
         slidesPerView: 5,
         centeredSlides: true,
       });
+
       swiper1.slideTo(parseInt(props.weight.split('.')[0], 0) + 5);
       swiper2.slideTo(parseInt(props.weight.split('.')[1], 0) + 5);
       swiper3.slideTo(parseInt(props.reps, 0) + 5);
@@ -106,8 +118,8 @@ class WorkoutModal extends Component {
               <Overlay close={this.close} />
               <div className={`HistoryModal ${cx('HistoryModal')}`}>
                 <div className={cx('header')}>
-                  <input type="text" className={cx('input')} onChange={(e) => { this.handleChange(e, 'name') }} value={this.state.name} />
-                  {this.props.editMode ?
+                  <input type="text" className={cx('input')} value={this.props.name} onChange={(e) => { this.handleChange(e, 'name') }} value={this.state.name} />
+                  {this.state.editMode ?
                     <button className={cx('btn')}>
                       <Icon icon={ic_done} size={16} style={{ color: '#FF7043' }} />
                     </button>

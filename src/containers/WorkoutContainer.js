@@ -24,8 +24,8 @@ class WorkoutContainer extends React.Component {
   }
   set = ({ id, name, detail }) => {
     const { uid } = storage.get('user');
-    console.log(selected);
     this.props.Actions.setWorkout({ id, uid, name, detail, date: selected })
+    this.props.Actions.getWorkout({ uid: uid, date: selected });
   }
 
   render() {
@@ -34,7 +34,7 @@ class WorkoutContainer extends React.Component {
       <React.Fragment>
         <Calendar data={props.data} get={this.get} />
         <AddBtn history={props.history} set={this.set} />
-        <WorkoutList data={props.data} />
+        <WorkoutList history={props.history} set={this.set} data={props.data} />
         {props.isLoading ? <Loading /> : null}
       </React.Fragment>
     )

@@ -25,6 +25,9 @@
     //background-color: red;
     border-bottom: 1px solid #e0e0e0;
     padding: 0 8px;
+    &:active{
+      background-color: #f0f0f0;
+    }
     .title{
       padding-top: 8px;
       font-size: 12pt;

@@ -22,6 +22,7 @@ export const editName = ({ date, uid, name, id }) => {
 }
 
 export const setWorkout = ({ id, uid, date, name, detail }) => {
+
     const temp = id === '' ?
         ref.doc(uid).collection(date).doc(detail.timestamp)
         :
@@ -37,6 +38,7 @@ export const setWorkout = ({ id, uid, date, name, detail }) => {
             return error;
         })
 }
+
 
 export const getWorkout = ({ date, uid }) => getWorkoutAsync(date, uid);
 async function getWorkoutAsync(date, uid) {
