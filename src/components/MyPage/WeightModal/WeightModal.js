@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import moment from 'moment';
 import styles from './WeightModal.scss';
 import classNames from 'classnames/bind';
 
@@ -26,6 +27,13 @@ class WeightModal extends Component {
     }
     return items;
   }
+  set = () => {
+    const { props } = this;
+    const weight = document.querySelector('.weightSwiper1 .swiper-slide-active').innerText +
+      document.querySelector('.weightSwiper2 .swiper-slide-active').innerText;
+    props.set({ data: { data: weight, timestamp: moment().toISOString() }, flag: 'weight' });
+    this.close();
+  }
   close = () => {
     document.querySelector('.HistoryModal').onclick = null;
     document.querySelector('.HistoryModal').classList.remove(cx('enter'));
@@ -37,7 +45,22 @@ class WeightModal extends Component {
     }, true);
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.visible) {
+    const { props } = this;
+    if (props.visible && !prevProps.visible) {
+      const swiper1 = new Swiper('.weightSwiper1', {
+        direction: 'vertical',
+        loop: true,
+        slidesPerView: 5,
+        centeredSlides: true,
+      });
+      const swiper2 = new Swiper('.weightSwiper2', {
+        direction: 'vertical',
+        loop: true,
+        slidesPerView: 5,
+        centeredSlides: true,
+      });
+      swiper1.slideTo(parseInt(props.weight.split('.')[0], 0) - 25);
+      swiper2.slideTo(parseInt(props.weight.split('.')[1], 0) + 5);
       setTimeout(
         () => {
           document.querySelector('.HistoryModal').classList.add(cx('enter'));
@@ -95,8 +118,8 @@ class WeightModal extends Component {
                   </div>
                 </div>
                 <div className={cx('footer')}>
-                  <button className={cx('btn')}>Cancel</button>
-                  <button className={cx('btn')}>Confirm</button>
+                  <button className={cx('btn')} onClick={this.close}>Cancel</button>
+                  <button className={cx('btn')} onClick={this.set}>Confirm</button>
                 </div>
               </div>
 

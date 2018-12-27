@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import storage from 'lib/storage';
 
-import * as actions from 'store/modules/login';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
 import styles from './ItemList.scss';
 import classNames from 'classnames/bind';
 
@@ -30,7 +26,6 @@ const Item = (props) => {
           :
           <Icon icon={ic_keyboard_arrow_right} size={24} style={{ color: '#e0e0e0' }} />
         }
-
       </div>
     </div>
   )
@@ -39,6 +34,7 @@ const Item = (props) => {
 class ItemList extends Component {
   constructor(props) {
     super(props);
+    props.getUserInfo();
     this.state = {
       GenderModal: false,
       DateModal: false,
@@ -64,6 +60,7 @@ class ItemList extends Component {
 
   render() {
     // const { providerId } = this.props.user.providerData[0]
+    const { props } = this;
     let providerId = null;
     let icon = null;
     if (storage.get('user')) {
@@ -80,29 +77,21 @@ class ItemList extends Component {
           <div className={cx('title')}>
             Personal Information
         </div>
-          <Item title="Gender" value="Male" onClick={() => { this.open('GenderModal') }} />
-          <Item title="Date of Birth" value="November 1992" onClick={() => { this.open('DateModal') }} />
-          <Item title="Weight" value="67.1 kg" onClick={() => { this.open('WeightModal') }} />
+          <Item title="Gender" value={props.gender} onClick={() => { this.open('GenderModal') }} />
+          <Item title="Date of Birth" value={props.DOB} onClick={() => { this.open('DateModal') }} />
+          <Item title="Weight" value={props.weight + 'kg'} onClick={() => { this.open('WeightModal') }} />
           <div className={cx('title')}>
             Settings
         </div>
-          <Item title="Logout" value={providerId} icon={icon} onClick={this.props.Actions.googleLogout} />
+          <Item title="Logout" value={providerId} icon={icon} onClick={this.props.logout} />
         </div>
-        <GenderModal visible={this.state.GenderModal} close={() => { this.close('GenderModal') }} />
-        <DateModal visible={this.state.DateModal} close={() => { this.close('DateModal') }} />
-        <WeightModal visible={this.state.WeightModal} close={() => { this.close('WeightModal') }} />
+        <GenderModal set={props.setUserInfo} gender={props.gender} visible={this.state.GenderModal} close={() => { this.close('GenderModal') }} />
+        <DateModal set={props.setUserInfo} DOB={props.DOB} visible={this.state.DateModal} close={() => { this.close('DateModal') }} />
+        <WeightModal set={props.setUserInfo} weight={props.weight} visible={this.state.WeightModal} close={() => { this.close('WeightModal') }} />
       </React.Fragment>
     );
   }
 }
 
 
-export default connect(
-  (state) => ({
-    isLogin: state.login.get('isLogin'),
-    user: state.login.get('user')
-  }),
-  (dispatch) => ({
-    Actions: bindActionCreators(actions, dispatch)
-  })
-)(ItemList);
+export default ItemList;

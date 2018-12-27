@@ -113,7 +113,7 @@ class WorkoutList extends Component {
           {/* {this.generate()} */}
           {this.props.data.length !== 0 ? this.generate() : <EmptyList />}
         </div>
-        <WorkoutModal id={state.id} set={props.set} visible={state.clicked} close={this.close} name={state.title} weight={state.weight} reps={state.reps} />
+        <WorkoutModal id={state.id} edit={props.edit} set={props.set} visible={state.clicked} close={this.close} name={state.title} weight={state.weight} reps={state.reps} />
 
       </React.Fragment>
 

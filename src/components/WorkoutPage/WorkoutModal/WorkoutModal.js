@@ -24,7 +24,7 @@ class WorkoutModal extends Component {
     console.log(props);
     this.state = {
       editMode: false,
-      name: props.name,
+      name: '',
       weight: '0.0',
       reps: '0',
       id: '',
@@ -64,18 +64,22 @@ class WorkoutModal extends Component {
     this.props.set({ id: this.state.id, detail: detail, name: this.state.name });
     this.close();
   }
+  edit = () => {
+    this.props.edit({ id: this.state.id, name: this.state.name });
+
+  }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      name: nextProps.name,
-      editMode: true,
+      name: this.state.name || nextProps.name,
+      editMode: nextProps.name ? true : false,
       weight: nextProps.weight,
       reps: nextProps.reps,
-      id: nextProps.id,
+      id: nextProps.id || '',
     })
   }
   componentDidUpdate(prevProps, prevState) {
     const { props } = this;
-    if (props.visible) {
+    if (props.visible && !prevProps.visible) {
       const swiper1 = new Swiper('.weightSwiper1', {
         direction: 'vertical',
         loop: true,
@@ -118,9 +122,9 @@ class WorkoutModal extends Component {
               <Overlay close={this.close} />
               <div className={`HistoryModal ${cx('HistoryModal')}`}>
                 <div className={cx('header')}>
-                  <input type="text" className={cx('input')} value={this.props.name} onChange={(e) => { this.handleChange(e, 'name') }} value={this.state.name} />
+                  <input type="text" className={cx('input')} value={this.state.name} onChange={(e) => { this.handleChange(e, 'name') }} />
                   {this.state.editMode ?
-                    <button className={cx('btn')}>
+                    <button className={cx('btn')} onClick={this.edit}>
                       <Icon icon={ic_done} size={16} style={{ color: '#FF7043' }} />
                     </button>
                     : null

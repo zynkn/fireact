@@ -26,6 +26,16 @@ class DateModal extends Component {
     }
     return items;
   }
+
+  set = () => {
+    const { props } = this;
+    const date = document.querySelector('.dateSwiper1 .swiper-slide-active').innerText +
+      '-' +
+      document.querySelector('.dateSwiper2 .swiper-slide-active').innerText;
+    console.log(date);
+    props.set({ data: date, flag: 'DOB' });
+    this.close();
+  }
   close = () => {
     document.querySelector('.HistoryModal').onclick = null;
     document.querySelector('.HistoryModal').classList.remove(cx('enter'));
@@ -37,7 +47,23 @@ class DateModal extends Component {
     }, true);
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.visible) {
+    const { props } = this;
+    if (props.visible && !prevProps.visible) {
+      const swiper1 = new Swiper('.dateSwiper1', {
+        direction: 'vertical',
+        loop: false,
+        slidesPerView: 5,
+        centeredSlides: true,
+      });
+      const swiper2 = new Swiper('.dateSwiper2', {
+        direction: 'vertical',
+        loop: true,
+        slidesPerView: 5,
+        centeredSlides: true,
+      });
+      console.log(props.DOB.split('-')[0])
+      swiper1.slideTo(parseInt(props.DOB.split('-')[0], 0) - 1950);
+      swiper2.slideTo(parseInt(props.DOB.split('-')[1], 0) + 4);
       setTimeout(
         () => {
           document.querySelector('.HistoryModal').classList.add(cx('enter'));
@@ -49,18 +75,6 @@ class DateModal extends Component {
   }
 
   componentDidMount() {
-    new Swiper('.weightSwiper1', {
-      direction: 'vertical',
-      loop: true,
-      slidesPerView: 5,
-      centeredSlides: true,
-    });
-    new Swiper('.weightSwiper2', {
-      direction: 'vertical',
-      loop: true,
-      slidesPerView: 5,
-      centeredSlides: true,
-    });
 
   }
   render() {
@@ -79,15 +93,15 @@ class DateModal extends Component {
                   <div className={cx('item')}>
                     <div className={cx('section')}>
                       <div className={cx('lense', 'left')} />
-                      <div className={`weightSwiper1 ${cx('swiper-container')}`} >
+                      <div className={`dateSwiper1 ${cx('swiper-container')}`} >
                         <div className={`swiper-wrapper ${cx('wrap')}`}>
-                          {this.swipeGenerate(1900, 2018)}
+                          {this.swipeGenerate(1950, 2018)}
                         </div>
                       </div>
                     </div>
                     <div className={cx('section')}>
                       <div className={cx('lense', 'right')} />
-                      <div className={`weightSwiper2 ${cx('swiper-container')}`}>
+                      <div className={`dateSwiper2 ${cx('swiper-container')}`}>
                         <div className={`swiper-wrapper ${cx('wrap')}`}>
                           {this.swipeGenerate(1, 12)}
                         </div>
@@ -96,8 +110,8 @@ class DateModal extends Component {
                   </div>
                 </div>
                 <div className={cx('footer')}>
-                  <button className={cx('btn')}>Cancel</button>
-                  <button className={cx('btn')}>Confirm</button>
+                  <button className={cx('btn')} onClick={this.close}>Cancel</button>
+                  <button className={cx('btn')} onClick={this.set}>Confirm</button>
                 </div>
               </div>
 

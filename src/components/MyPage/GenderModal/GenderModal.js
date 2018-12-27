@@ -18,25 +18,18 @@ const Overlay = (props) => {
 };
 
 class GenderModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gender: 'Male',
-    }
-  }
-
   close = () => {
     document.querySelector('.HistoryModal').onclick = null;
     document.querySelector('.HistoryModal').classList.remove(cx('enter'));
     document.querySelector('.bg').classList.remove(cx('enter'));
 
     document.querySelector('.HistoryModal').addEventListener("transitionend", (e) => {
-      console.log(e);
       this.props.close();
     }, true);
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.visible) {
+
+    if (this.props.visible && !prevProps.visible) {
       setTimeout(
         () => {
           document.querySelector('.HistoryModal').classList.add(cx('enter'));
@@ -48,13 +41,16 @@ class GenderModal extends Component {
   }
 
   ChangeGender = (e) => {
-    console.log(e.target.innerText);
-    this.setState({
-      gender: e.target.innerText,
+
+    this.close();
+    this.props.set({
+      data: e.target.innerText,
+      flag: 'sex'
     })
+
   }
   render() {
-    const { state } = this;
+    const { state, props } = this;
     return (
       <React.Fragment>
         {
@@ -66,12 +62,12 @@ class GenderModal extends Component {
                   <span className={cx('title')}>Gender</span>
                 </div>
                 <div className={cx('body')} onClick={this.ChangeGender}>
-                  <div className={`${cx('item')} ${state.gender === 'Male' ? cx('selected') : null}`}>
+                  <div className={`${cx('item')} ${props.gender === 'Male' ? cx('selected') : null}`}>
                     <Icon icon={ic_keyboard_arrow_right} size={20} style={{ color: '#e0e0e0', marginRight: '16px' }} />
                     Male
                   </div>
 
-                  <div className={`${cx('item')} ${state.gender === 'Female' ? cx('selected') : null}`}>
+                  <div className={`${cx('item')} ${props.gender === 'Female' ? cx('selected') : null}`}>
                     <Icon icon={ic_keyboard_arrow_right} size={20} style={{ color: '#e0e0e0', marginRight: '16px' }} />
                     Female
                   </div>

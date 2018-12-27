@@ -35,7 +35,7 @@ export const googleLogin = () => {
   );
 }
 
-export const googleLogout = () => {
+export const logout = () => {
   return (
     firebase.auth().signOut().then(result => {
       return true;
@@ -44,4 +44,6 @@ export const googleLogout = () => {
     })
   )
 }
+
+
 

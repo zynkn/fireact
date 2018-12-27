@@ -3,37 +3,38 @@ import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import { pender } from 'redux-pender';
 
-import * as api from 'lib/api';
+import * as api from 'lib/mypageAPI';
 
-// action types
-const GET_USER_INFO = 'info/GET_USER_INFO';
-const SET_USER_INFO = 'info/SET_USER_INFO';
 
-// action creators
+const SET_USER_INFO = 'mypage/SET_USER_INFO';
+const GET_USER_INFO = 'mypage/GET_USER_INFO';
+const LOADING = 'mypage/LOADING';
+
 export const getUserInfo = createAction(GET_USER_INFO, api.getUserInfo);
 export const setUserInfo = createAction(SET_USER_INFO, api.setUserInfo);
+export const loading = createAction(LOADING);
 
-//initial state
 const initialState = Map({
-  height: 'null',
-  DOB: 'null',
-  sex: 'null',
-  weight: 'null',
-  userUID: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
+  DOB: '',
+  gender: '',
+  weight: '',
+  isLoading: false,
 });
 
-// reducer
 export default handleActions({
-
+  [LOADING]: (state, action) => {
+    return state.set('isLoading', true)
+  },
   ...pender({
     type: GET_USER_INFO,
     onSuccess: (state, action) => {
       console.log('GETUSERINFO')
       console.log(action.payload);
-      return state.set('height', action.payload.height[action.payload.height.length - 1].data)
-        .set('DOB', action.payload.DOB)
-        .set('sex', action.payload.sex)
-        .set('weight', action.payload.weight[action.payload.weight.length - 1].data)
+      return state.set('DOB', action.payload.DOB || '')
+        .set('gender', action.payload.sex || '')
+        .set('weight', action.payload.weight[action.payload.weight.length - 1].data || '')
+        .set('isLoading', false);
+
     }
   }),
   ...pender({
@@ -44,4 +45,4 @@ export default handleActions({
       return state;
     }
   })
-}, initialState);
+}, initialState)

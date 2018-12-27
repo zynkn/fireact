@@ -10,14 +10,14 @@ import * as api from 'lib/loginAPI';
 // action types
 const GOOGLE_LOGIN = 'login/GOOGLE_LOGIN';
 const FACEBOOK_LOGIN = 'login/FACEBOOK_LOGIN';
-const GOOGLE_LOGOUT = 'login/GOOGLE_LOGOUT';
+const LOGOUT = 'login/LOGOUT';
 const SET_LOGGED_INFO = 'login/SET_LOGGED_INFO';
 const SET_ISLOGIN = 'login/SET_ISLOGIN';
 
 // action creators
 export const googleLogin = createAction(GOOGLE_LOGIN, api.googleLogin);
 export const facebookLogin = createAction(FACEBOOK_LOGIN, api.facebookLogin);
-export const googleLogout = createAction(GOOGLE_LOGOUT, api.googleLogout);
+export const logout = createAction(LOGOUT, api.logout);
 export const setLoggedInfo = createAction(SET_LOGGED_INFO);
 export const setIslogin = createAction(SET_ISLOGIN);
 
@@ -35,7 +35,7 @@ export default handleActions({
   [SET_ISLOGIN]: (state, action) => state.set('isLogin', true),
   [SET_LOGGED_INFO]: (state, action) => state.set('user', action.payload).set('isLogin', true).set('isLoading', false),
   ...pender({
-    type: GOOGLE_LOGOUT,
+    type: LOGOUT,
     onSuccess: (state, action) => {
       storage.remove('user');
       storage.remove('workout');
@@ -58,7 +58,10 @@ export default handleActions({
   ...pender({
     type: FACEBOOK_LOGIN,
     onSuccess: (state, action) => {
-      storage.set('user', action.payload.user);
+      storage.set('user', {
+        uid: action.payload.user.uid,
+        providerId: action.payload.user.providerData[0].providerId,
+      });
       return state.set('isLogin', true)
         .set('user', action.payload.user)
         .set('userUID', action.payload.user.uid)

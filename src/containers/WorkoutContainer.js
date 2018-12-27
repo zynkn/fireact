@@ -12,10 +12,7 @@ import { bindActionCreators } from 'redux';
 
 let selected = '';
 class WorkoutContainer extends React.Component {
-  constructor(props) {
-    super(props);
 
-  }
   get = ({ date }) => {
     const { uid } = storage.get('user');
     selected = date;
@@ -25,7 +22,12 @@ class WorkoutContainer extends React.Component {
   set = ({ id, name, detail }) => {
     const { uid } = storage.get('user');
     this.props.Actions.setWorkout({ id, uid, name, detail, date: selected })
-    this.props.Actions.getWorkout({ uid: uid, date: selected });
+    this.props.Actions.getWorkout({ uid, date: selected });
+  }
+  edit = ({ name, id }) => {
+    const { uid } = storage.get('user');
+    this.props.Actions.editName({ uid, id, date: selected, name })
+    this.props.Actions.getWorkout({ uid, date: selected });
   }
 
   render() {
@@ -34,7 +36,7 @@ class WorkoutContainer extends React.Component {
       <React.Fragment>
         <Calendar data={props.data} get={this.get} />
         <AddBtn history={props.history} set={this.set} />
-        <WorkoutList history={props.history} set={this.set} data={props.data} />
+        <WorkoutList history={props.history} set={this.set} data={props.data} edit={this.edit} />
         {props.isLoading ? <Loading /> : null}
       </React.Fragment>
     )

@@ -9,6 +9,10 @@ db.settings(settings);
 const ref = db.collection("record");
 
 export const editName = ({ date, uid, name, id }) => {
+    console.log(date);
+    console.log(uid);
+    console.log(name);
+    console.log(id);
     return ref.doc(uid.toString()).collection(date).doc(id).update({
         name: name
     })
