@@ -57,10 +57,9 @@ class WorkoutList extends Component {
     }
   }
   listHandler = (e) => {
-    const { props, state } = this;
     const el = e.target.closest(`.${cx('ListItem')}`);
     const title = el.querySelector(`.${cx('title')}`).innerText;
-    const id = el.dataset.id;
+    // const id = el.dataset.id;
     const weight = el.querySelector(`.${cx('Tag')}:last-child`).innerText.split(' ')[0];
     const reps = el.querySelector(`.${cx('Tag')}:last-child`).innerText.split(' ')[1];
     const { history } = this.props;
@@ -81,7 +80,6 @@ class WorkoutList extends Component {
     for (let i = 0; i < data.length; i++) {
       arr.push(<ListItem id={data[i].id} key={i} name={data[i].name} detail={data[i].detail} />);
     }
-    // console.log(arr);
     return arr;
   }
 

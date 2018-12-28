@@ -172,7 +172,7 @@ class Calendar extends Component {
   }
 
   render() {
-    const { props, state } = this;
+    const { state } = this;
     const { month, year } = state.date;
     return (
       <div className={cx('calendar-wrap')}>

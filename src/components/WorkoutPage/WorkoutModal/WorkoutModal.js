@@ -21,7 +21,6 @@ const Overlay = (props) => {
 class WorkoutModal extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       editMode: false,
       name: '',
@@ -44,7 +43,6 @@ class WorkoutModal extends Component {
     document.querySelector('.HistoryModal').classList.remove(cx('enter'));
     document.querySelector('.bg').classList.remove(cx('enter'));
     document.querySelector('.HistoryModal').addEventListener("transitionend", (e) => {
-      // console.log(e);
       this.props.close();
     }, true);
   }

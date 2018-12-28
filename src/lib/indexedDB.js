@@ -1,8 +1,8 @@
 export default (function () {
   const dbName = "FireactDB";
   const idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-  const idbTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-  const idbKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+  // const idbTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+  // const idbKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
   return {
     openIndexedDB() {
       // This works on all devices/browsers, and uses IndexedDBShim as a final fallback 

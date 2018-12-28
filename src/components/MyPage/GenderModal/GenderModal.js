@@ -50,7 +50,7 @@ class GenderModal extends Component {
 
   }
   render() {
-    const { state, props } = this;
+    const { props } = this;
     return (
       <React.Fragment>
         {

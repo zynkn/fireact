@@ -8,7 +8,7 @@ import * as api from 'lib/workoutAPI';
 
 const GET_WORKOUT = 'workout/GET_WORKOUT';
 const SET_WORKOUT = 'workout/SET_WORKOUT';
-const DEL_WORKOUT = 'workout/DEL_WORKOUT';
+// const DEL_WORKOUT = 'workout/DEL_WORKOUT';
 const EDIT_NAME = 'workout/EDIT_NAME';
 const LOADING = 'workout/LOADING';
 const SELECT_DATE = 'workout/SELECT_DATE';
