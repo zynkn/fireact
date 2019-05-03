@@ -1,63 +1,44 @@
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# 🔥 Fireact
+## Available Scripts
 
-[fireact.xyz](https://fireact.xyz)
+In the project directory, you can run:
 
-파이어액트는 개인별 운동 기록을 위한 웹 앱입니다.
+### `npm start`
 
-Google Chrome으로 접속하는 것을 권장합니다.
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Fuctionality
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-- Google Social Login
+### `npm test`
 
-- Workout History Management
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Tech Stack
+### `npm run build`
 
-- React 
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-- Redux
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-- Sass
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- Firebase Authentication
+### `npm run eject`
 
-- Cloud Firestore
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-- Firebase Hosting
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-## Project History
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-- Sep 02 2018 : starting to write it.
+## Learn More
 
-- Sep 05 2018 : 1st code refactoring is completed. 
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-- Sep 06 2018 : Delete Function is added.
-
-- Sep 06 2018 : 2rd firebase deploy.
-
-- Sep 08 2018 : Desktop UI developing is started.
-
-- Sep 14 2018 : the only one step left for 3rd deploying.
-
-- Sep 14 2018 : 3rd firebase deploy.
-
-- Sep 25 2018 : 4th firebase deploy.
-
-
-## Latest Update
-
-[3rd deploy PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_3rd_Deploy_Eng.pdf)
-
-[4th deploy PDF](https://github.com/zynkn/fireact/tree/master/docs/Fireact_4th_Deploy_Eng.pdf)
-
-## Remake Version ( In Progress )
-
-- Progressive Web App
-
-- Indexed DB
-
-- Improve UX / UI 
-
+To learn React, check out the [React documentation](https://reactjs.org/).
