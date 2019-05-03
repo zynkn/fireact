@@ -12,7 +12,6 @@ import { bindActionCreators } from 'redux';
 class MypageContainer extends React.Component {
   setUserInfo = ({ data, flag }) => {
     const { props } = this;
-
     props.mypageActions.setUserInfo({
       uid: storage.get('user').uid,
       data: data,
@@ -26,7 +25,6 @@ class MypageContainer extends React.Component {
     this.props.mypageActions.getUserInfo({ uid: storage.get('user').uid });
   }
   logout = () => {
-    console.log(this.props.loginActions);
     this.props.loginActions.logout();
   }
   render() {

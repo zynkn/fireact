@@ -32,7 +32,6 @@ class DateModal extends Component {
     const date = document.querySelector('.dateSwiper1 .swiper-slide-active').innerText +
       '-' +
       document.querySelector('.dateSwiper2 .swiper-slide-active').innerText;
-    console.log(date);
     props.set({ data: date, flag: 'DOB' });
     this.close();
   }
@@ -42,7 +41,6 @@ class DateModal extends Component {
     document.querySelector('.bg').classList.remove(cx('enter'));
 
     document.querySelector('.HistoryModal').addEventListener("transitionend", (e) => {
-      console.log(e);
       this.props.close();
     }, true);
   }
@@ -61,7 +59,6 @@ class DateModal extends Component {
         slidesPerView: 5,
         centeredSlides: true,
       });
-      console.log(props.DOB.split('-')[0])
       swiper1.slideTo(parseInt(props.DOB.split('-')[0], 0) - 1950);
       swiper2.slideTo(parseInt(props.DOB.split('-')[1], 0) + 4);
       setTimeout(

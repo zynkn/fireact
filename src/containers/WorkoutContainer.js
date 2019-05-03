@@ -12,7 +12,6 @@ import { bindActionCreators } from 'redux';
 
 let selected = '';
 class WorkoutContainer extends React.Component {
-
   get = ({ date }) => {
     const { uid } = storage.get('user');
     selected = date;

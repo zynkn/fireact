@@ -28,8 +28,6 @@ export default handleActions({
   ...pender({
     type: GET_USER_INFO,
     onSuccess: (state, action) => {
-      console.log('GETUSERINFO')
-      console.log(action.payload);
       return state.set('DOB', action.payload.DOB || '')
         .set('gender', action.payload.sex || '')
         .set('weight', action.payload.weight[action.payload.weight.length - 1].data || '')
@@ -40,8 +38,6 @@ export default handleActions({
   ...pender({
     type: SET_USER_INFO,
     onSuccess: (state, action) => {
-      console.log('SETUSERINFO');
-      console.log(action.payload);
       return state;
     }
   })

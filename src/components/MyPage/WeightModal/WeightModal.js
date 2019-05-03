@@ -40,7 +40,6 @@ class WeightModal extends Component {
     document.querySelector('.bg').classList.remove(cx('enter'));
 
     document.querySelector('.HistoryModal').addEventListener("transitionend", (e) => {
-      console.log(e);
       this.props.close();
     }, true);
   }

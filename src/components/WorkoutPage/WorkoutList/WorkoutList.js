@@ -62,8 +62,7 @@ class WorkoutList extends Component {
     // const id = el.dataset.id;
     const weight = el.querySelector(`.${cx('Tag')}:last-child`).innerText.split(' ')[0];
     const reps = el.querySelector(`.${cx('Tag')}:last-child`).innerText.split(' ')[1];
-    const { history } = this.props;
-    history.push(history.location.pathname, 'Modal');
+    this.props.history.push(this.props.history.location.pathname, 'Modal');
     document.querySelector('body').style.overflowY = 'hidden';
     this.setState({
       clicked: true,
@@ -72,7 +71,6 @@ class WorkoutList extends Component {
       reps: reps.split('reps')[0],
       id: el.dataset.id,
     })
-
   }
   generate = () => {
     const { data } = this.props;
@@ -107,9 +105,8 @@ class WorkoutList extends Component {
     const { props, state } = this;
     return (
       <React.Fragment>
-        <div className={cx('list-wrap')} onClick={this.listHandler}>
-          {/* {this.generate()} */}
-          {this.props.data.length !== 0 ? this.generate() : <EmptyList />}
+        <div className={cx('list-wrap')} onClick={props.data.length !== 0 ? this.listHandler : null}>
+          {props.data.length !== 0 ? this.generate() : <EmptyList />}
         </div>
         <WorkoutModal id={state.id} edit={props.edit} set={props.set} visible={state.clicked} close={this.close} name={state.title} weight={state.weight} reps={state.reps} />
 

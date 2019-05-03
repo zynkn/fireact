@@ -9,13 +9,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Switch>
-          <Route exact path="/" component={RootPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/mypage" component={MyPage} />
-          <Route exact path="/workout" component={WorkoutPage} />
-          <Route exact path="/analysis" component={AnalysisPage} />
-        </Switch>
+        <Route exact path="/" component={RootPage} />
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/mypage" component={MyPage} />
+        <Route exact path="/workout" component={WorkoutPage} />
+        <Route exact path="/analysis" component={AnalysisPage} />
       </div>
     );
   }

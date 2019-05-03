@@ -20,7 +20,6 @@ export const googleLogin = () => {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
       .then(function () {
         return firebase.auth().signInWithPopup(GoogleProvider).then(result => {
-          console.log(result);
           return result;
         }).catch(error => {
           return error;

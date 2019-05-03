@@ -1,17 +1,15 @@
 import React, { Fragment } from 'react';
-import storage from 'lib/storage';
+import fireact from 'assets/svg/fireact21.svg';
 import Header from 'components/Common/Header';
 import BottomNav from 'components/Common/BottomNav';
 
 
 const RootPage = (props) => {
-
-
   return (
     <Fragment>
       <Header history={props.history} />
       <main style={{ justifyContent: 'center' }}>
-        {storage.get('user') ? storage.get('user').uid : 'no data'}
+        <img src={fireact} alt="fireact" />
       </main>
       <BottomNav />
     </Fragment>

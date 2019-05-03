@@ -26,17 +26,30 @@ class AddBtn extends Component {
   }
   close = () => {
     const { history } = this.props;
-    history.goBack();
     document.querySelector('body').style.overflowY = 'auto';
+    history.goBack();
     this.setState({ clicked: false });
+
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
+  componentWillMount() {
+    console.log('componentWillMount')
+    // this.props.history.push('/', 'Normal')
   }
   componentWillReceiveProps(nextProps) {
+    console.log('UNSAFE_componentWillReceiveProps')
     if (nextProps.history.action === "POP" && nextProps.history.location.state === undefined) {
       document.querySelector('body').style.overflowY = 'auto';
       this.setState({
         clicked: false
       })
     }
+  }
+  componentDidUpdate(nextProps, nextState) {
+    console.log(nextProps);
+    console.log(nextState);
   }
   render() {
     const { state, props } = this;
@@ -48,10 +61,6 @@ class AddBtn extends Component {
           </button>
         </div>
         <WorkoutModal set={props.set} visible={state.clicked} close={this.close} weight='0.0' reps='0' />
-
-
-
-
       </React.Fragment>
 
     );

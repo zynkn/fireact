@@ -68,7 +68,7 @@ class WorkoutModal extends Component {
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      name: this.state.name || nextProps.name,
+      name: nextProps.name || this.state.name,
       editMode: nextProps.name ? true : false,
       weight: nextProps.weight,
       reps: nextProps.reps,
