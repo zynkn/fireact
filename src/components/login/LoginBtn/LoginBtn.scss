@@ -1,0 +1,35 @@
+@import 'styles/base.scss';
+
+
+.LoginBtn{
+  position: relative;
+  width: 100%;
+  padding: 16px 8px;
+  box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
+  border-radius: 5px;
+  border: 1px solid #e1e5e9;
+  font-family: $font-patua;
+  font-size: 16pt;
+
+  & + .LoginBtn{
+    margin-top: 48px;
+  }
+  img{
+    position: absolute;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 32px;
+  }
+}
+
+@media (max-width: 768px){
+  .LoginBtn{
+    font-size: 12pt;
+    img{
+      width: 20px;
+      left: 8px;
+    }
+  }
+}
