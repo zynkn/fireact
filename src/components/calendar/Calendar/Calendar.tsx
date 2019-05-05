@@ -10,7 +10,10 @@ const Calendar: React.FC = () => {
     <div className="Calendar">
       <CalendarHead />
       <CalendarBody />
-      <IconBtn className="lg theme-color" name="ADD" style={{ borderRadius: '5px' }} />
+      <div style={{ padding: '0 16px' }}>
+        <IconBtn className="lg theme-color" name="ADD" style={{ borderRadius: '5px' }} />
+      </div>
+
     </div>
   )
 }

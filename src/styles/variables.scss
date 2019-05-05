@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&subset=korean');
 @import url('https://fonts.googleapis.com/css?family=Patua+One');
 
-$font-stack: 'Noto Sans KR', sans-serif;
+$font-noto: 'Noto Sans KR', sans-serif;
 $font-patua: 'Patua One', cursive;
 $primary-color: #333;
 
@@ -24,3 +24,16 @@ $label-purple: #ab47bc;
 $label-orange: #ffa726;
 $label-brown: #8d6e63;
 $label-red: #ef5350;
+
+
+
+$tag-level-1: #ff7373;
+$tag-level-2: #ff6565;
+$tag-level-3: #ff5757;
+$tag-level-4: #ff4949;
+$tag-level-5: #ff4141;
+$tag-level-6: #ff3333;
+$tag-level-7: #ff2525;
+$tag-level-8: #ff1717;
+$tag-level-9: #ff0909;
+$tag-level-10: #ff0101;

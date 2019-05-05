@@ -41,12 +41,20 @@
 
 @media (max-width: 768px){
   .Pane.lg{
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     margin-top: 48px;
     min-height: calc(100vh - 48px);
+    height: auto;
+    padding: 0;
   }
 }
+// @media (max-width: 425px){
+//   .Pane.lg{
+//     height: inherit;
+//   }
+// }
 
 @media (max-width: 656px){
   .Pane.sm{
