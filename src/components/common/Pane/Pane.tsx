@@ -2,13 +2,14 @@ import React from 'react';
 import './Pane.scss';
 
 interface Props {
-  style: object
+  className?: string
+  style?: object
   children: any
 }
 
-const Pane: React.FC<Props> = ({ style, children }) => {
+const Pane: React.FC<Props> = ({ className, style, children }) => {
   return (
-    <div className="Pane" style={style}>
+    <div className={`Pane ${className}`} style={style}>
       {children}
     </div>
   )

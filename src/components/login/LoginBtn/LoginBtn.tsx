@@ -5,7 +5,7 @@ import FACEBOOK_ICON from 'assets/svg/facebook_white.svg';
 
 
 interface Props {
-  style: object
+  style?: object
   text: string
   icon: string
 }

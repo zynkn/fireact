@@ -10,6 +10,7 @@ header{
   background-color: $theme-color;
   font-family: $font-patua;
   padding: 13px 16px; 
+  z-index: 99;
   .header-box{
     width: $desktop-max-width;
     margin: auto;

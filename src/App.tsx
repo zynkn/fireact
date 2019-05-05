@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, RouteComponentProps } from 'react-router-dom';
 import Header from 'components/common/Header';
-import { LoginPage } from 'pages';
+import { LoginPage, CalendarPage } from 'pages';
 
 class App extends React.Component<any>{
 
@@ -12,7 +12,8 @@ class App extends React.Component<any>{
         <Header />
         <main>
           <Switch>
-            <Route exact path="/" component={LoginPage} />
+            <Route exact path="/" component={CalendarPage} />
+            <Route exact path="/login" component={LoginPage} />
           </Switch>
         </main>
       </>
