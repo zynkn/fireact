@@ -10,7 +10,7 @@ const Calendar: React.FC = () => {
     <div className="Calendar">
       <CalendarHead />
       <CalendarBody />
-      <div style={{ padding: '0 16px' }}>
+      <div style={{ padding: '0 16px', marginTop: '16px' }}>
         <IconBtn className="lg theme-color" name="ADD" style={{ borderRadius: '5px' }} />
       </div>
 
@@ -35,13 +35,13 @@ const CalendarBody: React.FC = () => {
   return (
     <div className="CalendarBody">
       <div className="row">
-        <div className="box">S</div>
-        <div className="box">M</div>
-        <div className="box">T</div>
-        <div className="box">W</div>
-        <div className="box">T</div>
-        <div className="box">F</div>
-        <div className="box">S</div>
+        <div className="box"><span className="date static">S</span></div>
+        <div className="box"><span className="date static">M</span></div>
+        <div className="box"><span className="date static">T</span></div>
+        <div className="box"><span className="date static">W</span></div>
+        <div className="box"><span className="date static">T</span></div>
+        <div className="box"><span className="date static">F</span></div>
+        <div className="box"><span className="date static">S</span></div>
       </div>
       <div className="row">
         <div className="box extra">
