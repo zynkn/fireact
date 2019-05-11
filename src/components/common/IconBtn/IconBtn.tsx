@@ -8,11 +8,12 @@ interface Props {
   style?: object
   name?: string
   className?: string
+  onClick?: VoidFunction
 }
 const IconBtn: React.FC<Props> = (props) => {
 
   return (
-    <button className={`IconBtn ${props.className}`} style={props.style}>
+    <button className={`IconBtn ${props.className}`} style={props.style} onClick={props.onClick}>
       {
         props.name ? props.name : <img src={props.icon || ARROW_LEFT} />
       }

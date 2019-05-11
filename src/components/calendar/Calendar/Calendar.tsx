@@ -1,37 +1,88 @@
 import React from 'react';
+import moment, { Moment as MomentTypes } from "moment";
+
 import './Calendar.scss';
 import IconBtn from 'components/common/IconBtn';
 import ARROW_LEFT from 'assets/svg/icon_arrow_left.svg';
 import ARROW_RIGHT from 'assets/svg/icon_arrow_right.svg';
 
-const Calendar: React.FC = () => {
+
+
+interface Props {
+  date: MomentTypes
+  changeMonth: Function
+  selectDate: Function
+  labels: { [key: string]: Array<string> }
+}
+
+const Calendar: React.FC<Props> = (props) => {
 
   return (
     <div className="Calendar">
-      <CalendarHead />
-      <CalendarBody />
+      <CalendarHead title={props.date.format('MMMM YYYY')} changeMonth={props.changeMonth} />
+      <CalendarBody date={props.date} selectDate={props.selectDate} labels={props.labels} />
       <div style={{ padding: '0 16px', marginTop: '16px' }}>
         <IconBtn className="lg theme-color" name="ADD" style={{ borderRadius: '5px' }} />
       </div>
-
     </div>
   )
 }
 
 export default Calendar;
 
-
-const CalendarHead: React.FC = () => {
+interface headProps {
+  title: string
+  changeMonth: Function
+}
+const CalendarHead: React.FC<headProps> = (props) => {
   return (
     <div className="CalendarHead">
-      <IconBtn icon={ARROW_LEFT} />
-      <span className="title">April 2019</span>
-      <IconBtn icon={ARROW_RIGHT} />
+      <IconBtn icon={ARROW_LEFT} onClick={() => props.changeMonth('previous')} />
+      <span className="title" onClick={() => props.changeMonth()}>{props.title}</span>
+      <IconBtn icon={ARROW_RIGHT} onClick={() => props.changeMonth('next')} />
     </div>
   )
 }
 
-const CalendarBody: React.FC = () => {
+
+interface bodyProps {
+  date: moment.Moment
+  selectDate: Function
+  labels: { [key: string]: Array<string> }
+}
+
+const CalendarBody: React.FC<bodyProps> = (props) => {
+  const generateCalendar = () => {
+    const today = moment();
+
+    const startWeek = props.date.clone().startOf('month').week();
+    const endWeek = props.date.clone().endOf('month').week() === 1 ? 53 : props.date.clone().endOf('month').week();
+    let calendar = []
+    for (let week = startWeek; week <= endWeek; week++) {
+      calendar.push(
+        <div className="row" key={week}>
+          {
+            Array(7).fill(0).map((n, i) => {
+              let current = props.date.clone().week(week).startOf('week').add(n + i, 'day')
+              let isSelected = props.date.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'selected' : '';
+              let isToday = today.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'today' : '';
+              let isExtra = current.format('MM') === props.date.format('MM') ? '' : 'extra';
+              let labels = props.labels[current.format('YYYY-MM-DD')] || [];
+              return (
+                <div className={`box ${isSelected} ${isToday} ${isExtra} `} key={i} onClick={() => props.selectDate(current)}>
+                  <div className="label-box">
+                    {labels.map((i, j) => <span key={j} className={`label ${i}`} />)}
+                  </div>
+                  <span className={`date`}>{current.format('D')}</span>
+                </div>
+              )
+            })
+          }
+        </div>
+      )
+    }
+    return calendar;
+  }
   return (
     <div className="CalendarBody">
       <div className="row">
@@ -43,304 +94,9 @@ const CalendarBody: React.FC = () => {
         <div className="box"><span className="date static">F</span></div>
         <div className="box"><span className="date static">S</span></div>
       </div>
-      <div className="row">
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">24</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">25</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">26</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label green" />
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">27</span>
-        </div>
-        <div className="box extra">
-          <span className="date">28</span>
-        </div>
-        <div className="box selected">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">1</span>
-        </div>
-        <div className="box today">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">2</span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="box">
-          <div className="label-box">
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">3</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">4</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">5</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label green" />
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">6</span>
-        </div>
-        <div className="box">
-          <span className="date">7</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">8</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">9</span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="box">
-          <div className="label-box">
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">10</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">11</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">12</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label green" />
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">13</span>
-        </div>
-        <div className="box">
-          <span className="date">14</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">15</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">16</span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="box">
-          <div className="label-box">
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">17</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">18</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">19</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label green" />
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">20</span>
-        </div>
-        <div className="box">
-          <span className="date">21</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">22</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">23</span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="box">
-          <div className="label-box">
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">24</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">25</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">26</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label green" />
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">27</span>
-        </div>
-        <div className="box">
-          <span className="date">28</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date">29</span>
-        </div>
-        <div className="box">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date">30</span>
-        </div>
-      </div>
-
-      <div className="row">
-        <div className="box">
-          <div className="label-box">
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date">31</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date ">1</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date ">2</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label green" />
-            <span className="label yellow" />
-            <span className="label red" />
-          </div>
-          <span className="date ">3</span>
-        </div>
-        <div className="box extra">
-          <span className="date ">4</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label skyblue" />
-            <span className="label purple" />
-            <span className="label blue" />
-          </div>
-          <span className="date ">5</span>
-        </div>
-        <div className="box extra">
-          <div className="label-box">
-            <span className="label blue" />
-          </div>
-          <span className="date ">6</span>
-        </div>
-      </div>
-
-
-
-
-
+      <>
+        {generateCalendar()}
+      </>
     </div>
   )
 }

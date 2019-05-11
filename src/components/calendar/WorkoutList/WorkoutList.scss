@@ -109,7 +109,7 @@
   @media (min-width: 769px){
     .ListItemBody{
       .Tag-wrap{
-        overflow-x: scroll;
+        overflow-x: auto;
         /* width */
         &::-webkit-scrollbar {
           height: 6px;

@@ -1,7 +1,7 @@
 import modules from './modules';
 import { createStore, applyMiddleware, compose } from 'redux';
-// import createSagaMiddleware from "redux-saga";
-// import mySaga from "./sagas";
+import createSagaMiddleware from "redux-saga";
+import mySaga from "./saga";
 
 // declare global {
 //   interface Window {
@@ -17,16 +17,16 @@ const composeEnhancers = devtools || compose;
 const configureStore = () => {
 
 
-  // const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware();
   const store = createStore(
     modules, /* preloadedState, */
     composeEnhancers(
-      //applyMiddleware(sagaMiddleware)
+      applyMiddleware(sagaMiddleware)
     )
 
   );
 
-  // sagaMiddleware.run(mySaga);
+  sagaMiddleware.run(mySaga);
   return store;
 }
 export default configureStore;
