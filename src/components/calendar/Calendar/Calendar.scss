@@ -37,7 +37,6 @@
       }
       button{
         width: 32px;
-        height: 32px;
         img{
           width: 16px;
         }
@@ -125,15 +124,19 @@
             height: 8px;
             border-radius: 100%;
             background-color: $theme-color;
+            border: 2px solid white;
             & + .label{
               margin-left: 2px;
             }
-            &.yellow{background-color: $label-yellow}
-            &.red{background-color: $label-red}
-            &.skyblue{background-color: $label-skyblue}
-            &.blue{background-color: $label-blue}
-            &.purple{background-color: $label-purple}
-            &.green{background-color: $label-green}
+            @each $name, $color in $label-colors {
+              &.#{$name} { background-color: $color; color: $color }
+            }
+            // &.yellow{background-color: $label-yellow}
+            // &.red{background-color: $label-red}
+            // &.skyblue{background-color: $label-skyblue}
+            // &.blue{background-color: $label-blue}
+            // &.purple{background-color: $label-purple}
+            // &.green{background-color: $label-green}
           }
         }
         @media (max-width: 425px){

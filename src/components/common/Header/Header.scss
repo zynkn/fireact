@@ -15,8 +15,7 @@ header{
     width: $desktop-max-width;
     margin: auto;
     .app-title{
-      img{
-        width: 24px;
+      svg{
         margin-right: 8px;
       }
       display: inline-flex;

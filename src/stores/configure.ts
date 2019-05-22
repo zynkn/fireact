@@ -1,7 +1,7 @@
 import modules from './modules';
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from "redux-saga";
-import mySaga from "./saga";
+import mySaga from "./sagas";
 
 // declare global {
 //   interface Window {
@@ -15,7 +15,7 @@ const composeEnhancers = devtools || compose;
 
 
 const configureStore = () => {
-
+  
 
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore(

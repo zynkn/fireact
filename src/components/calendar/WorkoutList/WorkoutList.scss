@@ -22,6 +22,9 @@
       width: 8px;
       height: 100%;
       background-color: $label-purple;
+      @each $name, $color in $label-colors {
+        &.#{$name} { background-color: $color; color: $color }
+      }
     }
     .ListItemHead{
       display: flex;
@@ -37,6 +40,10 @@
         background-color: #6fbe9c;
         border-radius: 7px;
         color: white;
+
+        @each $name, $color in $label-colors {
+          &.#{$name} { background-color: $color; }
+        }
       }
     }
     @media (max-width: 768px){
@@ -71,16 +78,22 @@
           background-color: $body-color;
           font-size: 10pt;
           white-space: nowrap;
-          &:nth-child(1){ background-color: $tag-level-1}
-          &:nth-child(2){ background-color: $tag-level-2}
-          &:nth-child(3){ background-color: $tag-level-3}
-          &:nth-child(4){ background-color: $tag-level-4}
-          &:nth-child(5){ background-color: $tag-level-5}
-          &:nth-child(6){ background-color: $tag-level-6}
-          &:nth-child(7){ background-color: $tag-level-7}
-          &:nth-child(8){ background-color: $tag-level-8}
-          &:nth-child(9){ background-color: $tag-level-9}
-          &:nth-child(n+10){ background-color: $tag-level-10}
+
+          @each $name, $color in $label-colors {
+            @for $i from 1 to 5 {
+              &.#{$name}:nth-child( n + #{$i}) { background-color: rgba($color, 0.5 + (0.1 * $i)) }
+            }
+          }
+          // &:nth-child(1){ background-color: $tag-level-1}
+          // &:nth-child(2){ background-color: $tag-level-2}
+          // &:nth-child(3){ background-color: $tag-level-3}
+          // &:nth-child(4){ background-color: $tag-level-4}
+          // &:nth-child(5){ background-color: $tag-level-5}
+          // &:nth-child(6){ background-color: $tag-level-6}
+          // &:nth-child(7){ background-color: $tag-level-7}
+          // &:nth-child(8){ background-color: $tag-level-8}
+          // &:nth-child(9){ background-color: $tag-level-9}
+          // &:nth-child(n+10){ background-color: $tag-level-10}
   
           & + .Tag{
             margin-right: 8px;
