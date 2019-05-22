@@ -1,7 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="120px" height="120px" viewBox="0 0 120 120" enable-background="new 0 0 120 120" xml:space="preserve">  <image id="image0" width="120" height="120" x="0" y="0"
-    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+import React from 'react';
+
+
+interface Props {
+  width?: string
+  height?: string
+  fill?: string
+}
+export const Logo: React.FC<Props> = ({ width = '100px', fill = '#000' }) => (
+<svg x="0px" y="0px" width={width}  viewBox="0 0 120 120">
+<image id="image0" width="120" height="120" x="0" y="0" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAA
 B3RJTUUH4goBEQsLDJam6QAAFJZJREFUeNrtnXlwHNWdxz/vdfccGknWYV22fMo3tmzAN+CQAA4O
 sEASQkgqJ5uL2tqQEPaCOJVAIGQ5k1SOTeWokGNzbXa3SJZls6mEsOEwh20sJzYWxgfYlnxgW9Yx
@@ -99,3 +106,4 @@ fQLMLLTXaD5ahbahfd7V6KVXtmZ/CJ3o1oeOdO1H+8m3ouf7HcCrRLyGDQL/DyGXYR6qowiIAAAA
 JXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTEyLTExVDAzOjM0OjQwLTA3OjAwGSBhQQAAACV0RVh0ZGF0
 ZTptb2RpZnkAMjAxOC0xMi0xMVQwMzozNDo0MC0wNzowMGh92f0AAAAASUVORK5CYII=" />
 </svg>
+)

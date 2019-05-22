@@ -1,0 +1,42 @@
+@import 'styles/base.scss';
+
+
+
+header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  background-color: $theme-color;
+  font-family: $font-patua;
+  padding: 13px 16px; 
+  z-index: 99;
+  .header-box{
+    width: $desktop-max-width;
+    margin: auto;
+    .app-title{
+      svg{
+        margin-right: 8px;
+      }
+      display: inline-flex;
+      align-items: center;
+      color: white;
+      font-size: 16pt;
+    }
+  }
+}
+
+@media (max-width: 768px){
+  header{
+    padding: 13px 16px;
+    .header-box{
+      .app-title{
+        img{
+          width: 20px;
+          margin-right: 8px;
+        }
+        font-size: 14pt;
+      }
+    }
+  }
+}
