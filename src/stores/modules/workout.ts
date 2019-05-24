@@ -11,7 +11,7 @@ selector name: get<Noun>
 import { createAction, handleActions } from 'redux-actions';
 import moment, { Moment as MomentTypes } from 'moment';
 import produce from "immer"
-import LocalForage from 'api/LocalForage'
+
 
 export const SELECTED_DATE_UPDATE = 'workout/SELECTED_DATE_UPDATE';
 export const updateSelectedDate = createAction(SELECTED_DATE_UPDATE);
@@ -20,6 +20,8 @@ export const updateSelectedDateSuccess = createAction(SELECTED_DATE_UPDATE_SUCCE
 const SELECTED_DATE_UPDATE_FAILURE = 'workout/SELECTED_DATE_UPDATE_FAILURE';
 export const updateSelectedDateFailure = createAction(SELECTED_DATE_UPDATE_FAILURE);
 
+export const LABEL_ADD = 'workout/LABEL_ADD';
+export const addLabel = createAction(LABEL_ADD);
 
 
 export const DATA_UPDATE = 'workout/DATA_UPDATE';
@@ -41,25 +43,27 @@ export const setCalendarLabels = createAction(SET_CALENDAR_LABELS);
 
 
 export interface WorkoutState {
-  data: Array<WorkoutDataProps>
+  data: { [key: string]: WorkoutDataProps }
   selectedDate: MomentTypes
   labels: {
     [key: string]: Array<string>
   }
 }
 export interface WorkoutDataProps {
-  id: number,
-  type: string,
-  name: string,
-  weightUnit?: string,
+  type: string
+  name: string
+  weightUnit?: string
   detail: Array<{ weight: number, reps: number }>
+  [key: string]: any
 }
 
 
 const initialState: WorkoutState = {
   selectedDate: moment(),
   labels: {},
-  data: [],
+  data: {
+
+  },
 }
 
 export default handleActions({
@@ -67,19 +71,23 @@ export default handleActions({
   [SELECTED_DATE_UPDATE_SUCCESS]: (state, action: any) => {
     return produce(state, draft => {
       draft.selectedDate = action.payload.date
-      draft.data = action.payload.data || []
+      draft.data = action.payload.data || [];
+      draft.labels = { ...draft.labels, ...action.payload.labels }
     });
   },
-
-  [DATA_UPDATE_SUCCESS]: (state, action: any) => {
-    let date = state.selectedDate.format('YYYY-MM-DD');
+  [LABEL_ADD]: (state, { payload }: any) => {
     return produce(state, draft => {
-      if (!draft.labels.hasOwnProperty(date)) {
-        draft.labels[date] = [action.payload.type];
-      } else if (!draft.labels[date].includes(action.payload.type)) {
-        draft.labels[date].push(action.payload.type);
+      if (state.labels[state.selectedDate.format('YYYY-MM-DD')] === undefined) {
+        draft.labels[state.selectedDate.format('YYYY-MM-DD')] = [payload];
       }
-      draft.data.push(action.payload);
+      else if (!state.labels[state.selectedDate.format('YYYY-MM-DD')].includes(payload)) {
+        draft.labels[state.selectedDate.format('YYYY-MM-DD')].push(payload);
+      }
+    })
+  },
+  [DATA_UPDATE_SUCCESS]: (state, action: any) => {
+    return produce(state, draft => {
+      draft.data = action.payload;
     });
   },
   [INITIALIZE_DATA]: (state, action: any) => {

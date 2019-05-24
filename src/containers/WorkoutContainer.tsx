@@ -5,7 +5,7 @@ import moment, { Moment as MomentTypes } from "moment";
 
 import { WorkoutDataProps } from 'stores/modules/workout';
 import { updateSelectedDate, setCalendarLabels, initData, initializeData } from 'stores/modules/workout';
-import { openModal, toggleModal } from 'stores/modules/modal';
+import { openModal, toggleModal, getLabels } from 'stores/modules/modal';
 import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,18 +14,19 @@ import LocalForage from 'api/LocalForage';
 import utils from 'utils';
 
 interface Props {
-  data: Array<WorkoutDataProps>
+  data: { [key: string]: WorkoutDataProps }
   selectedDate: MomentTypes
   labels: { [key: string]: Array<string> }
   selectDate: typeof updateSelectedDate
   openModal: typeof openModal
   toggleModal: typeof toggleModal
   initializeData: typeof initializeData
+  getLabels: typeof getLabels
 }
 class WorkoutContainer extends React.Component<Props> {
 
   initialize = () => {
-    LocalForage.init();
+    //this.props.getLabels()
     const startWeek = this.props.selectedDate.clone().startOf('month').week();
     const endWeek = this.props.selectedDate.clone().endOf('month').week() === 1 ? 53 : this.props.selectedDate.clone().endOf('month').week();
     let dates = utils.getCalendarDates(startWeek, endWeek);
@@ -39,6 +40,7 @@ class WorkoutContainer extends React.Component<Props> {
   componentDidMount() {
     this.initialize();
   }
+
 
   render() {
     return (
@@ -66,6 +68,7 @@ export default connect(
     openModal: bindActionCreators(openModal, dispatch),
     toggleModal: bindActionCreators(toggleModal, dispatch),
     initializeData: bindActionCreators(initializeData, dispatch),
+    getLabels: bindActionCreators(getLabels, dispatch),
 
   })
 )(WorkoutContainer);

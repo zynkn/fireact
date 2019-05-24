@@ -4,7 +4,7 @@ import Modal from 'components/common/Modal';
 import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeModal, selectLabel, toggleModal, removeName, inputName, inputData, saveData } from 'stores/modules/modal';
+import { closeModal, selectLabel, toggleModal, removeName, inputData, } from 'stores/modules/modal';
 import { updateData } from 'stores/modules/workout';
 
 
@@ -23,7 +23,6 @@ interface Props {
   toggleModal: typeof toggleModal
   removeName: typeof removeName
   inputData: typeof inputData
-  saveData: typeof saveData
   updateData: typeof updateData
   date: any
 }
@@ -40,7 +39,6 @@ class ModalContainer extends React.Component<Props> {
         removeName={this.props.removeName}
         inputData={this.props.inputData}
         workout={this.props.workout}
-        saveData={this.props.saveData}
         selectedDate={this.props.date}
         updateData={this.props.updateData}
         workoutId={this.props.workoutId}
@@ -64,7 +62,6 @@ export default connect(
     toggleModal: bindActionCreators(toggleModal, dispatch),
     removeName: bindActionCreators(removeName, dispatch),
     inputData: bindActionCreators(inputData, dispatch),
-    saveData: bindActionCreators(saveData, dispatch),
     updateData: bindActionCreators(updateData, dispatch),
   })
 )(ModalContainer);

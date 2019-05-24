@@ -5,7 +5,7 @@ import IconBtn from 'components/common/IconBtn';
 import Input from 'components/common/Input';
 import { ArrowDown, ArrowUp, Check } from 'components/common/Icons';
 import moment, { Moment as MomentTypes } from "moment";
-import { labelSet } from 'utils';
+import { LABELS } from 'CONSTANTS';
 
 interface Props {
   visible: boolean
@@ -22,28 +22,19 @@ interface Props {
   selectLabel?: any
   inputData: any
   removeName: any
-  saveData: any
   updateData: any
 }
-const storedLabels = [
-  { color: 'yellow', name: '유산소', eng: 'run' },
-  { color: 'green', name: '등', eng: 'back' },
-  { color: 'skyblue', name: '가슴', eng: 'chest' },
-  { color: 'blue', name: '삼두', eng: 'triceps' },
-  { color: 'purple', name: '이두', eng: 'biceps' },
-  { color: 'orange', name: '어깨', eng: 'shoulder' },
-  { color: 'brown', name: '하체', eng: 'legs' },
-  { color: 'red', name: '복부', eng: 'abs' },
-]
+
 const Modal: React.FC<Props> = (props) => {
-  console.log(labelSet);
   const updateData = () => {
+
+    let id = props.workoutId || moment().unix();
     props.updateData({
-      isNew: props.workoutId === 0 ? true : false,
-      id: props.workoutId || moment().unix(),
-      type: labelSet[props.selectedLabel].eng,
-      name: props.workout.name, unit: 'kg',
-      detail: [{ weight: props.workout.weight, reps: props.workout.reps }]
+      [id]: {
+        type: LABELS[props.selectedLabel].type,
+        name: props.workout.name, unit: 'kg',
+        detail: [{ weight: props.workout.weight, reps: props.workout.reps }]
+      }
     });
     props.closeModal()
   }
@@ -61,7 +52,7 @@ const Modal: React.FC<Props> = (props) => {
               <div className="ModalTop">
                 <div className="label-wrap">
                   {
-                    props.labels.map((i, j) => {
+                    LABELS.map((i, j) => {
                       return (
                         <span key={j} onClick={() => props.selectLabel(j)} className={`label ${i.color} ${props.selectedLabel === j ? 'selected' : ''}`}>{i.name}</span>
                       )
@@ -71,13 +62,13 @@ const Modal: React.FC<Props> = (props) => {
               </div>
 
               <div className="ModalHead">
-                <Input className={props.labels[props.selectedLabel].color} onChange={props.inputData} name='name' value={props.workout.name} hasBtn={true} btnClick={() => props.removeName()} />
+                <Input className={LABELS[props.selectedLabel].color} onChange={props.inputData} name='name' value={props.workout.name} hasBtn={true} btnClick={() => props.removeName()} />
                 <IconBtn icon={<Check width='16px' fill='#F76304' />} />
               </div>
 
               <div className="ModalBody">
                 <div className="row">
-                  <span className={`txt ${props.labels[props.selectedLabel].color}`}>Weight</span>
+                  <span className={`txt ${LABELS[props.selectedLabel].color}`}>Weight</span>
                   <div className="wrap">
                     <Input style={{ width: '80px' }} onChange={props.inputData} name='weight' value={props.workout.weight} />
                     <IconBtn icon={<ArrowDown />} style={{ marginLeft: '8px' }} />
@@ -88,7 +79,7 @@ const Modal: React.FC<Props> = (props) => {
 
                 </div>
                 <div className="row">
-                  <span className={`txt ${props.labels[props.selectedLabel].color}`}>Reps</span>
+                  <span className={`txt ${LABELS[props.selectedLabel].color}`}>Reps</span>
                   <div className="wrap">
                     <Input style={{ width: '80px' }} onChange={props.inputData} name='reps' value={props.workout.reps} />
                     <IconBtn icon={<ArrowDown />} style={{ marginLeft: '8px' }} />

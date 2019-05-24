@@ -3,7 +3,8 @@ import { all, takeLatest, put, call, select } from 'redux-saga/effects'
 import {
   SELECTED_DATE_UPDATE,
   updateSelectedDateSuccess,
-  updateSelectedDateFailure
+  updateSelectedDateFailure,
+  addLabel
 } from 'stores/modules/workout';
 
 import {
@@ -12,15 +13,22 @@ import {
 } from 'stores/modules/workout';
 
 import LocalForage from 'api/LocalForage';
+import utils from 'utils';
+import { LABELS } from 'CONSTANTS';
 
-export const getWorkout = (state: any) => state.workout
-
+const getWorkout = (state: any) => state.workout
+const getModal = (state: any) => state.modal
 
 function* updateSelectedDate({ payload }: any) {
   try {
-
-    const data = yield LocalForage.get(payload.format('YYYY-MM-DD')).then(res => (res || { data: null }))
-    yield put(updateSelectedDateSuccess({ date: payload, data: data.data }))
+    const data = yield LocalForage.get(payload.format('YYYY-MM-DD')).then(res => (res || {}));
+    let startWeek = payload.clone().startOf('month').week();
+    let endWeek = payload.clone().endOf('month').week() === 1 ? 53 : payload.clone().endOf('month').week();
+    let dates = utils.getCalendarDates(startWeek, endWeek);
+    const labels = yield LocalForage.getSome(dates).then(res => {
+      return utils.getUniqueItem(res);
+    })
+    yield put(updateSelectedDateSuccess({ date: payload, data: data, labels: labels }))
   } catch (e) {
     //yield put(updateSelectedDate(e));
   }
@@ -32,28 +40,18 @@ export function* updateSelectedDateSaga() {
 function* updateData({ payload }: any) {
   try {
     let state = yield select(getWorkout);
-    console.log(payload.isNew);
-    if (payload.isNew) {
-      yield LocalForage.set(
-        state.selectedDate.format('YYYY-MM-DD'),
-        { date: state.selectedDate.format('YYYY-MM-DD'), data: state.data.concat(payload) }
-      )
-      yield put(updateDataSuccess(payload));
-    } else {
-      console.log(state.data);
-      console.log(payload.detail);
-      let temp = state.data;
-      temp[0].detail = temp[0].detail.concat(payload.detail);
-      console.log(temp);
-      yield LocalForage.set(
-        state.selectedDate.format('YYYY-MM-DD'),
-        {
-          date: state.selectedDate.format('YYYY-MM-DD'), data: temp
-        }
-      )
-      yield put(updateDataSuccess({ ...payload, detail: temp[0].detail }));
-    }
-
+    let tmp: any = (Object.values(payload)[0]);
+    console.log(tmp);
+    yield put(addLabel(LABELS[tmp.type]));
+    const data = yield LocalForage.set(
+      state.selectedDate.format('YYYY-MM-DD'),
+      payload
+    ).then(() => {
+      return LocalForage.get(state.selectedDate.format('YYYY-MM-DD')).then((res) => {
+        return res;
+      });
+    })
+    yield put(updateDataSuccess(data));
 
   } catch (e) {
 

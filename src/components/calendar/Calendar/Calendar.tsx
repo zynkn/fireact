@@ -7,14 +7,14 @@ import { ArrowLeft, ArrowRight, Add } from 'components/common/Icons'
 
 
 const colorSet: { [key: string]: any } = {
-  'run': 'yellow',
+  'aerobic': 'yellow',
   'chest': 'skyblue',
   'biceps': 'purple',
   'triceps': 'blue',
   'shoulder': 'orange',
-  'legs': 'brown',
+  'lower': 'brown',
   'back': 'green',
-  'abs': 'red',
+  'abdominal': 'red',
 }
 
 

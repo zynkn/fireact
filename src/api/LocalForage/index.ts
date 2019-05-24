@@ -1,78 +1,91 @@
 import localforage from 'localforage';
 export default (function () {
-  const arrayToObject = (array: any, keyField: any) => {
-    return array.reduce((obj: any, item: any) => {
-      obj[item[keyField]] = item.data
-      return obj
+  const arrayToObject = (array: any) => {
+    return (array.filter((item: any) => {
+      if (Object.values(item)[0] !== null) {
+        return item;
+      }
+    })).reduce((acc: any, cur: any) => {
+      acc[Object.keys(cur)[0]] = Object.values(cur)[0];
+      return acc;
     }, {})
   }
+  const labelSet = [
+    { color: 'yellow', name: '유산소' },
+    { color: 'green', name: '등' },
+    { color: 'skyblue', name: '가슴' },
+    { color: 'blue', name: '삼두' },
+    { color: 'purple', name: '이두' },
+    { color: 'orange', name: '어깨' },
+    { color: 'brown', name: '하체' },
+    { color: 'red', name: '복부' }
+  ]
+
+  const settingStore = localforage.createInstance({
+    storeName: 'setting'
+  })
+  const workoutStore = localforage.createInstance({
+    storeName: 'workout'
+  })
 
   return {
-    init: () => {
+    init: (store: string = 'workout') => {
       localforage.config({
-        storeName: 'workout',
+        storeName: store,
       });
-      // localforage.setItem('2019-05-20', workout);
-      // localforage.setItem('2019-05-22', workout2);
     },
-    set: (key: any, data: any) => {
-      return localforage.setItem(key, data).then((res) => {
+    setLabels: () => {
+      console.log('indexedDB에 label값이 없으므로 세팅.')
+      return settingStore.setItem('labels', labelSet).then(res => {
         return res;
       })
     },
-    get: (key: any) => {
-      return localforage.getItem(key).then((item) => {
+    getLabels: () => {
+      return settingStore.getItem('labels').then((item) => {
         return item;
       })
     },
+    get: (key: any) => {
+
+      return workoutStore.getItem(key).then((item) => {
+        return item;
+      })
+    },
+    set: (key: any, data: any) => {
+
+      const uid = Object.keys(data)[0];
+      return workoutStore.getItem(key).then((item: any) => {
+        /*Empty */
+        if (item === null) {
+          return workoutStore.setItem(key, data).then(res => res);
+        }
+        if (!item[uid]) {
+          return workoutStore.setItem(key, { ...item, ...data }).then(res => res)
+        } else {
+          return workoutStore.setItem(key, { ...item, [uid]: { ...item[uid], detail: item[uid].detail.concat(data[uid].detail) } })
+        }
+
+      })
+    },
     getSome: async (keys: Array<string>) => {
+
       let promises = keys.map(async (key) => {
-        return localforage.getItem(key).then((res) => {
-          return res;
+        return workoutStore.getItem(key).then((res) => {
+          return { [key]: res };
         })
       });
       return Promise.all(promises).then(async (res) => {
-        return await arrayToObject(res.filter(i => i), 'date');
+        return await arrayToObject(res);
       })
     },
     getAll: async () => {
-      return await localforage.keys().then(async (keys) => {
+
+      return await workoutStore.keys().then(async (keys) => {
         let promises = keys.map(function (key) {
-          return localforage.getItem(key);
+          return workoutStore.getItem(key);
         });
         return Promise.all(promises).then(res => { console.log(res); return res; });
       });
     }
   }
 })();
-
-// export const init = () => {
-//   localforage.config({
-//     storeName: 'workout'
-//   });
-//   //localforage.setItem('2018-11-11', { date: '2018-11-11' });
-
-//   return getAllItem()
-// }
-// export const addItem = () => {
-
-// }
-
-
-// export const getAllItem = async () => {
-//   let temp: any = [];
-//   let idx = 0;
-//   await localforage.keys().then((keys) => {
-//     console.log(keys);
-//     keys.forEach(async (key) => {
-//       await localforage.getItem(key).then(item => {
-//         idx++;
-//         temp.push({ [key]: item });
-//       });
-//     })
-//   });
-//   console.log(temp)
-//   console.log('await end?')
-//   return temp;
-
-// }

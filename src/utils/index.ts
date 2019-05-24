@@ -30,7 +30,7 @@ export default (function () {
       let labels: { [key: string]: Array<string> } = {};
       for (let i in data) {
         let temp = new Set();
-        for (let j = 0; j < data[i].length; j++) {
+        for (let j in data[i]) {
           temp.add(data[i][j][key]);
         }
         labels[i] = Array.from(temp);
