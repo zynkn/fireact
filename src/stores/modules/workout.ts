@@ -76,11 +76,11 @@ export default handleActions({
     });
   },
   [LABEL_ADD]: (state, { payload }: any) => {
+    console.log(payload);
     return produce(state, draft => {
       if (state.labels[state.selectedDate.format('YYYY-MM-DD')] === undefined) {
         draft.labels[state.selectedDate.format('YYYY-MM-DD')] = [payload];
-      }
-      else if (!state.labels[state.selectedDate.format('YYYY-MM-DD')].includes(payload)) {
+      } else if (!state.labels[state.selectedDate.format('YYYY-MM-DD')].includes(payload)) {
         draft.labels[state.selectedDate.format('YYYY-MM-DD')].push(payload);
       }
     })

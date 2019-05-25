@@ -9,7 +9,6 @@ import { LABELS } from 'CONSTANTS';
 
 interface Props {
   visible: boolean
-  labels: Array<any>
   selectedLabel: number
   workoutId: number
   workout: {
@@ -23,21 +22,27 @@ interface Props {
   inputData: any
   removeName: any
   updateData: any
+  controlData: any
 }
 
 const Modal: React.FC<Props> = (props) => {
-  const updateData = () => {
 
+  const NUMBER_ONLY = /^[0-9]{0,4}\.{0,1}[0-9]{0,2}$/;
+  const INTEGER_ONLY = /^[0-9]{0,3}$/;
+  const LENGTH_RESTRICT = /^.{0,4}$/;
+  const updateData = () => {
     let id = props.workoutId || moment().unix();
-    props.updateData({
-      [id]: {
-        type: LABELS[props.selectedLabel].type,
-        name: props.workout.name, unit: 'kg',
-        detail: [{ weight: props.workout.weight, reps: props.workout.reps }]
-      }
-    });
+    props.updateData(id);
     props.closeModal()
   }
+
+  const onChangeHandle = (name: string, e: any, regex?: any) => {
+    console.log(e.target.value);
+    if (regex.test(e.target.value)) {
+      props.inputData({ name: name, value: e.target.value });
+    }
+  }
+
   return (
     <>
       {
@@ -62,7 +67,9 @@ const Modal: React.FC<Props> = (props) => {
               </div>
 
               <div className="ModalHead">
-                <Input className={LABELS[props.selectedLabel].color} onChange={props.inputData} name='name' value={props.workout.name} hasBtn={true} btnClick={() => props.removeName()} />
+                <Input className={LABELS[props.selectedLabel].color}
+                  onChange={(e: any) => onChangeHandle('name', e, LENGTH_RESTRICT)} name='name' value={props.workout.name}
+                  hasBtn={true} btnClick={() => props.removeName()} />
                 <IconBtn icon={<Check width='16px' fill='#F76304' />} />
               </div>
 
@@ -70,20 +77,22 @@ const Modal: React.FC<Props> = (props) => {
                 <div className="row">
                   <span className={`txt ${LABELS[props.selectedLabel].color}`}>Weight</span>
                   <div className="wrap">
-                    <Input style={{ width: '80px' }} onChange={props.inputData} name='weight' value={props.workout.weight} />
-                    <IconBtn icon={<ArrowDown />} style={{ marginLeft: '8px' }} />
-                    <IconBtn icon={<ArrowUp />} style={{ marginLeft: '8px' }} />
+                    <Input style={{ width: '80px' }} onChange={(e: any) => onChangeHandle('weight', e, NUMBER_ONLY)} name='weight' value={props.workout.weight} />
+                    <IconBtn icon={<ArrowDown />} style={{ marginLeft: '8px' }} onClick={() => props.controlData({ name: 'weight', action: 'decrease' })} />
+                    <IconBtn icon={<ArrowUp />} style={{ marginLeft: '8px' }} onClick={() => props.controlData({ name: 'weight', action: 'increase' })} />
                   </div>
                 </div>
-                <div className="row">
-
+                <div className="row" style={{ justifyContent: 'flex-end' }}>
+                  <button className="unitBtn" onClick={() => props.controlData({ name: 'weight', action: 'increase', unit: 2.5 })}>2.5kg</button>
+                  <button className="unitBtn" onClick={() => props.controlData({ name: 'weight', action: 'increase', unit: 5 })}>5kg</button>
+                  <button className="unitBtn" onClick={() => props.controlData({ name: 'weight', action: 'increase', unit: 10 })}>10kg</button>
                 </div>
                 <div className="row">
                   <span className={`txt ${LABELS[props.selectedLabel].color}`}>Reps</span>
                   <div className="wrap">
-                    <Input style={{ width: '80px' }} onChange={props.inputData} name='reps' value={props.workout.reps} />
-                    <IconBtn icon={<ArrowDown />} style={{ marginLeft: '8px' }} />
-                    <IconBtn icon={<ArrowUp />} style={{ marginLeft: '8px' }} />
+                    <Input style={{ width: '80px' }} onChange={(e: any) => onChangeHandle('reps', e, INTEGER_ONLY)} name='reps' value={props.workout.reps} />
+                    <IconBtn icon={<ArrowDown />} style={{ marginLeft: '8px' }} onClick={() => props.controlData({ name: 'reps', action: 'decrease' })} />
+                    <IconBtn icon={<ArrowUp />} style={{ marginLeft: '8px' }} onClick={() => props.controlData({ name: 'reps', action: 'increase' })} />
                   </div>
                 </div>
               </div>
@@ -92,7 +101,6 @@ const Modal: React.FC<Props> = (props) => {
                 <button>Cancel</button>
                 {/* <button onClick={() => { props.saveData(props.selectedDate.format('YYYY-MM-DD')); props.closeModal() }}>Confirm</button> */}
                 <button onClick={() => { updateData() }}>Confirm</button>
-
               </div>
 
 

@@ -4,13 +4,12 @@ import Modal from 'components/common/Modal';
 import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { closeModal, selectLabel, toggleModal, removeName, inputData, } from 'stores/modules/modal';
+import { closeModal, selectLabel, toggleModal, removeName, inputData, controlData } from 'stores/modules/modal';
 import { updateData } from 'stores/modules/workout';
 
 
 interface Props {
   isOpen: boolean
-  storedLabels: Array<any>
   selectedLabel: number
   workout: {
     name: string
@@ -24,6 +23,7 @@ interface Props {
   removeName: typeof removeName
   inputData: typeof inputData
   updateData: typeof updateData
+  controlData: typeof controlData
   date: any
 }
 
@@ -33,7 +33,6 @@ class ModalContainer extends React.Component<Props> {
     return (
       <Modal visible={this.props.isOpen}
         selectedLabel={this.props.selectedLabel}
-        labels={this.props.storedLabels}
         closeModal={this.props.closeModal}
         selectLabel={this.props.selectLabel}
         removeName={this.props.removeName}
@@ -42,6 +41,7 @@ class ModalContainer extends React.Component<Props> {
         selectedDate={this.props.date}
         updateData={this.props.updateData}
         workoutId={this.props.workoutId}
+        controlData={this.props.controlData}
       />
     )
   }
@@ -51,7 +51,6 @@ export default connect(
   ({ modal, workout }: StoreState) => ({
     isOpen: modal.isOpen,
     workoutId: modal.id,
-    storedLabels: modal.storedLabels,
     selectedLabel: modal.selectedLabel,
     workout: modal.workout,
     date: workout.selectedDate,
@@ -63,5 +62,6 @@ export default connect(
     removeName: bindActionCreators(removeName, dispatch),
     inputData: bindActionCreators(inputData, dispatch),
     updateData: bindActionCreators(updateData, dispatch),
+    controlData: bindActionCreators(controlData, dispatch),
   })
 )(ModalContainer);

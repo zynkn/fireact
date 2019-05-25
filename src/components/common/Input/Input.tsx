@@ -12,17 +12,21 @@ interface Props {
   hasBtn?: boolean
   style?: any
   name?: string
+  onFocus?: any
 }
 const Input: React.FC<Props> = (props) => {
 
   return (
     <div className={`Input ${props.className}`} style={props.style}>
-      <input value={props.value} type={props.type || 'text'} className={`${props.className}`} onChange={(e) => { props.onChange({ name: props.name, value: e.target.value }) }} />
+      <input value={props.value} type={props.type || 'text'}
+        className={`${props.className}`}
+        onFocus={props.onFocus}
+        onChange={props.onChange}
+        style={props.children ? { paddingRight: '36px' } : {}}
+      />
       {
-        props.hasBtn && props.value !== '' ?
-          <button onClick={props.btnClick}>
-            <Cancel width="16px" />
-          </button>
+        props.children && props.value !== '' ?
+          props.children
           :
           null
       }

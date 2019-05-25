@@ -9,3 +9,11 @@ export const LABELS = [
   { type: 'lower', color: 'brown', name: '하체' },
   { type: 'abdominal', color: 'red', name: '복부' }
 ]
+
+export const getLabelIndex = (type: string) => {
+  return LABELS.findIndex((i: any) => {
+    if (i.type === type) {
+      return i;
+    }
+  })
+}

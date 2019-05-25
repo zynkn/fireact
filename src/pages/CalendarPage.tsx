@@ -1,7 +1,7 @@
 import React from 'react';
 import Pane from 'components/common/Pane';
 import WorkoutContainer from 'containers/WorkoutContainer';
-import ModalContainer from 'containers/ModalContainer';
+import ModalContainer2 from 'containers/ModalContainer2';
 
 
 const CalendarPage: React.FC = () => {
@@ -9,7 +9,7 @@ const CalendarPage: React.FC = () => {
   return (
     <Pane className="lg">
       <WorkoutContainer />
-      <ModalContainer />
+      <ModalContainer2 />
     </Pane>
   )
 }

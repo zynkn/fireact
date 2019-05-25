@@ -7,6 +7,7 @@ import LocalForage from 'api/LocalForage'
 
 function* openModal({ payload }: any) {
   try {
+    console.log('OPENMODAL', payload)
     yield put(openModalSuccess(payload))
   } catch (e) {
     // yield put({ type: FAILED_GET_USER_INFO, e })

@@ -3,7 +3,6 @@ import { all, takeLatest, put, call, select } from 'redux-saga/effects'
 import {
   SELECTED_DATE_UPDATE,
   updateSelectedDateSuccess,
-  updateSelectedDateFailure,
   addLabel
 } from 'stores/modules/workout';
 
@@ -15,9 +14,10 @@ import {
 import LocalForage from 'api/LocalForage';
 import utils from 'utils';
 import { LABELS } from 'CONSTANTS';
+import { any } from 'prop-types';
 
-const getWorkout = (state: any) => state.workout
-const getModal = (state: any) => state.modal
+const WORKOUT_STATE = (state: any) => state.workout
+const MODAL_STATE = (state: any) => state.modal
 
 function* updateSelectedDate({ payload }: any) {
   try {
@@ -39,15 +39,31 @@ export function* updateSelectedDateSaga() {
 
 function* updateData({ payload }: any) {
   try {
-    let state = yield select(getWorkout);
-    let tmp: any = (Object.values(payload)[0]);
-    console.log(tmp);
-    yield put(addLabel(LABELS[tmp.type]));
+    const workoutState = yield select(WORKOUT_STATE);
+    const modalState = yield select(MODAL_STATE);
+
+    yield put(addLabel(LABELS[LABELS.findIndex((i: any) => i.type === LABELS[modalState.selectedLabel].type)].type));
+    //console.log(payload);
+    // console.log(
+    //   {
+    //     type: LABELS[modalState.selectedLabel].type,
+    //     name: modalState.workout.name,
+    //     unit: 'kg',
+    //     detail: [{ weight: modalState.workout.weight, reps: modalState.workout.reps }]
+    //   }
+    // )
     const data = yield LocalForage.set(
-      state.selectedDate.format('YYYY-MM-DD'),
-      payload
+      workoutState.selectedDate.format('YYYY-MM-DD'),
+      {
+        [payload]: {
+          type: LABELS[modalState.selectedLabel].type,
+          name: modalState.workout.name,
+          unit: 'kg',
+          detail: [{ weight: modalState.workout.weight, reps: modalState.workout.reps }]
+        }
+      }
     ).then(() => {
-      return LocalForage.get(state.selectedDate.format('YYYY-MM-DD')).then((res) => {
+      return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
         return res;
       });
     })

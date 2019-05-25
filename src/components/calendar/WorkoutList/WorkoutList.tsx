@@ -53,7 +53,6 @@ const ListItem: React.FC<ItemProps> = (props) => {
     let nextItem: object = {};
     return props.detail.map((current, index, array) => {
       nextItem = array[index + 1];
-      console.log(props.type);
       if (JSON.stringify(nextItem) === JSON.stringify(current)) {
         return <span key={index} className={`Tag square ${colorSet[props.type]}`} />
       } else {
