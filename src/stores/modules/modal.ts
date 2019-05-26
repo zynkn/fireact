@@ -65,7 +65,7 @@ const initialState: ModalState = {
 
 export default handleActions({
   [OPEN_MODAL_SUCCESS]: (state, { payload }: any) => {
-    console.log(payload);
+    //console.log(payload);
     return produce(state, draft => {
       draft.isOpen = true;
       if (payload) {
@@ -85,6 +85,7 @@ export default handleActions({
   [CLOSE_MODAL_SUCCESS]: (state) => {
     return produce(state, draft => {
       draft.isOpen = false
+      draft.id = 0
     })
   },
 

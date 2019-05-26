@@ -26,8 +26,18 @@ const WorkoutList: React.FC<Props> = ({ data, openModal }) => {
   const generateList = () => {
     let arr = [];
     for (let i in data) {
+      console.log(data[i], i);
+      const payload = {
+        id: i,
+        workout: {
+          name: data[i].name,
+          weight: data[i].detail[data[i].detail.length - 1].weight,
+          reps: data[i].detail[data[i].detail.length - 1].reps,
+        },
+        selectedLabel: data[i].type
+      }
       arr.push(
-        <ListItem key={i} id={i} {...data[i]} openModal={openModal} />
+        <ListItem key={i} id={i} {...data[i]} openModal={() => { console.log('open'); openModal({ ...payload }) }} />
       )
     }
     return arr;
@@ -54,9 +64,9 @@ const ListItem: React.FC<ItemProps> = (props) => {
     return props.detail.map((current, index, array) => {
       nextItem = array[index + 1];
       if (JSON.stringify(nextItem) === JSON.stringify(current)) {
-        return <span key={index} className={`Tag square ${colorSet[props.type]}`} />
+        return <span key={index} className={`Tag square ${colorSet[props.type]}`} onClick={(e) => { e.stopPropagation(); console.log(props.id, index); }} />
       } else {
-        return <span key={index} className={`Tag ${colorSet[props.type]}`}>{current.weight}kg {current.reps}reps</span>
+        return <span key={index} className={`Tag ${colorSet[props.type]}`} onClick={(e) => { e.stopPropagation(); console.log(props.id, index); }} >{current.weight}kg {current.reps}reps</span>
       }
     })
   }

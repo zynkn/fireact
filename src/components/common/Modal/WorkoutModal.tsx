@@ -10,7 +10,7 @@ import { LABELS } from 'CONSTANTS';
 const WorkoutModal = (props: any) => {
   const NUMBER_ONLY = /^[0-9]{0,3}\.{0,1}[0-9]{0,2}$/;
   const INTEGER_ONLY = /^[0-9]{0,3}$/;
-  const LENGTH_RESTRICT = /^.{0,4}$/;
+  const LENGTH_RESTRICT = /^.{0,32}$/;
 
   const onChangeHandle = (name: string, e: any, regex?: any) => {
     if (regex.test(e.target.value)) {
@@ -18,17 +18,28 @@ const WorkoutModal = (props: any) => {
     }
   }
   const updateData = () => {
-    let id = props.workoutId || moment().unix();
-    props.updateData(id);
-    props.closeModal()
+
+    if (isActive()) {
+      let id = props.workoutId || moment().unix();
+      props.updateData(id);
+      props.closeModal()
+    }
+
   }
 
   const isActive = () => {
 
-    if (props.workout.name && props.workout.weight && props.workout.reps) {
+    if (props.workout.name && props.workout.reps > 0) {
       return `${LABELS[props.selectedLabel].color}`;
     }
     return '';
+  }
+
+  const handleSelectLabel = (index: any) => {
+    console.log(props.workoutId)
+    if (!props.workoutId) {
+      props.selectLabel(index)
+    }
   }
   const handleFocus = (event: any) => event.target.select();
   return (
@@ -40,15 +51,15 @@ const WorkoutModal = (props: any) => {
             {
               LABELS.map((i, j) => {
                 return (
-                  <span key={j} onClick={() => props.selectLabel(j)}
-                    className={`label ${i.color} ${props.selectedLabel === j ? 'selected' : ''}`}>{i.name}</span>
+                  <span key={j} onClick={() => { handleSelectLabel(j) }}
+                    className={`label ${props.workoutId ? 'inactive' : ''} ${i.color} ${props.selectedLabel === j ? 'selected' : ''}`}>{i.name}</span>
                 )
               })
             }
           </div>
         </div>
         <div className="ModalHead">
-          <Input value={props.workout.name} onChange={(e: any) => onChangeHandle('name', e, LENGTH_RESTRICT)}>
+          <Input value={props.workout.name} disabled={props.workoutId ? true : false} onChange={(e: any) => onChangeHandle('name', e, LENGTH_RESTRICT)}>
             <button onClick={() => props.removeName()}>
               <Cancel width="16px" />
             </button>
@@ -75,7 +86,7 @@ const WorkoutModal = (props: any) => {
           </div>
         </div>
         <div className="ModalFoot">
-          <button >Cancel</button>
+          <button onClick={props.closeModal}>Cancel</button>
           <button onClick={() => { updateData() }} className={isActive()} >Confirm</button>
         </div>
       </div>

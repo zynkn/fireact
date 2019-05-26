@@ -13,6 +13,7 @@ interface Props {
   style?: any
   name?: string
   onFocus?: any
+  disabled?: boolean
 }
 const Input: React.FC<Props> = (props) => {
 
@@ -22,10 +23,11 @@ const Input: React.FC<Props> = (props) => {
         className={`${props.className}`}
         onFocus={props.onFocus}
         onChange={props.onChange}
+        disabled={props.disabled}
         style={props.children ? { paddingRight: '36px' } : {}}
       />
       {
-        props.children && props.value !== '' ?
+        props.children && !props.disabled && props.value !== '' ?
           props.children
           :
           null

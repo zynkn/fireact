@@ -42,7 +42,7 @@ function* updateData({ payload }: any) {
     const workoutState = yield select(WORKOUT_STATE);
     const modalState = yield select(MODAL_STATE);
 
-    yield put(addLabel(LABELS[LABELS.findIndex((i: any) => i.type === LABELS[modalState.selectedLabel].type)].type));
+
     //console.log(payload);
     // console.log(
     //   {
@@ -66,7 +66,8 @@ function* updateData({ payload }: any) {
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
         return res;
       });
-    })
+    });
+    yield put(addLabel(LABELS[LABELS.findIndex((i: any) => i.type === LABELS[modalState.selectedLabel].type)].type));
     yield put(updateDataSuccess(data));
 
   } catch (e) {
