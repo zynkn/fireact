@@ -19,9 +19,10 @@ const colorSet: { [key: string]: any } = {
 interface Props {
   data: { [key: string]: WorkoutDataProps }
   openModal: any
+  editData: any
   [key: string]: any
 }
-const WorkoutList: React.FC<Props> = ({ data, openModal }) => {
+const WorkoutList: React.FC<Props> = ({ data, openModal, editData }) => {
 
   const generateList = () => {
     let arr = [];
@@ -37,7 +38,7 @@ const WorkoutList: React.FC<Props> = ({ data, openModal }) => {
         selectedLabel: data[i].type
       }
       arr.push(
-        <ListItem key={i} id={i} {...data[i]} openModal={() => { console.log('open'); openModal({ ...payload }) }} />
+        <ListItem key={i} id={i} {...data[i]} openModal={() => { console.log('open'); openModal({ ...payload }) }} editData={editData} />
       )
     }
     return arr;
@@ -55,18 +56,31 @@ export default WorkoutList;
 
 interface ItemProps extends WorkoutDataProps {
   openModal: any
+  editData: any
   id: any
 }
 
 const ListItem: React.FC<ItemProps> = (props) => {
+
+  const handleEditData = (e: any, index: number) => {
+    handleClick();
+    e.stopPropagation();
+
+    //props.openModal(index);
+    // props.editData({
+    //   timestamp: props.id,
+    //   index: index
+    // });
+    console.log(props.id, index)
+  }
   const generateTag = () => {
     let nextItem: object = {};
     return props.detail.map((current, index, array) => {
       nextItem = array[index + 1];
       if (JSON.stringify(nextItem) === JSON.stringify(current)) {
-        return <span key={index} className={`Tag square ${colorSet[props.type]}`} onClick={(e) => { e.stopPropagation(); console.log(props.id, index); }} />
+        return <span key={index} className={`Tag square ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index) }} />
       } else {
-        return <span key={index} className={`Tag ${colorSet[props.type]}`} onClick={(e) => { e.stopPropagation(); console.log(props.id, index); }} >{current.weight}kg {current.reps}reps</span>
+        return <span key={index} className={`Tag ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index) }} >{current.weight}kg {current.reps}reps</span>
       }
     })
   }
@@ -81,8 +95,8 @@ const ListItem: React.FC<ItemProps> = (props) => {
         weight: props.detail[props.detail.length - 1].weight,
         reps: props.detail[props.detail.length - 1].reps,
       }
-
     }
+    console.log(data);
     props.openModal(data);
   }
 

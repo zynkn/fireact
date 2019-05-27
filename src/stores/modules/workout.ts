@@ -24,10 +24,18 @@ export const LABEL_ADD = 'workout/LABEL_ADD';
 export const addLabel = createAction(LABEL_ADD);
 
 
+// TODO: Name change (UPDATE => ADD) 
 export const DATA_UPDATE = 'workout/DATA_UPDATE';
 export const updateData = createAction(DATA_UPDATE);
 const DATA_UPDATE_SUCCESS = 'workout/DATA_UPDATE_SUCCESS';
 export const updateDataSuccess = createAction(DATA_UPDATE_SUCCESS);
+
+
+// TODO: Name change (EDIT => UPDATE);
+export const DATA_EDIT = 'workout/DATA_EDIT';
+export const editData = createAction(DATA_EDIT);
+const DATA_EDIT_SUCCESS = 'workout/DATA_EDIT_SUCCESS';
+export const editDataSuccess = createAction(DATA_EDIT_SUCCESS);
 
 export const DATA_INIT = 'workout/DATA_INIT';
 export const initData = createAction(DATA_INIT);
@@ -89,6 +97,11 @@ export default handleActions({
     return produce(state, draft => {
       draft.data = action.payload;
     });
+  },
+  [DATA_EDIT_SUCCESS]: (state, action: any) => {
+    return produce(state, draft => {
+
+    })
   },
   [INITIALIZE_DATA]: (state, action: any) => {
     return produce(state, draft => {

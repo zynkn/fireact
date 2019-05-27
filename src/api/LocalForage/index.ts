@@ -1,4 +1,5 @@
 import localforage from 'localforage';
+import workout from 'stores/modules/workout';
 export default (function () {
   const arrayToObject = (array: any) => {
     return (array.filter((item: any) => {
@@ -46,27 +47,11 @@ export default (function () {
       })
     },
     get: (key: any) => {
-
       return workoutStore.getItem(key).then((item) => {
         return item;
       })
     },
-    set: (key: any, data: any) => {
 
-      const uid = Object.keys(data)[0];
-      return workoutStore.getItem(key).then((item: any) => {
-        /*Empty */
-        if (item === null) {
-          return workoutStore.setItem(key, data).then(res => res);
-        }
-        if (!item[uid]) {
-          return workoutStore.setItem(key, { ...item, ...data }).then(res => res)
-        } else {
-          return workoutStore.setItem(key, { ...item, [uid]: { ...item[uid], detail: item[uid].detail.concat(data[uid].detail) } })
-        }
-
-      })
-    },
     getSome: async (keys: Array<string>) => {
 
       let promises = keys.map(async (key) => {
@@ -86,6 +71,33 @@ export default (function () {
         });
         return Promise.all(promises).then(res => { console.log(res); return res; });
       });
+    },
+    set: (key: any, data: any) => {
+      const uid = Object.keys(data)[0];
+      return workoutStore.getItem(key).then((item: any) => {
+        /*Empty */
+        if (item === null) {
+          return workoutStore.setItem(key, data).then(res => res);
+        }
+        if (!item[uid]) {
+          return workoutStore.setItem(key, { ...item, ...data }).then(res => res)
+        } else {
+          return workoutStore.setItem(key, { ...item, [uid]: { ...item[uid], detail: item[uid].detail.concat(data[uid].detail) } })
+        }
+
+      })
+    },
+    update: (key: any, data: any) => {
+      const uid = data.timestamp.toString();
+      console.log(data);
+      return workoutStore.getItem(key).then((item: any) => {
+        item[uid].detail.splice(data.index, 1, { weight: data.weight, reps: data.reps });
+
+        return workoutStore.setItem(key, {
+          ...item,
+        })
+      })
+
     }
   }
 })();

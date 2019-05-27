@@ -4,7 +4,7 @@ import WorkoutList from 'components/calendar/WorkoutList';
 import moment, { Moment as MomentTypes } from "moment";
 
 import { WorkoutDataProps } from 'stores/modules/workout';
-import { updateSelectedDate, setCalendarLabels, initData, initializeData } from 'stores/modules/workout';
+import { updateSelectedDate, setCalendarLabels, initData, initializeData, editData } from 'stores/modules/workout';
 import { openModal, toggleModal, getLabels } from 'stores/modules/modal';
 import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
@@ -22,6 +22,7 @@ interface Props {
   toggleModal: typeof toggleModal
   initializeData: typeof initializeData
   getLabels: typeof getLabels
+  editData: typeof editData
 }
 class WorkoutContainer extends React.Component<Props> {
 
@@ -50,7 +51,8 @@ class WorkoutContainer extends React.Component<Props> {
           selectDate={this.props.selectDate}
           openModal={this.props.openModal}
         />
-        <WorkoutList data={this.props.data} openModal={this.props.openModal} />
+        <button onClick={this.props.editData} >Button2</button>
+        <WorkoutList data={this.props.data} openModal={this.props.openModal} editData={this.props.editData} />
       </>
     )
   }
@@ -69,6 +71,7 @@ export default connect(
     toggleModal: bindActionCreators(toggleModal, dispatch),
     initializeData: bindActionCreators(initializeData, dispatch),
     getLabels: bindActionCreators(getLabels, dispatch),
+    editData: bindActionCreators(editData, dispatch),
 
   })
 )(WorkoutContainer);

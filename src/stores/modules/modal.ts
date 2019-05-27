@@ -42,6 +42,7 @@ export interface ModalState {
   selectedLabel: number
   storedLabels: any
   id: number
+  isUpdate?: boolean
   workout: {
     name: string
     weight: number
@@ -54,6 +55,7 @@ const initialState: ModalState = {
   isOpen: false,
   id: 0,
   selectedLabel: 0,
+  isUpdate: false,
   workout: {
     name: '',
     weight: 0,
