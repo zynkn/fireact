@@ -30,6 +30,11 @@ export const updateData = createAction(DATA_UPDATE);
 const DATA_UPDATE_SUCCESS = 'workout/DATA_UPDATE_SUCCESS';
 export const updateDataSuccess = createAction(DATA_UPDATE_SUCCESS);
 
+export const DATA_ADD = 'workout/DATA_ADD';
+export const addData = createAction(DATA_ADD);
+const DATA_ADD_SUCCESS = 'workout/DATA_ADD_SUCCESS';
+export const addDataSuccess = createAction(DATA_ADD_SUCCESS);
+
 
 // TODO: Name change (EDIT => UPDATE);
 export const DATA_EDIT = 'workout/DATA_EDIT';
@@ -91,6 +96,11 @@ export default handleActions({
       } else if (!state.labels[state.selectedDate.format('YYYY-MM-DD')].includes(payload)) {
         draft.labels[state.selectedDate.format('YYYY-MM-DD')].push(payload);
       }
+    })
+  },
+  [DATA_ADD_SUCCESS]: (state, action: any) => {
+    return produce(state, draft => {
+
     })
   },
   [DATA_UPDATE_SUCCESS]: (state, action: any) => {

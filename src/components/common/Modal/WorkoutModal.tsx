@@ -18,8 +18,13 @@ const WorkoutModal = (props: any) => {
     }
   }
   const updateData = () => {
-
-    if (isActive()) {
+    console.log(props.isUpdate)
+    if (props.isUpdate) {
+      console.log('Update ? ')
+      props.editData();
+      props.closeModal()
+    } else if (isActive()) {
+      console.log(' 뭐야')
       let id = props.workoutId || moment().unix();
       props.updateData(id);
       props.closeModal()
@@ -87,7 +92,10 @@ const WorkoutModal = (props: any) => {
         </div>
         <div className="ModalFoot">
           <button onClick={props.closeModal}>Cancel</button>
-          <button onClick={() => { updateData() }} className={isActive()} >Confirm</button>
+          <button style={{ background: 'red', color: 'white' }} onClick={props.closeModal}>Delete</button>
+          <button onClick={() => { updateData() }} className={isActive()} >
+            {props.isUpdate ? 'Update' : 'Confirm'}
+          </button>
         </div>
       </div>
     </React.Fragment>

@@ -51,7 +51,6 @@ class WorkoutContainer extends React.Component<Props> {
           selectDate={this.props.selectDate}
           openModal={this.props.openModal}
         />
-        <button onClick={this.props.editData} >Button2</button>
         <WorkoutList data={this.props.data} openModal={this.props.openModal} editData={this.props.editData} />
       </>
     )

@@ -5,6 +5,10 @@ import {
   updateSelectedDateSuccess,
   addLabel,
 } from 'stores/modules/workout';
+import {
+  DATA_ADD,
+  addDataSuccess
+} from 'stores/modules/workout';
 
 import {
   DATA_UPDATE,
@@ -37,10 +41,31 @@ function* updateSelectedDate({ payload }: any) {
     //yield put(updateSelectedDate(e));
   }
 }
+
 export function* updateSelectedDateSaga() {
   yield takeLatest(SELECTED_DATE_UPDATE, updateSelectedDate);
 }
 
+interface workoutProps {
+  name: string
+  weight: number
+  reps: number
+  label: number
+
+}
+function* addData({ payload }: any) {
+  try {
+    console.log(payload);
+    yield put(addDataSuccess());
+  } catch (e) {
+
+  }
+}
+export function* addDataSaga() {
+  yield takeLatest(DATA_ADD, addData);
+}
+
+/**적폐 */
 function* updateData({ payload }: any) {
   try {
     const workoutState = yield select(WORKOUT_STATE);
@@ -75,13 +100,14 @@ function* editData({ payload }: any) {
   try {
     console.log('editdata');
     const workoutState = yield select(WORKOUT_STATE);
+    const modalState = yield select(MODAL_STATE);
     const data = yield LocalForage.update(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       {
-        timestamp: 1558928787,
-        index: 2,
-        reps: 33,
-        weight: 44,
+        timestamp: modalState.id,
+        index: modalState.selectedIndex,
+        reps: modalState.workout.reps,
+        weight: modalState.workout.weight,
       }
     ).then(() => {
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
@@ -102,5 +128,6 @@ export default function* workoutSaga() {
     updateSelectedDateSaga(),
     updateDataSaga(),
     editDataSaga(),
+    addDataSaga(),
   ])
 }

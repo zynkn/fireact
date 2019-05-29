@@ -39,49 +39,20 @@ export const controlData = createAction(CONTROL_DATA);
 
 export interface ModalState {
   isOpen: boolean
-  selectedLabel: number
-  storedLabels: any
   id: number
-  isUpdate?: boolean
-  workout: {
-    name: string
-    weight: number
-    reps: number
-    [key: string]: any
-  }
 }
 
 const initialState: ModalState = {
   isOpen: false,
-  id: 0,
-  selectedLabel: 0,
-  isUpdate: false,
-  workout: {
-    name: '',
-    weight: 0,
-    reps: 0,
-  },
-  storedLabels: [],
+  id: 0
 }
 
 
 export default handleActions({
   [OPEN_MODAL_SUCCESS]: (state, { payload }: any) => {
-    //console.log(payload);
     return produce(state, draft => {
       draft.isOpen = true;
-      if (payload) {
-        draft.workout = payload.workout;
-        // draft.selectedLabel = LABELS.findIndex((i: any) => { if (i.type === payload.selectedLabel) return i })
-        draft.selectedLabel = getLabelIndex(payload.selectedLabel);
-        draft.id = payload.id;
-      } else {
-        draft.workout = {
-          name: '',
-          weight: 0,
-          reps: 0,
-        }
-      }
+      draft.id = payload.id;
     })
   },
   [CLOSE_MODAL_SUCCESS]: (state) => {
@@ -90,44 +61,4 @@ export default handleActions({
       draft.id = 0
     })
   },
-
-  /*적폐 청산 대상*/
-  [TOGGLE_MODAL_SUCCESS]: (state) => {
-    return produce(state, draft => {
-      draft.isOpen = !draft.isOpen
-    })
-  },
-  /*적폐 청산 대상 */
-  [GET_LABELS_SUCCESS]: (state, action: any) => {
-    return produce(state, draft => {
-      draft.storedLabels = action.payload;
-    })
-  },
-  [SELECT_LABEL]: (state, action: any) => {
-    return produce(state, draft => {
-      draft.selectedLabel = action.payload;
-    })
-  },
-  [REMOVE_NAME]: (state, { payload = { name: 'name' } }: any) => {
-    return produce(state, draft => {
-      draft.workout[payload.name] = ''
-    })
-  },
-  [INPUT_DATA]: (state, { payload }: any) => {
-    return produce(state, draft => {
-      draft.workout[payload.name] = payload.value
-    })
-  },
-  [CONTROL_DATA]: (state, { payload }: any) => {
-    let unit = payload.unit || 1;
-    return produce(state, draft => {
-      if (payload.action === 'decrease') {
-        draft.workout[payload.name] = Number(draft.workout[payload.name]) - unit < 0 ? 0 : Number((Number(draft.workout[payload.name]) - unit).toFixed(2));
-      } else if (payload.action === 'increase') {
-        draft.workout[payload.name] = Number((Number(draft.workout[payload.name]) + unit).toFixed(2));
-      }
-
-    })
-  }
-
 }, initialState)

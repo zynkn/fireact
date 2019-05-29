@@ -97,6 +97,15 @@ export default (function () {
           ...item,
         })
       })
+    },
+    remove: (key: any, data: any) => {
+      const uid = data.timestamp.toString();
+
+      return workoutStore.getItem(key).then((item: any) => {
+        if (item[uid].detail.length > 1) {
+          item[uid].detail.splice(data.index, 1)
+        }
+      })
 
     }
   }

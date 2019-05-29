@@ -27,18 +27,8 @@ const WorkoutList: React.FC<Props> = ({ data, openModal, editData }) => {
   const generateList = () => {
     let arr = [];
     for (let i in data) {
-      console.log(data[i], i);
-      const payload = {
-        id: i,
-        workout: {
-          name: data[i].name,
-          weight: data[i].detail[data[i].detail.length - 1].weight,
-          reps: data[i].detail[data[i].detail.length - 1].reps,
-        },
-        selectedLabel: data[i].type
-      }
       arr.push(
-        <ListItem key={i} id={i} {...data[i]} openModal={() => { console.log('open'); openModal({ ...payload }) }} editData={editData} />
+        <ListItem key={i} id={i} {...data[i]} openModal={() => openModal({ id: i })} editData={editData} />
       )
     }
     return arr;
@@ -62,46 +52,39 @@ interface ItemProps extends WorkoutDataProps {
 
 const ListItem: React.FC<ItemProps> = (props) => {
 
-  const handleEditData = (e: any, index: number) => {
-    handleClick();
+  const handleEditData = (e: any, index: number, workout: any) => {
     e.stopPropagation();
 
-    //props.openModal(index);
-    // props.editData({
-    //   timestamp: props.id,
-    //   index: index
-    // });
-    console.log(props.id, index)
+    let data = {
+      id: props.id,
+      selectedLabel: props.type,
+      isUpdate: true,
+      selectedIndex: index,
+      workout: {
+        name: props.name,
+        weight: workout.weight,
+        reps: workout.reps,
+      },
+    }
+    props.openModal(data);
+
+    console.log(props.id, index, workout)
   }
   const generateTag = () => {
     let nextItem: object = {};
     return props.detail.map((current, index, array) => {
       nextItem = array[index + 1];
       if (JSON.stringify(nextItem) === JSON.stringify(current)) {
-        return <span key={index} className={`Tag square ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index) }} />
+        return <span key={index} className={`Tag square ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index, current) }} />
       } else {
-        return <span key={index} className={`Tag ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index) }} >{current.weight}kg {current.reps}reps</span>
+        return <span key={index} className={`Tag ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index, current) }} >{current.weight}kg {current.reps}reps</span>
       }
     })
   }
 
-  const handleClick = () => {
-
-    let data = {
-      id: props.id,
-      selectedLabel: props.type,
-      workout: {
-        name: props.name,
-        weight: props.detail[props.detail.length - 1].weight,
-        reps: props.detail[props.detail.length - 1].reps,
-      }
-    }
-    console.log(data);
-    props.openModal(data);
-  }
 
   return (
-    <div className="ListItem" onClick={() => handleClick()}>
+    <div className="ListItem" onClick={props.openModal}>
       <span className={`ListLabel ${colorSet[props.type]}`} />
       <div className="ListItemHead">
         <span className="title">{props.name}</span>
