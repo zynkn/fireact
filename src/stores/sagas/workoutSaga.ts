@@ -23,6 +23,7 @@ import {
 import LocalForage from 'api/LocalForage';
 import utils from 'utils';
 import { LABELS } from 'CONSTANTS';
+import moment from 'moment';
 
 const WORKOUT_STATE = (state: any) => state.workout
 const MODAL_STATE = (state: any) => state.modal
@@ -51,12 +52,29 @@ interface workoutProps {
   weight: number
   reps: number
   label: number
-
 }
 function* addData({ payload }: any) {
   try {
-    console.log(payload);
-    yield put(addDataSuccess());
+    const modalState = yield select(MODAL_STATE);
+    const workoutState = yield select(WORKOUT_STATE);
+    const id = modalState.id || moment().unix()
+    const data = yield LocalForage.set(
+      workoutState.selectedDate.format('YYYY-MM-DD'),
+      {
+        [id]: {
+          type: LABELS[payload.label].type,
+          name: payload.name,
+          unit: 'kg',
+          detail: [{ weight: payload.weight, reps: payload.reps }]
+        }
+      }
+    ).then(() => {
+      return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
+        return res;
+      });
+    });
+    yield put(addLabel(LABELS[LABELS.findIndex(({ type }) => type === LABELS[payload.label].type)].type));
+    yield put(addDataSuccess(data));
   } catch (e) {
 
   }
@@ -65,29 +83,26 @@ export function* addDataSaga() {
   yield takeLatest(DATA_ADD, addData);
 }
 
-/**적폐 */
 function* updateData({ payload }: any) {
   try {
+    console.log(payload);
     const workoutState = yield select(WORKOUT_STATE);
-    const modalState = yield select(MODAL_STATE);
-    const data = yield LocalForage.set(
+    const data = yield LocalForage.update(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       {
-        [payload]: {
-          type: LABELS[modalState.selectedLabel].type,
-          name: modalState.workout.name,
-          unit: 'kg',
-          detail: [{ weight: modalState.workout.weight, reps: modalState.workout.reps }]
-        }
+        timestamp: payload.id,
+        index: payload.index,
+        reps: payload.reps,
+        weight: payload.weight,
       }
-    ).then(() => {
+    ).then((ss) => {
+      console.log(ss);
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
+        console.log(res);
         return res;
-      });
-    });
-    yield put(addLabel(LABELS[LABELS.findIndex((i: any) => i.type === LABELS[modalState.selectedLabel].type)].type));
+      })
+    })
     yield put(updateDataSuccess(data));
-
   } catch (e) {
 
   }

@@ -2,7 +2,7 @@ import React from 'react';
 import './WorkoutList.scss';
 import { WorkoutDataProps } from 'stores/modules/workout';
 
-
+import { LABELS, getLabelIndex } from 'CONSTANTS';
 
 const colorSet: { [key: string]: any } = {
   'aerobic': 'yellow',
@@ -24,11 +24,23 @@ interface Props {
 }
 const WorkoutList: React.FC<Props> = ({ data, openModal, editData }) => {
 
+  const onHandleClick = (i: string, data: any) => {
+    const payload = {
+      id: i,
+      name: data[i].name,
+      weight: data[i].detail[data[i].detail.length - 1].weight,
+      reps: data[i].detail[data[i].detail.length - 1].reps,
+      label: getLabelIndex(data[i].type)
+    }
+    openModal(payload);
+  }
   const generateList = () => {
     let arr = [];
     for (let i in data) {
+      console.log(data[i])
+
       arr.push(
-        <ListItem key={i} id={i} {...data[i]} openModal={() => openModal({ id: i })} editData={editData} />
+        <ListItem key={i} id={i} {...data[i]} openModal={openModal} onClick={() => onHandleClick(i, data)} editData={editData} />
       )
     }
     return arr;
@@ -52,39 +64,38 @@ interface ItemProps extends WorkoutDataProps {
 
 const ListItem: React.FC<ItemProps> = (props) => {
 
-  const handleEditData = (e: any, index: number, workout: any) => {
+  const handleEditData = (e: any, index: number, weight: number, reps: number) => {
     e.stopPropagation();
 
-    let data = {
+    let payload = {
       id: props.id,
-      selectedLabel: props.type,
+      name: props.name,
+      weight: weight,
+      reps: reps,
+      index: index,
       isUpdate: true,
-      selectedIndex: index,
-      workout: {
-        name: props.name,
-        weight: workout.weight,
-        reps: workout.reps,
-      },
+      label: getLabelIndex(props.type)
     }
-    props.openModal(data);
-
-    console.log(props.id, index, workout)
+    console.log(
+      payload
+    )
+    props.openModal(payload);
   }
   const generateTag = () => {
     let nextItem: object = {};
     return props.detail.map((current, index, array) => {
       nextItem = array[index + 1];
       if (JSON.stringify(nextItem) === JSON.stringify(current)) {
-        return <span key={index} className={`Tag square ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index, current) }} />
+        return <span key={index} className={`Tag square ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index, current.weight, current.reps) }} />
       } else {
-        return <span key={index} className={`Tag ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index, current) }} >{current.weight}kg {current.reps}reps</span>
+        return <span key={index} className={`Tag ${colorSet[props.type]}`} onClick={(e) => { handleEditData(e, index, current.weight, current.reps) }} >{current.weight}kg {current.reps}reps</span>
       }
     })
   }
 
 
   return (
-    <div className="ListItem" onClick={props.openModal}>
+    <div className="ListItem" onClick={props.onClick}>
       <span className={`ListLabel ${colorSet[props.type]}`} />
       <div className="ListItemHead">
         <span className="title">{props.name}</span>

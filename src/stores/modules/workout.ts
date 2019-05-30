@@ -100,7 +100,7 @@ export default handleActions({
   },
   [DATA_ADD_SUCCESS]: (state, action: any) => {
     return produce(state, draft => {
-
+      draft.data = action.payload;
     })
   },
   [DATA_UPDATE_SUCCESS]: (state, action: any) => {

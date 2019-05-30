@@ -8,30 +8,64 @@ import { LABELS } from 'CONSTANTS';
 
 
 const WorkoutModal = (props: any) => {
-  const [label, setLabel] = useState(0);
-  const [name, setName] = useState('');
-  const [weight, setWeight] = useState(0);
-  const [reps, setReps] = useState(0);
+  console.log(props);
+  const [label, setLabel] = useState(props.label);
+  const [name, setName] = useState(props.name);
+  const [weight, setWeight] = useState(props.weight);
+  const [reps, setReps] = useState(props.reps);
+
+  const activeColor = () => {
+    if (name !== '' && weight >= 0 && reps > 0) {
+      return LABELS[label].color;
+    }
+  }
+  const isActive = () => {
+    if (props.id) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+
+  const onHandleConfirm = () => {
+    if (name !== '' && weight >= 0 && reps > 0) {
+
+      if (props.isUpdate) {
+        props.updateData({ id: props.id, weight, reps, index: props.index })
+      } else {
+        props.addData({ name, weight, reps, label })
+      }
+
+      props.closeModal();
+    }
+  }
+
+  const onHandleLabel = (idx: number) => {
+    if (isActive()) {
+      setLabel(idx)
+    }
+  }
 
   const handleFocus = (event: any) => event.target.select();
   return (
     <React.Fragment>
       <div className="ModalOverlay" />
       <div className="Modal">
-        <div className="ModalTop">
+        <div className={`ModalTop ${isActive() ? '' : 'inactive'}`}>
           <div className="label-wrap">
             {
               LABELS.map((i, j) => {
                 return (
-                  <span key={j} onClick={() => { setLabel(j) }}
+                  <span key={j} onClick={() => { onHandleLabel(j) }}
                     className={`label ${i.color} ${label === j ? 'selected' : ''}`}>{i.name}</span>
                 )
               })
             }
           </div>
         </div>
-        <div className="ModalHead">
-          <Input value={name} onChange={(e: any) => setName(e.target.value)}>
+        <div className={`ModalHead ${isActive() ? '' : 'inactive'}`}>
+          <Input disabled={!isActive()} value={name} onChange={(e: any) => setName(e.target.value)}>
             <button onClick={() => setName('')}>
               <Cancel width="16px" />
             </button>
@@ -57,13 +91,12 @@ const WorkoutModal = (props: any) => {
           </div>
         </div>
         <div className="ModalFoot">
-          <button style={{ background: '#f9f9f9', color: '#bebebe' }}>Cancel</button>
-          <button style={{ background: '#f9f9f9', color: '#bebebe' }}>Delete</button>
-          <button onClick={() => props.addData({ name: name, weight: weight, reps: reps, label: label })} style={{ background: '#f9f9f9', color: '#bebebe' }}>Confirm</button>
+          <button onClick={props.closeModal} style={{ background: '#f9f9f9', color: '#bebebe' }}>Cancel</button>
+          {/* <button style={{ background: '#f9f9f9', color: '#bebebe' }}>Delete</button> */}
+          <button onClick={onHandleConfirm} className={activeColor()} >Confirm</button>
         </div>
       </div>
     </React.Fragment>
-
   )
 }
 

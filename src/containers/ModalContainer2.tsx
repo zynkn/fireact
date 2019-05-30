@@ -5,7 +5,7 @@ import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { closeModal } from 'stores/modules/modal';
-import { addData } from 'stores/modules/workout';
+import { addData, updateData } from 'stores/modules/workout';
 
 import WorkoutModal2 from 'components/common/Modal/WorkoutModal2';
 
@@ -42,8 +42,7 @@ class ModalContainer2 extends React.Component<Props> {
   render() {
     const { props } = this;
     const MODAL_PROPS = {
-      closeModal: props.closeModal,
-      addData: props.addData,
+      ...this.props
     }
     return (
       <ModalHOC visible={props.isOpen} modal={<WorkoutModal2 {...MODAL_PROPS} />} />
@@ -53,9 +52,17 @@ class ModalContainer2 extends React.Component<Props> {
 export default connect(
   ({ modal }: StoreState) => ({
     isOpen: modal.isOpen,
+    isUpdate: modal.isUpdate,
+    id: modal.id,
+    name: modal.name,
+    weight: modal.weight,
+    reps: modal.reps,
+    label: modal.label,
+    index: modal.index,
   }),
   (dispatch) => ({
     closeModal: bindActionCreators(closeModal, dispatch),
     addData: bindActionCreators(addData, dispatch),
+    updateData: bindActionCreators(updateData, dispatch),
   })
 )(ModalContainer2);

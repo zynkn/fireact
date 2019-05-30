@@ -39,26 +39,51 @@ export const controlData = createAction(CONTROL_DATA);
 
 export interface ModalState {
   isOpen: boolean
+  isUpdate: boolean
   id: number
+  name: string
+  weight: number
+  reps: number
+  label: number
+  index: number
 }
 
 const initialState: ModalState = {
   isOpen: false,
-  id: 0
+  isUpdate: false,
+  id: 0,
+  name: '',
+  weight: 0,
+  reps: 0,
+  label: 0,
+  index: 0,
 }
 
 
 export default handleActions({
   [OPEN_MODAL_SUCCESS]: (state, { payload }: any) => {
+    console.log(payload);
     return produce(state, draft => {
       draft.isOpen = true;
       draft.id = payload.id;
+      draft.name = payload.name || '';
+      draft.weight = payload.weight || 0;
+      draft.reps = payload.reps || 0;
+      draft.label = payload.label || 0;
+      draft.isUpdate = payload.isUpdate || false;
+      draft.index = payload.index || 0;
     })
   },
   [CLOSE_MODAL_SUCCESS]: (state) => {
     return produce(state, draft => {
-      draft.isOpen = false
-      draft.id = 0
+      draft.isOpen = false;
+      draft.id = 0;
+      draft.name = '';
+      draft.weight = 0;
+      draft.reps = 0;
+      draft.label = 0;
+      draft.isUpdate = false;
+      draft.index = 0;
     })
   },
 }, initialState)
