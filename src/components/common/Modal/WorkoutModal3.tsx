@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import './common.scss';
 import IconBtn from 'components/common/IconBtn';
 import Input from 'components/common/Input';
@@ -7,13 +8,19 @@ import { ArrowDown, ArrowUp, Check, Cancel } from 'components/common/Icons';
 import { LABELS } from 'CONSTANTS';
 
 
-const WorkoutModal = (props: any) => {
-  console.log(props);
+
+interface Props {
+  visible: boolean,
+  id?: string,
+  label?: number,
+  name?: string,
+  fnClose: any,
+}
+const Modal: React.FC<Props> = (props: any) => {
   const [label, setLabel] = useState(props.label);
   const [name, setName] = useState(props.name);
   const [weight, setWeight] = useState(props.weight);
   const [reps, setReps] = useState(props.reps);
-
   const activeColor = () => {
     console.log(weight);
     if (name !== '' && weight >= 0 && weight !== '' && reps > 0 && reps !== '') {
@@ -94,7 +101,7 @@ const WorkoutModal = (props: any) => {
           </div>
         </div>
         <div className="ModalFoot">
-          <button onClick={props.closeModal} style={{ background: '#f9f9f9', color: '#bebebe' }}>Cancel</button>
+          <button onClick={props.fnClose} style={{ background: '#f9f9f9', color: '#bebebe' }}>Cancel</button>
           {
             props.isUpdate ? <button style={{ background: '#f9f9f9', color: 'red' }}>Delete</button> : null
           }
@@ -108,4 +115,9 @@ const WorkoutModal = (props: any) => {
   )
 }
 
-export default WorkoutModal;
+const WorkoutModal3: React.FC<Props> = (props: any) => {
+  return props.visible ? ReactDOM.createPortal(
+    <Modal {...props} />, document.getElementById("modal") as Element
+  ) : null
+}
+export default WorkoutModal3;

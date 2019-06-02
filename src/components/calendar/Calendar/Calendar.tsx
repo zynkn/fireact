@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment, { Moment as MomentTypes } from "moment";
 
 import './Calendar.scss';
 import IconBtn from 'components/common/IconBtn';
 import { ArrowLeft, ArrowRight, Add } from 'components/common/Icons'
-
+import TestModal from 'components/common/Modal/TestModal';
 
 const colorSet: { [key: string]: any } = {
   'aerobic': 'yellow',
@@ -22,18 +22,30 @@ interface Props {
   selectedDate: moment.Moment
   selectDate: Function
   openModal: any
+  addData: any
   labels: { [key: string]: Array<string> }
 }
 
 const Calendar: React.FC<Props> = (props) => {
+  const [isShowing, setIsShowing] = useState(false);
+  const [idx, setIdx] = useState(-1);
 
+  const handleClick = () => {
+    setIdx(-1);
+    setIsShowing(true);
+  }
+  const handleHide = () => {
+    setIdx(0);
+    setIsShowing(false);
+  }
   return (
     <div className="Calendar">
       <CalendarHead selectedDate={props.selectedDate} selectDate={props.selectDate} />
       <CalendarBody selectedDate={props.selectedDate} selectDate={props.selectDate} labels={props.labels} />
       <div style={{ padding: '0 16px', marginTop: '16px' }}>
-        <IconBtn className="lg theme-color" icon={<Add fill='#fff' width="24px" />} style={{ borderRadius: '5px' }} onClick={() => props.openModal()} />
+        <IconBtn className="lg theme-color" icon={<Add fill='#fff' width="24px" />} style={{ borderRadius: '5px' }} onClick={handleClick} />
       </div>
+      <TestModal isShowing={isShowing} idx={idx} reps={0} weight={0} hide={handleHide} addData={props.addData} />
     </div>
   )
 }

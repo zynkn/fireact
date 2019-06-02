@@ -74,6 +74,7 @@ export default (function () {
     },
     set: (key: any, data: any) => {
       const uid = Object.keys(data)[0];
+      //console.log(data[uid]);
       return workoutStore.getItem(key).then((item: any) => {
         /*Empty */
         if (item === null) {
@@ -82,28 +83,32 @@ export default (function () {
         if (!item[uid]) {
           return workoutStore.setItem(key, { ...item, ...data }).then(res => res)
         } else {
-          return workoutStore.setItem(key, { ...item, [uid]: { ...item[uid], detail: item[uid].detail.concat(data[uid].detail) } })
+          return workoutStore.setItem(key, { ...item, [uid]: { ...item[uid], sets: { ...item[uid].sets, ...data[uid].sets } } })
         }
 
       })
     },
     update: (key: any, data: any) => {
       const uid = data.timestamp.toString();
-      console.log(data);
+      console.log(uid, data);
       return workoutStore.getItem(key).then((item: any) => {
-        item[uid].detail.splice(data.index, 1, { weight: data.weight, reps: data.reps });
+        //item[uid].detail.splice(data.index, 1, { weight: data.weight, reps: data.reps });
 
         return workoutStore.setItem(key, {
-          ...item,
+          ...item, [uid]: { ...item[uid], sets: { ...item[uid].sets, [data.index]: { weight: data.weight, reps: data.reps } } }
         })
       })
     },
     remove: (key: any, data: any) => {
       const uid = data.timestamp.toString();
-
       return workoutStore.getItem(key).then((item: any) => {
-        if (item[uid].detail.length > 1) {
-          item[uid].detail.splice(data.index, 1)
+        if (Object.keys(item[uid].sets).length > 1) {
+          delete item[uid].sets[data.index];
+          return workoutStore.setItem(key, { ...item });
+        } else {
+          console.log('length가 하나?');
+          delete item[uid]
+          return workoutStore.setItem(key, { ...item });
         }
       })
 

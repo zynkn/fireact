@@ -16,8 +16,8 @@ import {
 } from 'stores/modules/workout';
 
 import {
-  DATA_EDIT,
-  editDataSuccess
+  DATA_REMOVE,
+  removeDataSuccess
 } from 'stores/modules/workout';
 
 import LocalForage from 'api/LocalForage';
@@ -57,7 +57,8 @@ function* addData({ payload }: any) {
   try {
     const modalState = yield select(MODAL_STATE);
     const workoutState = yield select(WORKOUT_STATE);
-    const id = modalState.id || moment().unix()
+    const id = payload.id;
+    console.log(id);
     const data = yield LocalForage.set(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       {
@@ -65,7 +66,9 @@ function* addData({ payload }: any) {
           type: LABELS[payload.label].type,
           name: payload.name,
           unit: 'kg',
-          detail: [{ weight: payload.weight, reps: payload.reps }]
+          sets: {
+            [moment().unix()]: { weight: payload.weight, reps: payload.reps }
+          }
         }
       }
     ).then(() => {
@@ -111,38 +114,36 @@ export function* updateDataSaga() {
   yield takeLatest(DATA_UPDATE, updateData);
 }
 
-function* editData({ payload }: any) {
+function* removeData({ payload }: any) {
   try {
-    console.log('editdata');
+    console.log('removeData');
     const workoutState = yield select(WORKOUT_STATE);
-    const modalState = yield select(MODAL_STATE);
-    const data = yield LocalForage.update(
+    const data = yield LocalForage.remove(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       {
-        timestamp: modalState.id,
-        index: modalState.selectedIndex,
-        reps: modalState.workout.reps,
-        weight: modalState.workout.weight,
+        timestamp: payload.id,
+        index: payload.index,
       }
     ).then(() => {
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
         return res;
       })
-    })
-    yield put(updateDataSuccess(data));
+    });
+    //yield put(addLabel(LABELS[LABELS.findIndex(({ type }) => type === LABELS[payload.label].type)].type));
+    yield put(removeDataSuccess(data));
   } catch (e) {
 
   }
 }
-function* editDataSaga() {
-  yield takeLatest(DATA_EDIT, editData);
+function* removeDataSaga() {
+  yield takeLatest(DATA_REMOVE, removeData);
 }
 
 export default function* workoutSaga() {
   yield all([
     updateSelectedDateSaga(),
     updateDataSaga(),
-    editDataSaga(),
+    removeDataSaga(),
     addDataSaga(),
   ])
 }

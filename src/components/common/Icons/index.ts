@@ -7,6 +7,7 @@ export { Add } from './Add';
 export { Logo } from './Logo';
 export { Check } from './Check';
 export { Cancel } from './Cancel';
+export { Gear } from './Gear';
 // export const req = require.context('.', true, /\.\/.\.tsx$/)
 
 // req.keys().forEach((key: any) => {

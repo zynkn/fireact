@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import ReactTransitionGroup from 'react-addons-css-transition-group'; // ES6
+import moment from 'moment';
 import './common.scss';
 import IconBtn from 'components/common/IconBtn';
 import Input from 'components/common/Input';
-import moment from "moment";
 import { ArrowDown, ArrowUp, Check, Cancel } from 'components/common/Icons';
 import { LABELS } from 'CONSTANTS';
+import { removeProperties } from '@babel/types';
 
 
-const WorkoutModal = (props: any) => {
-  console.log(props);
-  const [label, setLabel] = useState(props.label);
-  const [name, setName] = useState(props.name);
-  const [weight, setWeight] = useState(props.weight);
-  const [reps, setReps] = useState(props.reps);
+const Modal: React.FC<any> = (props: any) => {
+  const renderCount = useRef(0);
+  const prevStates = useRef({ weight: props.weight, reps: props.reps, name: props.name });
+  console.log('<Modal /> RENDER!', ++renderCount.current);
+  const [label, setLabel] = useState(props.label || 0);
+  const [name, setName]: any = useState(props.name || '');
+  const [weight, setWeight]: any = useState(props.weight || 0);
+  const [reps, setReps]: any = useState(props.reps || 0);
+  const [idx, setIdx]: any = useState(props.idx || -1);
 
+  useEffect(() => {
+    console.log('전달 받은 idx =>', props.idx, '현재 idx', idx);
+    if (props.idx !== idx || props.weight !== weight || props.reps !== reps) {
+      setName(props.name);
+      setIdx(props.idx);
+      setWeight(props.weight);
+      setReps(props.reps);
+    }
+  }, [props.idx, props.weight, props.reps]);
+
+  if (!props.isShowing) {
+    return <ReactTransitionGroup
+      transitionName={'anim'}
+      transitionEnterTimeout={200}
+      transitionLeaveTimeout={200}
+    ></ReactTransitionGroup>
+  }
   const activeColor = () => {
-    console.log(weight);
     if (name !== '' && weight >= 0 && weight !== '' && reps > 0 && reps !== '') {
-
       return LABELS[label].color;
     }
     return ''
@@ -29,21 +50,29 @@ const WorkoutModal = (props: any) => {
       return true;
     }
   }
-
-
   const onHandleConfirm = () => {
+    console.log(idx);
     if (name !== '' && weight >= 0 && reps > 0) {
-
-      if (props.isUpdate) {
-        props.updateData({ id: props.id, weight, reps, index: props.index })
+      if (props.idx !== -1) {
+        props.updateData({ id: props.id, weight, reps, index: props.idx })
       } else {
-        props.addData({ name, weight, reps, label })
+        props.addData({ id: props.id || moment().unix(), name, weight, reps, label })
       }
-
-      props.closeModal();
+      setIdx(-2);
+      props.hide();
     }
   }
-
+  const handleRemove = () => {
+    props.removeData({
+      id: props.id,
+      index: props.idx,
+    })
+    props.hide();
+  }
+  const handleHide = () => {
+    setIdx(-2);
+    props.hide();
+  }
   const onHandleLabel = (idx: number) => {
     if (isActive()) {
       setLabel(idx)
@@ -51,19 +80,20 @@ const WorkoutModal = (props: any) => {
   }
 
   const handleFocus = (event: any) => event.target.select();
+
+
   return (
-    <React.Fragment>
+    <ReactTransitionGroup
+      transitionName={'anim'}
+      transitionEnterTimeout={200}
+      transitionLeaveTimeout={200}
+    >
       <div className="ModalOverlay" />
       <div className="Modal">
         <div className={`ModalTop ${isActive() ? '' : 'inactive'}`}>
           <div className="label-wrap">
             {
-              LABELS.map((i, j) => {
-                return (
-                  <span key={j} onClick={() => { onHandleLabel(j) }}
-                    className={`label ${i.color} ${label === j ? 'selected' : ''}`}>{i.name}</span>
-                )
-              })
+              LABELS.map((i, j) => <span key={j} onClick={() => { onHandleLabel(j) }} className={`label ${i.color} ${(label) === j ? 'selected' : ''}`}>{i.name}</span>)
             }
           </div>
         </div>
@@ -94,18 +124,23 @@ const WorkoutModal = (props: any) => {
           </div>
         </div>
         <div className="ModalFoot">
-          <button onClick={props.closeModal} style={{ background: '#f9f9f9', color: '#bebebe' }}>Cancel</button>
+          <button onClick={handleHide} style={{ background: '#f9f9f9', color: '#bebebe' }}>Cancel</button>
           {
-            props.isUpdate ? <button style={{ background: '#f9f9f9', color: 'red' }}>Delete</button> : null
+            (props.idx !== -1) && <button onClick={handleRemove}>Delete</button>
           }
-
-          <button onClick={onHandleConfirm} className={activeColor()} >{
-            props.isUpdate ? 'Update' : 'Confirm'
-          }</button>
+          <button onClick={onHandleConfirm} className={activeColor()} >{'Confirm'}</button>
         </div>
       </div>
-    </React.Fragment>
+    </ReactTransitionGroup>
   )
 }
 
-export default WorkoutModal;
+const TestModal: React.FC<any> = (props: any) => {
+  return ReactDOM.createPortal(
+    <>
+      <Modal {...props} hid={props.hide} />
+    </>, document.getElementById("modal") as Element
+  )
+}
+
+export default TestModal;

@@ -7,7 +7,6 @@ selector name: get<Noun>
 */
 
 
-
 import { createAction, handleActions } from 'redux-actions';
 import moment, { Moment as MomentTypes } from 'moment';
 import produce from "immer"
@@ -35,6 +34,10 @@ export const addData = createAction(DATA_ADD);
 const DATA_ADD_SUCCESS = 'workout/DATA_ADD_SUCCESS';
 export const addDataSuccess = createAction(DATA_ADD_SUCCESS);
 
+export const DATA_REMOVE = 'workout/DATA_REMOVE';
+export const removeData = createAction(DATA_REMOVE);
+const DATA_REMOVE_SUCCESS = 'workout/DATA_REMOVE_SUCCESS';
+export const removeDataSuccess = createAction(DATA_REMOVE_SUCCESS);
 
 // TODO: Name change (EDIT => UPDATE);
 export const DATA_EDIT = 'workout/DATA_EDIT';
@@ -48,12 +51,8 @@ export const initData = createAction(DATA_INIT);
 export const INITIALIZE_DATA = 'workout/INITIALIZE_DATA';
 export const initializeData = createAction(INITIALIZE_DATA);
 
-
 const SET_CALENDAR_LABELS = 'workout/SET_CALENDAR_LABELS';
 export const setCalendarLabels = createAction(SET_CALENDAR_LABELS);
-
-
-
 
 export interface WorkoutState {
   data: { [key: string]: WorkoutDataProps }
@@ -108,9 +107,9 @@ export default handleActions({
       draft.data = action.payload;
     });
   },
-  [DATA_EDIT_SUCCESS]: (state, action: any) => {
+  [DATA_REMOVE_SUCCESS]: (state, action: any) => {
     return produce(state, draft => {
-
+      draft.data = action.payload
     })
   },
   [INITIALIZE_DATA]: (state, action: any) => {
