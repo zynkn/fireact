@@ -12,23 +12,22 @@ import { removeProperties } from '@babel/types';
 
 const Modal: React.FC<any> = (props: any) => {
   const renderCount = useRef(0);
-  const prevStates = useRef({ weight: props.weight, reps: props.reps, name: props.name });
-  console.log('<Modal /> RENDER!', ++renderCount.current);
+  console.log('<TestModal /> RENDER!', ++renderCount.current);
   const [label, setLabel] = useState(props.label || 0);
   const [name, setName]: any = useState(props.name || '');
   const [weight, setWeight]: any = useState(props.weight || 0);
   const [reps, setReps]: any = useState(props.reps || 0);
-  const [idx, setIdx]: any = useState(props.idx || -1);
-
+  const [idx, setIdx]: any = useState(props.idx || -2);
+  console.log(label, props.label);
   useEffect(() => {
-    console.log('전달 받은 idx =>', props.idx, '현재 idx', idx);
-    if (props.idx !== idx || props.weight !== weight || props.reps !== reps) {
+    if (props.idx !== idx || props.label !== label || props.weight !== weight || props.reps !== reps) {
       setName(props.name);
       setIdx(props.idx);
       setWeight(props.weight);
       setReps(props.reps);
+      setLabel(props.label);
     }
-  }, [props.idx, props.weight, props.reps]);
+  }, [props.idx, props.weight, props.reps, props.label]);
 
   if (!props.isShowing) {
     return <ReactTransitionGroup
@@ -54,9 +53,9 @@ const Modal: React.FC<any> = (props: any) => {
     console.log(idx);
     if (name !== '' && weight >= 0 && reps > 0) {
       if (props.idx !== -1) {
-        props.updateData({ id: props.id, weight, reps, index: props.idx })
+        props.updateData({ uid: props.id, weight, reps, index: props.idx })
       } else {
-        props.addData({ id: props.id || moment().unix(), name, weight, reps, label })
+        props.addData({ uid: props.id || moment().unix(), name, weight, reps, label })
       }
       setIdx(-2);
       props.hide();

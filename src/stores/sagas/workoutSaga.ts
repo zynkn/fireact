@@ -4,6 +4,7 @@ import {
   SELECTED_DATE_UPDATE,
   updateSelectedDateSuccess,
   addLabel,
+  updateLabel,
 } from 'stores/modules/workout';
 import {
   DATA_ADD,
@@ -47,22 +48,14 @@ export function* updateSelectedDateSaga() {
   yield takeLatest(SELECTED_DATE_UPDATE, updateSelectedDate);
 }
 
-interface workoutProps {
-  name: string
-  weight: number
-  reps: number
-  label: number
-}
 function* addData({ payload }: any) {
   try {
-    const modalState = yield select(MODAL_STATE);
     const workoutState = yield select(WORKOUT_STATE);
-    const id = payload.id;
-    console.log(id);
+    const uid = payload.uid;
     const data = yield LocalForage.set(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       {
-        [id]: {
+        [uid]: {
           type: LABELS[payload.label].type,
           name: payload.name,
           unit: 'kg',
@@ -92,19 +85,14 @@ function* updateData({ payload }: any) {
     const workoutState = yield select(WORKOUT_STATE);
     const data = yield LocalForage.update(
       workoutState.selectedDate.format('YYYY-MM-DD'),
-      {
-        timestamp: payload.id,
-        index: payload.index,
-        reps: payload.reps,
-        weight: payload.weight,
-      }
-    ).then((ss) => {
-      console.log(ss);
+      { ...payload }
+    ).then(() => {
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
-        console.log(res);
         return res;
       })
     })
+    const labels = utils.getUniqueItem({ [workoutState.selectedDate.format('YYYY-MM-DD')]: data });
+    yield put(updateLabel(labels));
     yield put(updateDataSuccess(data));
   } catch (e) {
 
@@ -129,7 +117,8 @@ function* removeData({ payload }: any) {
         return res;
       })
     });
-    //yield put(addLabel(LABELS[LABELS.findIndex(({ type }) => type === LABELS[payload.label].type)].type));
+    const labels = utils.getUniqueItem({ [workoutState.selectedDate.format('YYYY-MM-DD')]: data });
+    yield put(updateLabel(labels));
     yield put(removeDataSuccess(data));
   } catch (e) {
 

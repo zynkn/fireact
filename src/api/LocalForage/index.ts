@@ -89,13 +89,28 @@ export default (function () {
       })
     },
     update: (key: any, data: any) => {
-      const uid = data.timestamp.toString();
+      const uid = data.uid.toString();
       console.log(uid, data);
       return workoutStore.getItem(key).then((item: any) => {
-        //item[uid].detail.splice(data.index, 1, { weight: data.weight, reps: data.reps });
 
+        if (data.weight) {
+          return workoutStore.setItem(key, {
+            ...item, [uid]: { ...item[uid], sets: { ...item[uid].sets, [data.index]: { weight: data.weight, reps: data.reps } } }
+          })
+        } else if (data.type) {
+          return workoutStore.setItem(key, {
+            ...item, [uid]: { ...item[uid], type: data.type, name: data.name }
+          })
+        }
+
+      })
+    },
+    updateName: (key: any, data: any) => {
+      const uid = data.uid.toString();
+      console.log(uid, data);
+      return workoutStore.getItem(key).then((item: any) => {
         return workoutStore.setItem(key, {
-          ...item, [uid]: { ...item[uid], sets: { ...item[uid].sets, [data.index]: { weight: data.weight, reps: data.reps } } }
+          ...item, [uid]: { ...item[uid], type: data.type, name: data.name }
         })
       })
     },

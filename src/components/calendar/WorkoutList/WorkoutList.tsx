@@ -33,16 +33,25 @@ interface Props {
 const WorkoutList: React.FC<Props> = ({ data, addData, updateData, removeData }) => {
   const renderCount = useRef(0);
   console.log('<WorkoutList /> RENDER!', ++renderCount.current);
-  const generateList = useMemo(() => {
+  console.log(data);
+  // const generateList = useMemo(() => {
+  //   let arr = [];
+  //   for (let i in data) {
+  //     arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} type={data.type} {...data[i]} />)
+  //   }
+  //   return arr;
+  // }, [data])
+  const generateList = () => {
+    console.log('generateList()')
     let arr = [];
     for (let i in data) {
-      arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} {...data[i]} />)
+      arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} type={data.type} {...data[i]} />)
     }
     return arr;
-  }, [data])
+  }
   return (
     <div className="WorkoutList">
-      {generateList}
+      {generateList()}
     </div>
   )
 }
@@ -54,34 +63,38 @@ interface ItemProps extends WorkoutDataProps {
 }
 
 const ListItem: React.FC<ItemProps> = (props) => {
+  console.log(props);
   const renderCount = useRef(0);
   let lastSet: any = Object.keys(props.sets).pop();
-  // console.log('<ListItem /> RENDER!', ++renderCount.current);
+  console.log('<ListItem /> RENDER!', ++renderCount.current);
   const [isShowing, setIsShowing] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [weight, setWeight] = useState(props.sets[lastSet].weight);
   const [reps, setReps] = useState(props.sets[lastSet].reps);
   const [idx, setIdx] = useState(-1);
+  const [label, setLabel] = useState(getLabelIndex(props.type));
 
   const handleTag = (e: any, obj: any) => {
     e.stopPropagation();
     setWeight(obj.weight);
     setReps(obj.reps);
     setIdx(obj.index);
+    setLabel(getLabelIndex(props.type))
     toggle();
   }
   const handleList = () => {
     setWeight(props.sets[lastSet].weight);
     setReps(props.sets[lastSet].reps);
+    setLabel(getLabelIndex(props.type));
     setIdx(-1);
     toggle();
   }
   const handleClickLabel = (e: any) => {
     e.stopPropagation();
+    //setIdx(-1);
     setIsEdit(true);
   }
   const handleEditModalHide = () => {
-
     setIsEdit(false);
   }
   const generateTag = () => {
@@ -116,10 +129,11 @@ const ListItem: React.FC<ItemProps> = (props) => {
         </div>
       </div >
       <EditModal isShowing={isEdit} hide={() => setIsEdit(false)}
+        updateData={props.updateData}
         name={props.name}
         id={props.id}
         idx={idx}
-        label={getLabelIndex(props.type)}
+        label={label}
       />
       <TestModal isShowing={isShowing} hide={toggle}
         addData={props.addData}
@@ -130,7 +144,7 @@ const ListItem: React.FC<ItemProps> = (props) => {
         idx={idx}
         weight={weight}
         reps={reps}
-        label={getLabelIndex(props.type)}
+        label={label}
       />
     </>
   )

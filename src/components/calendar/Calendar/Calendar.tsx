@@ -45,7 +45,7 @@ const Calendar: React.FC<Props> = (props) => {
       <div style={{ padding: '0 16px', marginTop: '16px' }}>
         <IconBtn className="lg theme-color" icon={<Add fill='#fff' width="24px" />} style={{ borderRadius: '5px' }} onClick={handleClick} />
       </div>
-      <TestModal isShowing={isShowing} idx={idx} reps={0} weight={0} hide={handleHide} addData={props.addData} />
+      <TestModal isShowing={isShowing} idx={idx} reps={0} weight={0} label={0} hide={handleHide} addData={props.addData} />
     </div>
   )
 }

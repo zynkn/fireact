@@ -13,13 +13,13 @@ import { removeProperties } from '@babel/types';
 const Modal: React.FC<any> = (props: any) => {
   const renderCount = useRef(0);
 
-  console.log('<Modal /> RENDER!', ++renderCount.current);
+  console.log('<EditModal /> RENDER!', ++renderCount.current);
   const [label, setLabel] = useState(props.label || 0);
   const [name, setName]: any = useState(props.name || '');
   const [idx, setIdx]: any = useState(props.idx || -1);
 
   useEffect(() => {
-    console.log('전달 받은 idx =>', props.idx, '현재 idx', idx);
+    //console.log('전달 받은 idx =>', props.idx, '현재 idx', idx);
     if (props.idx !== idx) {
       setName(props.name);
       setIdx(props.idx);
@@ -42,12 +42,9 @@ const Modal: React.FC<any> = (props: any) => {
   }
   const onHandleConfirm = () => {
     console.log(idx);
+    console.log(name, LABELS[label]);
     if (name !== '') {
-      if (props.idx !== -1) {
-        //props.updateData({ id: props.id, weight, reps, index: props.idx })
-      } else {
-        //props.addData({ id: props.id || moment().unix(), name, weight, reps, label })
-      }
+      props.updateData({ uid: props.id, name, type: LABELS[label].type })
       setIdx(-2);
       props.hide();
     }
@@ -61,6 +58,7 @@ const Modal: React.FC<any> = (props: any) => {
   }
   const handleHide = () => {
     setIdx(-2);
+    console.log(name, label);
     props.hide();
   }
   const onHandleLabel = (idx: number) => {

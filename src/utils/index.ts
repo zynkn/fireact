@@ -27,6 +27,7 @@ export default (function () {
       return calendar.flat();
     },
     getUniqueItem: (data: any, key: string = 'type') => {
+      console.log(data);
       let labels: { [key: string]: Array<string> } = {};
       for (let i in data) {
         let temp = new Set();
