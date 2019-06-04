@@ -29,15 +29,10 @@
       transition: transform 0.4s;
       height: 100%;
       background-color: $label-purple;
-      @each $name, $color in $label-colors {
-        &.#{$name} { background-color: $color; color: $color }
-      }
       svg{
         position: absolute;
         left: 0;
-
       }
-
       &:hover{
         transform: translateX(0px);
       }
@@ -56,10 +51,6 @@
         background-color: #6fbe9c;
         border-radius: 7px;
         color: white;
-
-        @each $name, $color in $label-colors {
-          &.#{$name} { background-color: $color; }
-        }
       }
     }
     @media (max-width: 768px){
@@ -73,100 +64,89 @@
         }
       }
     }
-  }
-
-  .ListItemBody{
-    padding: 8px 24px;
-    overflow-x: hidden;
-    max-width: 100%;
-    .Tag-wrap{
-      overflow-x: scroll;
-      .Tag-box{
-        display: inline-flex;
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-        align-items: center;
-        .Tag{
-          box-sizing: border-box;
-          padding: 6px 8px;
-          border-radius: 3px;
-          color: white;
-          background-color: $body-color;
-          font-size: 10pt;
-          white-space: nowrap;
-
-          @each $name, $color in $label-colors {
-            @for $i from 1 to 5 {
-              &.#{$name}:nth-child( n + #{$i}) { background-color: rgba($color, 0.5 + (0.1 * $i)) }
+    
+    .ListItemBody{
+      padding: 8px 24px;
+      overflow-x: hidden;
+      max-width: 100%;
+      .Tag-wrap{
+        overflow-x: scroll;
+        .Tag-box{
+          display: inline-flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+          align-items: center;
+          .Tag{
+            box-sizing: border-box;
+            padding: 6px 8px;
+            border-radius: 3px;
+            color: white;
+            background-color: $body-color;
+            font-size: 10pt;
+            white-space: nowrap;
+            & + .Tag{
+              margin-right: 8px;
+            }
+            &.square{
+              flex: 0 0 20px;
+              padding: 8px;
+              width: 20px;
+              height: 20px;
             }
           }
-          // &:nth-child(1){ background-color: $tag-level-1}
-          // &:nth-child(2){ background-color: $tag-level-2}
-          // &:nth-child(3){ background-color: $tag-level-3}
-          // &:nth-child(4){ background-color: $tag-level-4}
-          // &:nth-child(5){ background-color: $tag-level-5}
-          // &:nth-child(6){ background-color: $tag-level-6}
-          // &:nth-child(7){ background-color: $tag-level-7}
-          // &:nth-child(8){ background-color: $tag-level-8}
-          // &:nth-child(9){ background-color: $tag-level-9}
-          // &:nth-child(n+10){ background-color: $tag-level-10}
   
-          & + .Tag{
-            margin-right: 8px;
-          }
-          &.square{
-            flex: 0 0 20px;
-            padding: 8px;
-            width: 20px;
-            height: 20px;
-          }
-        }
-
-        @media (max-width: 768px){
-          .Tag{
-            font-size: 9pt;
+          @media (max-width: 768px){
+            .Tag{
+              font-size: 9pt;
+            }
           }
         }
       }
     }
-  }
-  @media (max-width: 768px){
-    .ListItemBody{
-      padding: 8px 8px 8px 24px;
+    @media (max-width: 768px){
+      .ListItemBody{
+        padding: 8px 8px 8px 24px;
+      }
     }
-  }
-  @media (min-width: 769px){
-    .ListItemBody{
-      .Tag-wrap{
-        overflow-x: auto;
-        /* width */
-        &::-webkit-scrollbar {
-          height: 6px;
-          border-radius: 5px;
+    @media (min-width: 769px){
+      .ListItemBody{
+        .Tag-wrap{
+          overflow-x: auto;
+          /* width */
+          &::-webkit-scrollbar {
+            height: 6px;
+            border-radius: 5px;
+          }
+    
+          /* Track */
+          &::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 5px;
+          }
+    
+          /* Handle */
+          &::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.08); 
+            border-radius: 5px;
+          }
+    
+          /* Handle on hover */
+          &::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.16); 
+            border-radius: 5px;
+          }
         }
-  
-        /* Track */
-        &::-webkit-scrollbar-track {
-          background: #f1f1f1; 
-          border-radius: 5px;
-        }
-  
-        /* Handle */
-        &::-webkit-scrollbar-thumb {
-          background: rgba(0,0,0,0.08); 
-          border-radius: 5px;
-        }
-  
-        /* Handle on hover */
-        &::-webkit-scrollbar-thumb:hover {
-          background: rgba(0,0,0,0.16); 
-          border-radius: 5px;
-        }
+      }
+    
+    }
+    @each $name, $color in $label-colors {
+      &.#{$name} > .ListLabel { background-color: $color; color: $color }
+      &.#{$name} .set-label { background-color: $color; }
+      @for $i from 1 to 5 {
+        &.#{$name} > .ListItemBody > .Tag-wrap > .Tag-box > .Tag:nth-child( n + #{$i}) { background-color: rgba($color, 0.5 + (0.1 * $i)) }
       }
     }
   }
-
-
 }
 
 @media (max-width: 768px){

@@ -20,7 +20,7 @@ const Input: React.FC<Props> = (props) => {
   return (
     <div className={`Input ${props.className}`} style={props.style}>
       <input value={props.value} type={props.type || 'text'}
-        className={`${props.className}`}
+        className={`${!props.disabled && props.className}`}
         onFocus={props.onFocus}
         onChange={props.onChange}
         disabled={props.disabled}

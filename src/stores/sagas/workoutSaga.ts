@@ -27,8 +27,6 @@ import { LABELS } from 'CONSTANTS';
 import moment from 'moment';
 
 const WORKOUT_STATE = (state: any) => state.workout
-const MODAL_STATE = (state: any) => state.modal
-
 function* updateSelectedDate({ payload }: any) {
   try {
     const data = yield LocalForage.get(payload.format('YYYY-MM-DD')).then(res => (res || {}));
@@ -81,8 +79,8 @@ export function* addDataSaga() {
 
 function* updateData({ payload }: any) {
   try {
-    console.log(payload);
     const workoutState = yield select(WORKOUT_STATE);
+    console.log(payload);
     const data = yield LocalForage.update(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       { ...payload }
@@ -104,7 +102,6 @@ export function* updateDataSaga() {
 
 function* removeData({ payload }: any) {
   try {
-    console.log('removeData');
     const workoutState = yield select(WORKOUT_STATE);
     const data = yield LocalForage.remove(
       workoutState.selectedDate.format('YYYY-MM-DD'),

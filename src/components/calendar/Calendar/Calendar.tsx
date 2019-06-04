@@ -1,41 +1,27 @@
-import React, { useState } from 'react';
-import moment, { Moment as MomentTypes } from "moment";
+import React, { useState, useRef } from 'react';
+import moment from "moment";
 
 import './Calendar.scss';
 import IconBtn from 'components/common/IconBtn';
 import { ArrowLeft, ArrowRight, Add } from 'components/common/Icons'
-import TestModal from 'components/common/Modal/TestModal';
-
-const colorSet: { [key: string]: any } = {
-  'aerobic': 'yellow',
-  'chest': 'skyblue',
-  'biceps': 'purple',
-  'triceps': 'blue',
-  'shoulder': 'orange',
-  'lower': 'brown',
-  'back': 'green',
-  'abdominal': 'red',
-}
-
+import WorkoutAddModal from 'components/common/Modal/WorkoutAddModal';
+import { NEW_LABELS } from 'CONSTANTS';
 
 interface Props {
   selectedDate: moment.Moment
   selectDate: Function
-  openModal: any
   addData: any
   labels: { [key: string]: Array<string> }
 }
 
 const Calendar: React.FC<Props> = (props) => {
+  const renderCount = useRef(0);
+  console.log('<Calendar /> ', ++renderCount.current);
   const [isShowing, setIsShowing] = useState(false);
-  const [idx, setIdx] = useState(-1);
-
   const handleClick = () => {
-    setIdx(-1);
     setIsShowing(true);
   }
   const handleHide = () => {
-    setIdx(0);
     setIsShowing(false);
   }
   return (
@@ -45,7 +31,14 @@ const Calendar: React.FC<Props> = (props) => {
       <div style={{ padding: '0 16px', marginTop: '16px' }}>
         <IconBtn className="lg theme-color" icon={<Add fill='#fff' width="24px" />} style={{ borderRadius: '5px' }} onClick={handleClick} />
       </div>
-      <TestModal isShowing={isShowing} idx={idx} reps={0} weight={0} label={0} hide={handleHide} addData={props.addData} />
+      <WorkoutAddModal
+        isShowing={isShowing}
+        idx={-1}
+        data={{}}
+        // weight={0} reps={0}
+        hide={handleHide} addData={props.addData}
+      />
+      {/* <TestModal isShowing={isShowing} idx={idx} reps={0} weight={0} label={0} hide={handleHide} addData={props.addData} /> */}
     </div>
   )
 }
@@ -56,7 +49,9 @@ interface headProps {
   selectedDate: moment.Moment
   selectDate: Function
 }
-const CalendarHead: React.FC<headProps> = (props) => {
+const CalendarHead: React.FC<headProps> = React.memo((props) => {
+  const renderCount = useRef(0);
+  console.log('<CalendarHead /> ', ++renderCount.current);
   return (
     <div className="CalendarHead">
       <IconBtn icon={<ArrowLeft />} onClick={() => props.selectDate(props.selectedDate.clone().subtract(1, 'month'))} />
@@ -64,7 +59,7 @@ const CalendarHead: React.FC<headProps> = (props) => {
       <IconBtn icon={<ArrowRight />} onClick={() => props.selectDate(props.selectedDate.clone().add(1, 'month'))} />
     </div>
   )
-}
+})
 
 
 interface bodyProps {
@@ -73,10 +68,11 @@ interface bodyProps {
   labels: { [key: string]: Array<string> }
 }
 
-const CalendarBody: React.FC<bodyProps> = (props) => {
+const CalendarBody: React.FC<bodyProps> = React.memo((props) => {
+  const renderCount = useRef(0);
+  console.log('<CalendarBody /> ', ++renderCount.current);
   const generateCalendar = () => {
     const today = moment();
-
     const startWeek = props.selectedDate.clone().startOf('month').week();
     const endWeek = props.selectedDate.clone().endOf('month').week() === 1 ? 53 : props.selectedDate.clone().endOf('month').week();
     let calendar = []
@@ -93,7 +89,7 @@ const CalendarBody: React.FC<bodyProps> = (props) => {
               return (
                 <div className={`box ${isSelected} ${isToday} ${isExtra} `} key={i} onClick={() => props.selectDate(current)}>
                   <div className="label-box">
-                    {labels.map((i, j) => <span key={j} className={`label ${colorSet[i]}`} />)}
+                    {labels.map((i: string, j: number) => { return <span key={j} className={`label ${NEW_LABELS[i].color}`} /> })}
                   </div>
                   <span className={`date`}>{current.format('D')}</span>
                 </div>
@@ -121,4 +117,4 @@ const CalendarBody: React.FC<bodyProps> = (props) => {
       </>
     </div>
   )
-}
+})

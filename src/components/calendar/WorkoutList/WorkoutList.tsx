@@ -1,30 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useRef, useMemo } from 'react';
+
 import './WorkoutList.scss';
 import { WorkoutDataProps } from 'stores/modules/workout';
-import WorkoutModal3 from 'components/common/Modal/WorkoutModal3'
-import { LABELS, getLabelIndex } from 'CONSTANTS';
-import { Gear } from 'components/common/Icons';
+import { NEW_LABELS, getLabelIndex } from 'CONSTANTS';
 
-import TestModal from 'components/common/Modal/TestModal';
-import IconBtn from 'components/common/IconBtn';
+import WorkoutAddModal from 'components/common/Modal/WorkoutAddModal';
 import EditModal from 'components/common/Modal/EditModal';
-
-const colorSet: { [key: string]: any } = {
-  'aerobic': 'yellow',
-  'chest': 'skyblue',
-  'biceps': 'purple',
-  'triceps': 'blue',
-  'shoulder': 'orange',
-  'lower': 'brown',
-  'back': 'green',
-  'abdominal': 'red',
-}
 
 interface Props {
   data: { [key: string]: WorkoutDataProps }
-  openModal: any
-  closeModal: any
   updateData: any
   removeData: any
   addData: any
@@ -32,26 +16,17 @@ interface Props {
 }
 const WorkoutList: React.FC<Props> = ({ data, addData, updateData, removeData }) => {
   const renderCount = useRef(0);
-  console.log('<WorkoutList /> RENDER!', ++renderCount.current);
-  console.log(data);
-  // const generateList = useMemo(() => {
-  //   let arr = [];
-  //   for (let i in data) {
-  //     arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} type={data.type} {...data[i]} />)
-  //   }
-  //   return arr;
-  // }, [data])
-  const generateList = () => {
-    console.log('generateList()')
+  console.log('<WorkoutList />', ++renderCount.current);
+  const generateList = useMemo(() => {
     let arr = [];
     for (let i in data) {
-      arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} type={data.type} {...data[i]} />)
+      arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} {...data[i]} />)
     }
     return arr;
-  }
+  }, [data])
   return (
     <div className="WorkoutList">
-      {generateList()}
+      {generateList}
     </div>
   )
 }
@@ -62,90 +37,126 @@ interface ItemProps extends WorkoutDataProps {
   id: any
 }
 
-const ListItem: React.FC<ItemProps> = (props) => {
-  console.log(props);
+const ListItem: React.FC<ItemProps> = React.memo((props) => {
   const renderCount = useRef(0);
+  const renderCount2 = useRef(0);
+  console.log('<ListItem />' + props.name, ++renderCount.current);
   let lastSet: any = Object.keys(props.sets).pop();
-  console.log('<ListItem /> RENDER!', ++renderCount.current);
-  const [isShowing, setIsShowing] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
-  const [weight, setWeight] = useState(props.sets[lastSet].weight);
-  const [reps, setReps] = useState(props.sets[lastSet].reps);
-  const [idx, setIdx] = useState(-1);
-  const [label, setLabel] = useState(getLabelIndex(props.type));
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [idxToModal, setIdxToModal] = useState(-1);
+  const [isTagClicked, setIsTagClicked] = useState(false);
+  const [isLabelClicked, setIsLabelClicked] = useState(false);
 
+  const [isEdit, setIsEdit] = useState(false);
+  const [idx, setIdx] = useState(-1);
+
+  const data = {
+    name: props.name,
+    label: getLabelIndex(props.type),
+    id: props.id,
+    sets: props.sets,
+  };
+  const toggle = () => setIsModalOpened(!isModalOpened)
+  const handleClickListItem = () => {
+    setIdxToModal(lastSet);
+    setIsLabelClicked(false);
+    setIsTagClicked(false);
+    toggle();
+  };
+  const handleClickLabel = (e: any) => {
+    e.stopPropagation();
+    setIdxToModal(lastSet);
+    setIsLabelClicked(true);
+    toggle();
+    //setIdx(-1);
+    //setIsEdit(true);
+  };
   const handleTag = (e: any, obj: any) => {
     e.stopPropagation();
-    setWeight(obj.weight);
-    setReps(obj.reps);
-    setIdx(obj.index);
-    setLabel(getLabelIndex(props.type))
+    setIdxToModal(obj.index);
+    setIsLabelClicked(false);
+    setIsTagClicked(true);
+    //console.log(obj.index);
     toggle();
   }
   const handleList = () => {
-    setWeight(props.sets[lastSet].weight);
-    setReps(props.sets[lastSet].reps);
-    setLabel(getLabelIndex(props.type));
     setIdx(-1);
     toggle();
   }
-  const handleClickLabel = (e: any) => {
-    e.stopPropagation();
-    //setIdx(-1);
-    setIsEdit(true);
-  }
+
   const handleEditModalHide = () => {
     setIsEdit(false);
   }
-  const generateTag = () => {
+  const generateTag = useMemo(() => {
+    console.log('generateTag()', ++renderCount2.current);
     let nextItem: object = {};
     return Object.keys(props.sets).map((current, index, array) => {
       let { weight, reps } = props.sets[current];
       nextItem = (props.sets[array[index + 1]])
       if (JSON.stringify(nextItem) === JSON.stringify(props.sets[current])) {
-        return <span key={current} onClick={(e) => handleTag(e, { index: current, weight, reps })} className={`Tag square ${colorSet[props.type]}`}></span>
+        return <span key={current} onClick={(e) => handleTag(e, { index: current, weight, reps })} className={`Tag square`}></span>
       } else {
-        return <span key={current} onClick={(e) => handleTag(e, { index: current, weight, reps })} className={`Tag ${colorSet[props.type]}`}>{weight}kg {reps}reps</span>
+        return <span key={current} onClick={(e) => handleTag(e, { index: current, weight, reps })} className={`Tag`}>{weight}kg {reps}reps</span>
       }
     })
-  }
-  const toggle = () => setIsShowing(!isShowing)
+  }, [props.sets]);
+
+  const generateModal = useMemo(() => {
+    console.log('generateModal()');
+    let nextItem: object = {};
+    return Object.keys(props.sets).map((current, index, array) => {
+      let { weight, reps } = props.sets[current];
+      nextItem = (props.sets[array[index + 1]]);
+      return <WorkoutAddModal />
+
+    })
+  }, []);
+
+
+
+
+
+
+  // EditModal이랑 TestModal 네이밍 변경하고, isShowing 네이밍도 같이 변경해라 제발 씌발
   return (
     <>
-      <div className="ListItem" onClick={handleList}>
-        <span className={`ListLabel ${colorSet[props.type]} `} onClick={handleClickLabel}>
-          <Gear width={"24px"} fill="#fff" />
-        </span>
+      <div className={`ListItem ${NEW_LABELS[props.type].color}`} onClick={handleClickListItem}>
+        <span className={`ListLabel`} onClick={handleClickLabel} />
         <div className="ListItemHead">
           <span className="title">{props.name}</span>
-          <span className={`set-label ${colorSet[props.type]} `}>{Object.keys(props.sets).length} Sets</span>
+          <span className={`set-label`}>{Object.keys(props.sets).length} Sets</span>
         </div>
         <div className="ListItemBody">
           <div className="Tag-wrap">
             <div className="Tag-box">
-              {generateTag()}
+              {generateTag}
             </div>
           </div>
         </div>
       </div >
-      <EditModal isShowing={isEdit} hide={() => setIsEdit(false)}
+      {/* <EditModal isShowing={isEdit} hide={() => setIsEdit(false)}
         updateData={props.updateData}
         name={props.name}
         id={props.id}
         idx={idx}
-        label={label}
-      />
-      <TestModal isShowing={isShowing} hide={toggle}
+      /> */}
+      <WorkoutAddModal
+        id={props.id}
+        data={data}
+        isShowing={isModalOpened}
+        isLabelClicked={isLabelClicked}
+        idx={idxToModal}
+
+        hide={toggle}
         addData={props.addData}
         updateData={props.updateData}
         removeData={props.removeData}
-        name={props.name}
-        id={props.id}
-        idx={idx}
-        weight={weight}
-        reps={reps}
-        label={label}
+
+        isTagClicked={isTagClicked}
+
+
+
       />
     </>
   )
-};
+})

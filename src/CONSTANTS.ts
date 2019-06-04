@@ -17,3 +17,30 @@ export const getLabelIndex = (type: string) => {
     }
   })
 }
+
+export const NEW_LABELS: any = {
+  'aerobic': {
+    color: 'yellow', name: '유산소',
+  },
+  'back': {
+    color: 'green', name: '등',
+  },
+  'chest': {
+    color: 'skyblue', name: '가슴',
+  },
+  'triceps': {
+    color: 'blue', name: '삼두',
+  },
+  'biceps': {
+    color: 'purple', name: '이두',
+  },
+  'shoulder': {
+    color: 'orange', name: '어깨',
+  },
+  'lower': {
+    color: 'brown', name: '하체',
+  },
+  'abdominal': {
+    color: 'red', name: '복부',
+  }
+}

@@ -93,7 +93,7 @@ export default (function () {
       console.log(uid, data);
       return workoutStore.getItem(key).then((item: any) => {
 
-        if (data.weight) {
+        if (data.reps) {
           return workoutStore.setItem(key, {
             ...item, [uid]: { ...item[uid], sets: { ...item[uid].sets, [data.index]: { weight: data.weight, reps: data.reps } } }
           })
