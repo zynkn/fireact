@@ -12,12 +12,12 @@ import { LABELS } from 'CONSTANTS';
 
 const Modal: React.FC<any> = React.memo((props: any) => {
   const renderCount = useRef(0);
-  console.log('<WorkoutAddModal />' + ' ' + props.idx, ++renderCount.current);
+  console.log('<WorkoutAddModal />', ++renderCount.current);
   console.log(props);
   const [weight, setWeight]: any = useState(0);
   const [reps, setReps]: any = useState(0);
   const [name, setName]: any = useState('');
-  const [label, setLabel]: any = useState(props.label || 0);
+  const [label, setLabel]: any = useState(0);
   const [idx, setIdx]: any = useState(props.idx || -1);
   useEffect(() => {
     if (idx !== props.idx) {
@@ -27,7 +27,7 @@ const Modal: React.FC<any> = React.memo((props: any) => {
       setLabel(props.data.label);
       setName(props.data.name);
     }
-  }, [props.idx])
+  }, [props])
 
   if (!props.isShowing) {
     return <ReactTransitionGroup
@@ -37,6 +37,9 @@ const Modal: React.FC<any> = React.memo((props: any) => {
     ></ReactTransitionGroup>
   }
   const activeColor = () => {
+    if (props.isLabelClicked && name !== '') {
+      return LABELS[label].color;
+    }
     if (name !== '' && weight >= 0 && weight !== '' && reps > 0 && reps !== '') {
       return LABELS[label].color;
     }
@@ -82,8 +85,10 @@ const Modal: React.FC<any> = React.memo((props: any) => {
   }
   const handleHide = () => {
     setIdx(-1);
-    setName(props.data.name);
-    setLabel(props.data.label);
+    setWeight(0);
+    setReps(0);
+    setName(props.data.name || '');
+    setLabel(props.data.label || 0);
     props.hide();
   }
 

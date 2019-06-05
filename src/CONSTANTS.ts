@@ -15,10 +15,11 @@ export const getLabelIndex = (type: string) => {
     if (i.type === type) {
       return i;
     }
+    return false;
   })
 }
 
-export const NEW_LABELS: any = {
+export const NEW_LABELS: { [key: string]: { color: string, name: string } } = {
   'aerobic': {
     color: 'yellow', name: '유산소',
   },

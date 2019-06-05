@@ -144,6 +144,7 @@
       &.#{$name} .set-label { background-color: $color; }
       @for $i from 1 to 5 {
         &.#{$name} > .ListItemBody > .Tag-wrap > .Tag-box > .Tag:nth-child( n + #{$i}) { background-color: rgba($color, 0.5 + (0.1 * $i)) }
+        &.#{$name} > .ListItemBody > .Tag-wrap > .Tag-box > .Tag:nth-child( n + #{$i}):hover { background-color: rgba($color, 1.0 + (0.1 * $i)) }
       }
     }
   }

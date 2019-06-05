@@ -1,7 +1,6 @@
 import React from 'react';
 import './Header.scss';
 import { Logo } from 'components/common/Icons';
-import APP_ICON from 'assets/svg/fireact.svg'
 
 const Header: React.FC = () => {
   return (

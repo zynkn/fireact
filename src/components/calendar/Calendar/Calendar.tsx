@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import moment from "moment";
+import moment, { Moment as MomentTypes } from "moment";
 
 import './Calendar.scss';
 import IconBtn from 'components/common/IconBtn';
@@ -8,9 +8,9 @@ import WorkoutAddModal from 'components/common/Modal/WorkoutAddModal';
 import { NEW_LABELS } from 'CONSTANTS';
 
 interface Props {
-  selectedDate: moment.Moment
+  selectedDate: MomentTypes
   selectDate: Function
-  addData: any
+  addData: Function
   labels: { [key: string]: Array<string> }
 }
 
@@ -35,10 +35,9 @@ const Calendar: React.FC<Props> = (props) => {
         isShowing={isShowing}
         idx={-1}
         data={{}}
-        // weight={0} reps={0}
+        weight={0} reps={0}
         hide={handleHide} addData={props.addData}
       />
-      {/* <TestModal isShowing={isShowing} idx={idx} reps={0} weight={0} label={0} hide={handleHide} addData={props.addData} /> */}
     </div>
   )
 }
@@ -46,7 +45,7 @@ const Calendar: React.FC<Props> = (props) => {
 export default Calendar;
 
 interface headProps {
-  selectedDate: moment.Moment
+  selectedDate: MomentTypes
   selectDate: Function
 }
 const CalendarHead: React.FC<headProps> = React.memo((props) => {
@@ -63,7 +62,7 @@ const CalendarHead: React.FC<headProps> = React.memo((props) => {
 
 
 interface bodyProps {
-  selectedDate: moment.Moment
+  selectedDate: MomentTypes
   selectDate: Function
   labels: { [key: string]: Array<string> }
 }

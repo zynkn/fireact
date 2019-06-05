@@ -1,11 +1,13 @@
 import localforage from 'localforage';
-import workout from 'stores/modules/workout';
+
+
 export default (function () {
   const arrayToObject = (array: any) => {
     return (array.filter((item: any) => {
       if (Object.values(item)[0] !== null) {
         return item;
       }
+      return false;
     })).reduce((acc: any, cur: any) => {
       acc[Object.keys(cur)[0]] = Object.values(cur)[0];
       return acc;

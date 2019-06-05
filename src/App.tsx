@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, RouteComponentProps } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Header from 'components/common/Header';
 import { LoginPage, CalendarPage } from 'pages';
 

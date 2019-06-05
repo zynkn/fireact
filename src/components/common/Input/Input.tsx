@@ -1,14 +1,12 @@
 import React from 'react';
 import './Input.scss';
-import { Cancel } from 'components/common/Icons';
-import IconBtn from 'components/common/IconBtn';
 
 interface Props {
   className?: string
   type?: string
   onChange?: any
-  value?: any
-  btnClick?: any
+  value?: string | number
+  btnClick?: VoidFunction
   hasBtn?: boolean
   style?: any
   name?: string

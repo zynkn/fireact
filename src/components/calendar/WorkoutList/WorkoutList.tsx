@@ -5,14 +5,13 @@ import { WorkoutDataProps } from 'stores/modules/workout';
 import { NEW_LABELS, getLabelIndex } from 'CONSTANTS';
 
 import WorkoutAddModal from 'components/common/Modal/WorkoutAddModal';
-import EditModal from 'components/common/Modal/EditModal';
 
 interface Props {
   data: { [key: string]: WorkoutDataProps }
-  updateData: any
-  removeData: any
-  addData: any
-  [key: string]: any
+  updateData: Function
+  removeData: Function
+  addData: Function
+  //[key: string]: any
 }
 const WorkoutList: React.FC<Props> = ({ data, addData, updateData, removeData }) => {
   const renderCount = useRef(0);
@@ -34,22 +33,17 @@ const WorkoutList: React.FC<Props> = ({ data, addData, updateData, removeData })
 export default WorkoutList;
 
 interface ItemProps extends WorkoutDataProps {
-  id: any
+  id: string
 }
 
 const ListItem: React.FC<ItemProps> = React.memo((props) => {
   const renderCount = useRef(0);
-  const renderCount2 = useRef(0);
   console.log('<ListItem />' + props.name, ++renderCount.current);
   let lastSet: any = Object.keys(props.sets).pop();
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [idxToModal, setIdxToModal] = useState(-1);
   const [isTagClicked, setIsTagClicked] = useState(false);
   const [isLabelClicked, setIsLabelClicked] = useState(false);
-
-  const [isEdit, setIsEdit] = useState(false);
-  const [idx, setIdx] = useState(-1);
-
   const data = {
     name: props.name,
     label: getLabelIndex(props.type),
@@ -63,61 +57,31 @@ const ListItem: React.FC<ItemProps> = React.memo((props) => {
     setIsTagClicked(false);
     toggle();
   };
-  const handleClickLabel = (e: any) => {
+  const handleClickLabel = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIdxToModal(lastSet);
     setIsLabelClicked(true);
     toggle();
-    //setIdx(-1);
-    //setIsEdit(true);
   };
-  const handleTag = (e: any, obj: any) => {
+  const handleTag = (e: React.MouseEvent, obj: { index: number, weight: number, reps: number }) => {
     e.stopPropagation();
     setIdxToModal(obj.index);
     setIsLabelClicked(false);
     setIsTagClicked(true);
-    //console.log(obj.index);
     toggle();
-  }
-  const handleList = () => {
-    setIdx(-1);
-    toggle();
-  }
-
-  const handleEditModalHide = () => {
-    setIsEdit(false);
   }
   const generateTag = useMemo(() => {
-    console.log('generateTag()', ++renderCount2.current);
     let nextItem: object = {};
     return Object.keys(props.sets).map((current, index, array) => {
       let { weight, reps } = props.sets[current];
       nextItem = (props.sets[array[index + 1]])
       if (JSON.stringify(nextItem) === JSON.stringify(props.sets[current])) {
-        return <span key={current} onClick={(e) => handleTag(e, { index: current, weight, reps })} className={`Tag square`}></span>
+        return <span key={current} onClick={(e) => handleTag(e, { index: Number(current), weight, reps })} className={`Tag square`}></span>
       } else {
-        return <span key={current} onClick={(e) => handleTag(e, { index: current, weight, reps })} className={`Tag`}>{weight}kg {reps}reps</span>
+        return <span key={current} onClick={(e) => handleTag(e, { index: Number(current), weight, reps })} className={`Tag`}>{weight}kg {reps}reps</span>
       }
     })
   }, [props.sets]);
-
-  const generateModal = useMemo(() => {
-    console.log('generateModal()');
-    let nextItem: object = {};
-    return Object.keys(props.sets).map((current, index, array) => {
-      let { weight, reps } = props.sets[current];
-      nextItem = (props.sets[array[index + 1]]);
-      return <WorkoutAddModal />
-
-    })
-  }, []);
-
-
-
-
-
-
-  // EditModal이랑 TestModal 네이밍 변경하고, isShowing 네이밍도 같이 변경해라 제발 씌발
   return (
     <>
       <div className={`ListItem ${NEW_LABELS[props.type].color}`} onClick={handleClickListItem}>
@@ -134,28 +98,18 @@ const ListItem: React.FC<ItemProps> = React.memo((props) => {
           </div>
         </div>
       </div >
-      {/* <EditModal isShowing={isEdit} hide={() => setIsEdit(false)}
-        updateData={props.updateData}
-        name={props.name}
-        id={props.id}
-        idx={idx}
-      /> */}
       <WorkoutAddModal
         id={props.id}
         data={data}
         isShowing={isModalOpened}
         isLabelClicked={isLabelClicked}
+        isTagClicked={isTagClicked}
         idx={idxToModal}
 
         hide={toggle}
         addData={props.addData}
         updateData={props.updateData}
         removeData={props.removeData}
-
-        isTagClicked={isTagClicked}
-
-
-
       />
     </>
   )

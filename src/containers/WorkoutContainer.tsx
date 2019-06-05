@@ -1,7 +1,7 @@
 import React from 'react';
 import Calendar from 'components/calendar/Calendar';
 import WorkoutList from 'components/calendar/WorkoutList';
-import moment, { Moment as MomentTypes } from "moment";
+import { Moment as MomentTypes } from "moment";
 
 import { WorkoutDataProps } from 'stores/modules/workout';
 import { updateSelectedDate, removeData, updateData, initializeData, addData } from 'stores/modules/workout';
@@ -16,11 +16,11 @@ interface Props {
   data: { [key: string]: WorkoutDataProps }
   selectedDate: MomentTypes
   labels: { [key: string]: Array<string> }
-  selectDate: typeof updateSelectedDate
-  initializeData: typeof initializeData
-  updateData: typeof updateData
-  addData: typeof addData
-  removeData: typeof removeData
+  selectDate: Function
+  initializeData: Function
+  updateData: Function
+  addData: Function
+  removeData: Function
 }
 class WorkoutContainer extends React.Component<Props> {
 
@@ -41,14 +41,18 @@ class WorkoutContainer extends React.Component<Props> {
 
 
   render() {
+    const { props } = this;
     return (
       <>
-        <Calendar selectedDate={this.props.selectedDate}
-          labels={this.props.labels}
-          selectDate={this.props.selectDate}
-          addData={this.props.addData}
+        <Calendar selectedDate={props.selectedDate}
+          labels={props.labels}
+          selectDate={props.selectDate}
+          addData={props.addData}
         />
-        <WorkoutList data={this.props.data} removeData={this.props.removeData} updateData={this.props.updateData} addData={this.props.addData} />
+        <WorkoutList data={props.data}
+          removeData={props.removeData}
+          updateData={props.updateData}
+          addData={props.addData} />
       </>
     )
   }

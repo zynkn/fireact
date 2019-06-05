@@ -4,7 +4,7 @@ import './Pane.scss';
 interface Props {
   className?: string
   style?: object
-  children: any
+  children: React.ReactNode
 }
 
 const Pane: React.FC<Props> = ({ className, style, children }) => {

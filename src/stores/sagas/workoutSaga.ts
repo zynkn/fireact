@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call, select } from 'redux-saga/effects'
+import { all, takeLatest, put, select } from 'redux-saga/effects'
 
 import {
   SELECTED_DATE_UPDATE,
