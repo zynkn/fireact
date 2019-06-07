@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import LocalForage from 'api/LocalForage';
+
 import utils from 'utils';
 
 interface Props {
@@ -36,6 +37,7 @@ class WorkoutContainer extends React.Component<Props> {
     });
   }
   componentDidMount() {
+    //signInGoogle();
     this.initialize();
   }
 

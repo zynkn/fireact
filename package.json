@@ -12,6 +12,7 @@
     "@types/react-router-dom": "^4.3.2",
     "@types/redux-actions": "^2.6.0",
     "@types/webpack-env": "^1.13.9",
+    "firebase": "^6.1.0",
     "immer": "^3.1.1",
     "localforage": "^1.7.3",
     "moment": "^2.24.0",
@@ -32,7 +33,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "react-scripts build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"

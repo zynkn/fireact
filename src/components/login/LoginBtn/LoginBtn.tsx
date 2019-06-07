@@ -8,11 +8,12 @@ interface Props {
   style?: object
   text: string
   icon: string
+  onClick?: VoidFunction
 }
 
-const LoginBtn: React.FC<Props> = ({ style, text, icon }) => {
+const LoginBtn: React.FC<Props> = ({ style, text, icon, onClick }) => {
   return (
-    <button className="LoginBtn" style={style}>
+    <button className="LoginBtn" style={style} onClick={onClick}>
       {
         icon === "Google" ? <img src={GOOGLE_ICON} alt="GOOGLE_ICON" /> : null
           ||
