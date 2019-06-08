@@ -8,14 +8,17 @@ provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 
 
 export const signInGoogle = () => {
-  firebase.auth().signInWithPopup(provider).then(function (result) {
+  return firebase.auth().signInWithPopup(provider).then(function (result) {
     // This gives you a Google Access Token. You can use it to access the Google API.
     console.log(result);
+    return result;
     //var token = result.credential.accessToken;
     // The signed-in user info.
     var user = result.user;
     // ...
   }).catch(function (error) {
+    console.log(error);
+    return error;
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;

@@ -44,6 +44,7 @@ class WorkoutContainer extends React.Component<Props> {
 
   render() {
     const { props } = this;
+    console.log(props);
     return (
       <>
         <Calendar selectedDate={props.selectedDate}
