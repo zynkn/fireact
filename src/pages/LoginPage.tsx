@@ -13,6 +13,11 @@ interface Props extends RouteComponentProps {
 }
 class LoginPage extends React.Component<Props> {
 
+  componentDidMount() {
+    if (this.props.isLogin) {
+      this.props.history.replace('/')
+    }
+  }
   componentDidUpdate() {
     if (this.props.isLogin) {
       this.props.history.replace('/')

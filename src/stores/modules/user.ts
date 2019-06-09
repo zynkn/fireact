@@ -23,6 +23,7 @@ export default handleActions({
   [GOOGLE_LOGIN_SUCCESS]: (state, action: any) => {
     console.log(action);
     return produce(state, draft => {
+      draft.uid = action.payload.uid;
       draft.isLogin = true;
     })
   }

@@ -9,10 +9,15 @@ header{
   width: 100vw;
   background-color: $theme-color;
   font-family: $font-patua;
-  padding: 13px 16px; 
+  padding: 13px 0; 
   z-index: 99;
   .header-box{
-    width: $desktop-max-width;
+    display: flex;
+    justify-content: space-between;
+    max-width: $desktop-max-width;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 0 16px;
     margin: auto;
     .app-title{
       svg{
@@ -28,7 +33,7 @@ header{
 
 @media (max-width: 768px){
   header{
-    padding: 13px 16px;
+    padding: 13px 0;
     .header-box{
       .app-title{
         img{

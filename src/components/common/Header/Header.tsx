@@ -1,6 +1,7 @@
 import React from 'react';
 import './Header.scss';
-import { Logo } from 'components/common/Icons';
+import { Logo, User } from 'components/common/Icons';
+import { NavLink } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const renderCount = React.useRef(0);
@@ -8,10 +9,13 @@ const Header: React.FC = () => {
   return (
     <header>
       <div className="header-box">
-        <span className="app-title">
+        <NavLink to="/" className="app-title">
           <Logo width="24px" />
           Fireact
-        </span>
+        </NavLink>
+        <NavLink to="/login">
+          <User width="24px" fill="#fff" />
+        </NavLink>
       </div>
 
     </header>

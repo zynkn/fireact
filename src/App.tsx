@@ -6,6 +6,9 @@ import { LoginPage, CalendarPage } from 'pages';
 class App extends React.Component<any>{
 
 
+  componentDidMount() {
+
+  }
   render() {
     console.log(this.props);
     return (

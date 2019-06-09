@@ -1,7 +1,7 @@
-import { fire } from 'fire';
+import 'fire';
 import firebase, { firestore } from 'firebase';
 import 'firebase/firestore';
-fire();
+
 const db = firebase.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);

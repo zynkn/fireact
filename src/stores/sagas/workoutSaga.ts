@@ -1,4 +1,4 @@
-import { all, takeLatest, put, select } from 'redux-saga/effects'
+import { all, takeLatest, put, select, call } from 'redux-saga/effects'
 
 import {
   SELECTED_DATE_UPDATE,
@@ -25,8 +25,11 @@ import LocalForage from 'api/LocalForage';
 import utils from 'utils';
 import { LABELS } from 'CONSTANTS';
 import moment from 'moment';
+import * as firestore from 'api/Firebase/firestore';
 
 const WORKOUT_STATE = (state: any) => state.workout
+const USER_STATE = (state: any) => state.user
+
 function* updateSelectedDate({ payload }: any) {
   try {
     const data = yield LocalForage.get(payload.format('YYYY-MM-DD')).then(res => (res || {}));
@@ -49,6 +52,7 @@ export function* updateSelectedDateSaga() {
 function* addData({ payload }: any) {
   try {
     const workoutState = yield select(WORKOUT_STATE);
+    const userState = yield select(USER_STATE);
     const uid = payload.uid;
     const data = yield LocalForage.set(
       workoutState.selectedDate.format('YYYY-MM-DD'),
@@ -66,6 +70,17 @@ function* addData({ payload }: any) {
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
         return res;
       });
+    });
+    yield call(firestore.setWorkout, {
+      uid: userState.uid,
+      date: workoutState.selectedDate.format('YYYY-MM-DD'),
+      timestamp: uid,
+      type: LABELS[payload.label].type,
+      name: payload.name,
+      unit: 'kg',
+      sets: {
+        [moment().unix()]: { weight: payload.weight, reps: payload.reps }
+      }
     });
     yield put(addLabel(LABELS[LABELS.findIndex(({ type }) => type === LABELS[payload.label].type)].type));
     yield put(addDataSuccess(data));

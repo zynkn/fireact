@@ -1,16 +1,19 @@
-import { all, takeLatest, put, select } from 'redux-saga/effects'
+import { all, takeLatest, put, call } from 'redux-saga/effects'
 import {
   GOOGLE_LOGIN,
   loginGoogleSuccess
 } from 'stores/modules/user';
+import LocalForage from 'api/LocalForage';
 import * as auth from 'api/Firebase/authentication';
-
+import * as firestore from 'api/Firebase/firestore';
 
 function* loginGoogle({ payload }: any) {
   try {
-    const data = yield auth.signInGoogle();
+    //const data = yield auth.signInGoogle();
+    const data = yield call(auth.signInGoogle);
+    //yield call(firestore.setWorkout, data.user.uid);
     console.log(data);
-    yield put(loginGoogleSuccess(data));
+    yield put(loginGoogleSuccess({ uid: data.user.uid }));
 
   } catch (e) {
 
