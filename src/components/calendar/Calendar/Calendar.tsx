@@ -33,7 +33,7 @@ const Calendar: React.FC<Props> = (props) => {
       </div>
       <WorkoutAddModal
         isShowing={isShowing}
-        idx={-1}
+        timestamp={-1}
         data={{}}
         weight={0} reps={0}
         hide={handleHide} addData={props.addData}

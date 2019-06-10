@@ -11,19 +11,17 @@ import { LABELS } from 'CONSTANTS';
 
 
 const Modal: React.FC<any> = React.memo((props: any) => {
-  const renderCount = useRef(0);
-  console.log('<WorkoutAddModal />', ++renderCount.current);
   console.log(props);
   const [weight, setWeight]: any = useState(0);
   const [reps, setReps]: any = useState(0);
   const [name, setName]: any = useState('');
   const [label, setLabel]: any = useState(0);
-  const [idx, setIdx]: any = useState(props.idx || -1);
+  const [timestamp, setTimestamp]: any = useState(props.timestamp || -1);
   useEffect(() => {
-    if (idx !== props.idx) {
-      setIdx(props.idx);
-      setWeight(props.data.sets[props.idx].weight || 0);
-      setReps(props.data.sets[props.idx].reps || 0);
+    if (timestamp !== props.timestamp) {
+      setTimestamp(props.timestamp);
+      setWeight(props.data.sets[props.timestamp].weight || 0);
+      setReps(props.data.sets[props.timestamp].reps || 0);
       setLabel(props.data.label);
       setName(props.data.name);
     }
@@ -46,13 +44,9 @@ const Modal: React.FC<any> = React.memo((props: any) => {
     return ''
   }
   const isActive = () => {
-    //console.log(!props.isLabelClicked)
     if (props.isLabelClicked === false) {
       return false;
     }
-    // if (props.id && props.isLabelClicked) {
-    //   return false;
-    // } 
     else {
       return true;
     }
@@ -60,14 +54,14 @@ const Modal: React.FC<any> = React.memo((props: any) => {
   const handleConfirm = () => {
     if (name !== '' && weight >= 0 && reps > 0) {
       if (props.isLabelClicked) {
-        props.updateData({ uid: props.id, name, type: LABELS[label].type })
+        props.updateData({ isLabelClicked: true, workoutId: props.id, weight, reps, name, index: props.timestamp, type: LABELS[label].type })
       } else if (props.isTagClicked) {
-        props.updateData({ uid: props.id, weight, reps, index: props.idx })
-        setIdx(-1);
+        props.updateData({ workoutId: props.id, weight, reps, name, index: props.timestamp, type: LABELS[label].type })
+        setTimestamp(-1);
       } else {
-        props.addData({ uid: props.id || moment().unix(), name, weight, reps, label })
+        props.addData({ workoutId: props.id || moment().unix(), name, weight, reps, label })
       }
-      if (idx === -1) {
+      if (timestamp === -1) {
         setWeight(0);
         setReps(0);
         setName('');
@@ -77,14 +71,14 @@ const Modal: React.FC<any> = React.memo((props: any) => {
   }
   const handleRemove = () => {
     props.removeData({
-      id: props.id,
-      index: props.idx,
+      workoutId: props.id,
+      timestamp: props.timestamp,
     })
-    setIdx(-1);
+    setTimestamp(-1);
     props.hide();
   }
   const handleHide = () => {
-    setIdx(-1);
+    setTimestamp(-1);
     setWeight(0);
     setReps(0);
     setName(props.data.name || '');
@@ -162,7 +156,7 @@ const Modal: React.FC<any> = React.memo((props: any) => {
 const WorkoutAddModal: React.FC<any> = (props: any) => {
   return ReactDOM.createPortal(
     <>
-      <Modal {...props} hid={props.hide} />
+      <Modal {...props} />
     </>, document.getElementById("modal") as Element
   )
 }

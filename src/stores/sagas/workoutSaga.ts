@@ -26,6 +26,7 @@ import utils from 'utils';
 import { LABELS } from 'CONSTANTS';
 import moment from 'moment';
 import * as firestore from 'api/Firebase/firestore';
+import { tsPropertySignature } from '@babel/types';
 
 const WORKOUT_STATE = (state: any) => state.workout
 const USER_STATE = (state: any) => state.user
@@ -53,11 +54,11 @@ function* addData({ payload }: any) {
   try {
     const workoutState = yield select(WORKOUT_STATE);
     const userState = yield select(USER_STATE);
-    const uid = payload.uid;
+    const workoutId = payload.workoutId;
     const data = yield LocalForage.set(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       {
-        [uid]: {
+        [workoutId]: {
           type: LABELS[payload.label].type,
           name: payload.name,
           unit: 'kg',
@@ -74,7 +75,7 @@ function* addData({ payload }: any) {
     yield call(firestore.setWorkout, {
       uid: userState.uid,
       date: workoutState.selectedDate.format('YYYY-MM-DD'),
-      timestamp: uid,
+      workoutId: workoutId,
       type: LABELS[payload.label].type,
       name: payload.name,
       unit: 'kg',
@@ -95,6 +96,7 @@ export function* addDataSaga() {
 function* updateData({ payload }: any) {
   try {
     const workoutState = yield select(WORKOUT_STATE);
+    const userState = yield select(USER_STATE);
     console.log(payload);
     const data = yield LocalForage.update(
       workoutState.selectedDate.format('YYYY-MM-DD'),
@@ -103,7 +105,19 @@ function* updateData({ payload }: any) {
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
         return res;
       })
-    })
+    });
+    console.log(data);
+    yield call(firestore.setWorkout, {
+      uid: userState.uid,
+      date: workoutState.selectedDate.format('YYYY-MM-DD'),
+      workoutId: payload.workoutId,
+      type: payload.type,
+      name: payload.name,
+      unit: 'kg',
+      sets: {
+        [payload.index]: { weight: payload.weight, reps: payload.reps }
+      }
+    });
     const labels = utils.getUniqueItem({ [workoutState.selectedDate.format('YYYY-MM-DD')]: data });
     yield put(updateLabel(labels));
     yield put(updateDataSuccess(data));
@@ -118,17 +132,26 @@ export function* updateDataSaga() {
 function* removeData({ payload }: any) {
   try {
     const workoutState = yield select(WORKOUT_STATE);
+    const userState = yield select(USER_STATE);
     const data = yield LocalForage.remove(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       {
-        timestamp: payload.id,
-        index: payload.index,
+        workoutId: payload.workoutId,
+        timestamp: payload.timestamp,
       }
     ).then(() => {
       return LocalForage.get(workoutState.selectedDate.format('YYYY-MM-DD')).then((res) => {
         return res;
       })
     });
+    console.log(data);
+    yield call(firestore.removeWorkout,
+      {
+        uid: userState.uid,
+        date: workoutState.selectedDate.format('YYYY-MM-DD'),
+        workoutId: payload.workoutId,
+        timestamp: payload.timestamp,
+      })
     const labels = utils.getUniqueItem({ [workoutState.selectedDate.format('YYYY-MM-DD')]: data });
     yield put(updateLabel(labels));
     yield put(removeDataSuccess(data));

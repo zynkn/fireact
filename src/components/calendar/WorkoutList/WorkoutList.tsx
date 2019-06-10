@@ -39,9 +39,9 @@ interface ItemProps extends WorkoutDataProps {
 const ListItem: React.FC<ItemProps> = React.memo((props) => {
   const renderCount = useRef(0);
   console.log('<ListItem />' + props.name, ++renderCount.current);
-  let lastSet: any = Object.keys(props.sets).pop();
+  let lastTimestamp: any = Object.keys(props.sets).pop();
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [idxToModal, setIdxToModal] = useState(-1);
+  const [timestamp, setTimestamp] = useState(-1);
   const [isTagClicked, setIsTagClicked] = useState(false);
   const [isLabelClicked, setIsLabelClicked] = useState(false);
   const data = {
@@ -52,20 +52,20 @@ const ListItem: React.FC<ItemProps> = React.memo((props) => {
   };
   const toggle = () => setIsModalOpened(!isModalOpened)
   const handleClickListItem = () => {
-    setIdxToModal(lastSet);
+    setTimestamp(lastTimestamp);
     setIsLabelClicked(false);
     setIsTagClicked(false);
     toggle();
   };
   const handleClickLabel = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIdxToModal(lastSet);
+    setTimestamp(lastTimestamp);
     setIsLabelClicked(true);
     toggle();
   };
   const handleTag = (e: React.MouseEvent, obj: { index: number, weight: number, reps: number }) => {
     e.stopPropagation();
-    setIdxToModal(obj.index);
+    setTimestamp(obj.index);
     setIsLabelClicked(false);
     setIsTagClicked(true);
     toggle();
@@ -104,7 +104,7 @@ const ListItem: React.FC<ItemProps> = React.memo((props) => {
         isShowing={isModalOpened}
         isLabelClicked={isLabelClicked}
         isTagClicked={isTagClicked}
-        idx={idxToModal}
+        timestamp={timestamp}
 
         hide={toggle}
         addData={props.addData}

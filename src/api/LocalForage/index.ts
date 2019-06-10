@@ -91,11 +91,11 @@ export default (function () {
       })
     },
     update: (key: any, data: any) => {
-      const uid = data.uid.toString();
+      const uid = data.workoutId.toString();
       console.log(uid, data);
       return workoutStore.getItem(key).then((item: any) => {
 
-        if (data.reps) {
+        if (!data.isLabelClicked) {
           return workoutStore.setItem(key, {
             ...item, [uid]: { ...item[uid], sets: { ...item[uid].sets, [data.index]: { weight: data.weight, reps: data.reps } } }
           })
@@ -117,14 +117,14 @@ export default (function () {
       })
     },
     remove: (key: any, data: any) => {
-      const uid = data.timestamp.toString();
+      const workoutId = data.workoutId.toString();
       return workoutStore.getItem(key).then((item: any) => {
-        if (Object.keys(item[uid].sets).length > 1) {
-          delete item[uid].sets[data.index];
+        if (Object.keys(item[workoutId].sets).length > 1) {
+          delete item[workoutId].sets[data.timestamp];
           return workoutStore.setItem(key, { ...item });
         } else {
           console.log('length가 하나?');
-          delete item[uid]
+          delete item[workoutId]
           return workoutStore.setItem(key, { ...item });
         }
       })
