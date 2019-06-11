@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Calendar from 'components/calendar/Calendar';
 import WorkoutList from 'components/calendar/WorkoutList';
 import { Moment as MomentTypes } from "moment";
@@ -12,8 +12,10 @@ import { bindActionCreators } from 'redux';
 import LocalForage from 'api/LocalForage';
 
 import utils from 'utils';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface Props {
+interface Props extends RouteComponentProps {
+  isLogin: boolean
   data: { [key: string]: WorkoutDataProps }
   selectedDate: MomentTypes
   labels: { [key: string]: Array<string> }
@@ -22,6 +24,7 @@ interface Props {
   updateData: Function
   addData: Function
   removeData: Function
+
 }
 class WorkoutContainer extends React.Component<Props> {
 
@@ -37,7 +40,11 @@ class WorkoutContainer extends React.Component<Props> {
     });
   }
   componentDidMount() {
+    console.log(this.props);
     //signInGoogle();
+    if (!this.props.isLogin) {
+      this.props.history.replace('/login')
+    }
     this.initialize();
   }
 
@@ -63,7 +70,8 @@ class WorkoutContainer extends React.Component<Props> {
 
 
 export default connect(
-  ({ workout }: StoreState) => ({
+  ({ workout, user }: StoreState) => ({
+    isLogin: user.isLogin,
     data: workout.data,
     selectedDate: workout.selectedDate,
     labels: workout.labels

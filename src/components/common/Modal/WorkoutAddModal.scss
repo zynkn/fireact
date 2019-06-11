@@ -1,0 +1,70 @@
+@import 'styles/base.scss';
+.inactive{
+  background-color: #f9f9f9;
+}
+.ModalTop{
+  padding: 0 16px; 
+  .label-wrap{
+    display: flex;
+    overflow-x: auto;
+    .label{
+      flex:0 0 calc(100% / 8);
+      padding: 16px 0;
+      text-align: center;
+      font-size: 10pt;
+      color: #c1c5c9;
+      cursor: pointer;
+      &:hover{
+        border-bottom: 2px solid #c1c5c9;
+      }
+      &.selected{
+        color: red;
+        border-bottom: 2px solid red;
+        @each $name, $color in $label-colors {
+          &.#{$name} { border-color: $color; color: $color }
+        }
+      }
+      &.inactive{
+        color: gray;
+        cursor: not-allowed;
+        &:hover{
+          border-bottom: 2px solid transparent;
+        }
+      }
+    }
+  }
+
+}
+.ModalHead{
+  display: flex;
+  padding: 8px 16px;
+}
+.ModalBody{
+  
+  .row{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 8px 16px;
+  }
+}
+.ModalFoot{
+  display: flex;
+  padding-top: 24px;
+  button{
+    border-top: 1px solid #f0f0f0;
+    background-color: #f9f9f9;
+    color: #bebebe;
+    flex: 1 1 50%;
+    padding: 16px 0;
+    &+button{
+      border-left: 1px solid #f0f0f0;
+    }
+    &.active{
+      background-color: $theme-color;
+    }
+    @each $name, $color in $label-colors {
+      &.#{$name} { background-color: $color; color: white }
+    }
+  }
+}

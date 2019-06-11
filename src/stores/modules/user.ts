@@ -10,12 +10,16 @@ export const loginGoogleSuccess = createAction(GOOGLE_LOGIN_SUCCESS);
 
 export interface UserState {
   uid: string,
+  isLogin: boolean,
+  gender: string,
+  weight: object,
 
-  isLogin: boolean
 }
 const initialState: UserState = {
   uid: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
   isLogin: false,
+  gender: 'Male',
+  weight: {},
 }
 
 

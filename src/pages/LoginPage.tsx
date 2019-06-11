@@ -18,14 +18,13 @@ class LoginPage extends React.Component<Props> {
       this.props.history.replace('/')
     }
   }
-  componentDidUpdate() {
-    if (this.props.isLogin) {
-      this.props.history.replace('/')
-    }
-  }
+  // componentDidUpdate() {
+  //   if (this.props.isLogin) {
+  //     this.props.history.replace('/')
+  //   }
+  // }
   render() {
     const { props } = this;
-    console.log(props);
     return (
       <Pane className="sm" >
         <h2 className="pane-title" style={{ color: '#F76304', textAlign: 'center' }}>Login</h2>

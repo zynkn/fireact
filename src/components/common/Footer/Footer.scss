@@ -1,0 +1,28 @@
+@import 'styles/base.scss';
+
+
+
+footer{
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  height: 48px;
+  width: 100%;
+  background-color:  $theme-color;
+
+  .tab{
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px){
+  footer{
+    display: none;
+  }
+
+}

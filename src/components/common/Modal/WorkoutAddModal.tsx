@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-css-transition-group'; // ES6
 import moment from 'moment';
 import './common.scss';
+import './WorkoutAddModal.scss';
 import IconBtn from 'components/common/IconBtn';
 import Input from 'components/common/Input';
 import { ArrowDown, ArrowUp, Cancel } from 'components/common/Icons';

@@ -15,8 +15,6 @@ interface Props {
 }
 
 const Calendar: React.FC<Props> = (props) => {
-  const renderCount = useRef(0);
-  console.log('<Calendar /> ', ++renderCount.current);
   const [isShowing, setIsShowing] = useState(false);
   const handleClick = () => {
     setIsShowing(true);
@@ -68,8 +66,6 @@ interface bodyProps {
 }
 
 const CalendarBody: React.FC<bodyProps> = React.memo((props) => {
-  const renderCount = useRef(0);
-  console.log('<CalendarBody /> ', ++renderCount.current);
   const generateCalendar = () => {
     const today = moment();
     const startWeek = props.selectedDate.clone().startOf('month').week();
