@@ -6,27 +6,18 @@ import {
   addLabel,
   updateLabel,
 } from 'stores/modules/workout';
-import {
-  DATA_ADD,
-  addDataSuccess
-} from 'stores/modules/workout';
+import { DATA_ADD, addDataSuccess } from 'stores/modules/workout';
 
-import {
-  DATA_UPDATE,
-  updateDataSuccess
-} from 'stores/modules/workout';
+import { DATA_UPDATE, updateDataSuccess } from 'stores/modules/workout';
 
-import {
-  DATA_REMOVE,
-  removeDataSuccess
-} from 'stores/modules/workout';
+import { DATA_REMOVE, removeDataSuccess } from 'stores/modules/workout';
+import { INIT_DATA } from 'stores/modules/workout';
 
 import LocalForage from 'api/LocalForage';
 import utils from 'utils';
 import { LABELS } from 'CONSTANTS';
 import moment from 'moment';
 import * as firestore from 'api/Firebase/firestore';
-import { tsPropertySignature } from '@babel/types';
 
 const WORKOUT_STATE = (state: any) => state.workout
 const USER_STATE = (state: any) => state.user
@@ -162,6 +153,9 @@ function* removeData({ payload }: any) {
 function* removeDataSaga() {
   yield takeLatest(DATA_REMOVE, removeData);
 }
+
+
+
 
 export default function* workoutSaga() {
   yield all([

@@ -44,6 +44,11 @@ export const INITIALIZE_DATA = 'workout/INITIALIZE_DATA';
 export const initializeData = createAction(INITIALIZE_DATA);
 
 
+export const INIT_DATA = 'workout/INIT_DATA';
+export const initData = createAction(INIT_DATA);
+const INIT_DATA_SUCCESS = 'workout/INIT_DATA_SUCCESS';
+
+
 export interface WorkoutState {
   data: { [key: string]: WorkoutDataProps }
   selectedDate: MomentTypes
@@ -107,6 +112,12 @@ export default handleActions({
     })
   },
   [INITIALIZE_DATA]: (state, action: any) => {
+    return produce(state, draft => {
+      draft.data = action.payload.data || [];
+      draft.labels = action.payload.labels;
+    })
+  },
+  [INIT_DATA_SUCCESS]: (state, action: any) => {
     return produce(state, draft => {
       draft.data = action.payload.data || [];
       draft.labels = action.payload.labels;

@@ -4,7 +4,7 @@ import WorkoutList from 'components/calendar/WorkoutList';
 import { Moment as MomentTypes } from "moment";
 
 import { WorkoutDataProps } from 'stores/modules/workout';
-import { updateSelectedDate, removeData, updateData, initializeData, addData } from 'stores/modules/workout';
+import { updateSelectedDate, removeData, updateData, initializeData, addData, initData } from 'stores/modules/workout';
 import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,14 +24,18 @@ interface Props extends RouteComponentProps {
   updateData: Function
   addData: Function
   removeData: Function
+  initData: Function
 
 }
 class WorkoutContainer extends React.Component<Props> {
 
   initialize = () => {
+
+
     const startWeek = this.props.selectedDate.clone().startOf('month').week();
     const endWeek = this.props.selectedDate.clone().endOf('month').week() === 1 ? 53 : this.props.selectedDate.clone().endOf('month').week();
     let dates = utils.getCalendarDates(startWeek, endWeek);
+    this.props.initData({ dates });
     LocalForage.getSome(dates).then((res) => {
       this.props.initializeData({
         data: res[this.props.selectedDate.format('YYYY-MM-DD')],
@@ -82,5 +86,6 @@ export default connect(
     updateData: bindActionCreators(updateData, dispatch),
     addData: bindActionCreators(addData, dispatch),
     removeData: bindActionCreators(removeData, dispatch),
+    initData: bindActionCreators(initData, dispatch),
   })
 )(WorkoutContainer);

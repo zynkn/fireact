@@ -18,11 +18,11 @@ class LoginPage extends React.Component<Props> {
       this.props.history.replace('/')
     }
   }
-  // componentDidUpdate() {
-  //   if (this.props.isLogin) {
-  //     this.props.history.replace('/')
-  //   }
-  // }
+  componentDidUpdate() {
+    if (this.props.isLogin) {
+      this.props.history.replace('/')
+    }
+  }
   render() {
     const { props } = this;
     return (
