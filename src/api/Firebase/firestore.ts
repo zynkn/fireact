@@ -8,6 +8,14 @@ const db = firebase.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true };
 db.settings(settings);
 
+export const getWorkout = async (payload: any) => {
+  console.log(payload);
+  const datas: any = await db.collection("workout").doc(payload.uid).get().then((res) => {
+    return res.data();
+  });
+  console.log(datas);
+}
+
 export const setWorkout = (payload: any) => {
   console.log(payload);
 

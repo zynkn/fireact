@@ -76,6 +76,7 @@ class WorkoutContainer extends React.Component<Props> {
 export default connect(
   ({ workout, user }: StoreState) => ({
     isLogin: user.isLogin,
+    uid: user.uid,
     data: workout.data,
     selectedDate: workout.selectedDate,
     labels: workout.labels
