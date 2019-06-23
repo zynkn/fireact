@@ -7,10 +7,9 @@ import {
   updateLabel,
 } from 'stores/modules/workout';
 import { DATA_ADD, addDataSuccess } from 'stores/modules/workout';
-
 import { DATA_UPDATE, updateDataSuccess } from 'stores/modules/workout';
-
 import { DATA_REMOVE, removeDataSuccess } from 'stores/modules/workout';
+import { INIT_DATA, initDataSuccess } from 'stores/modules/workout';
 
 import LocalForage from 'api/LocalForage';
 import utils from 'utils';
@@ -23,13 +22,18 @@ const USER_STATE = (state: any) => state.user
 
 function* updateSelectedDate({ payload }: any) {
   try {
-    const data = yield LocalForage.get(payload.format('YYYY-MM-DD')).then(res => (res || {}));
+    const userState = yield select(USER_STATE);
+    const data = yield firestore.getWorkout({
+      uid: userState.uid,
+      date: payload.format('YYYY-MM-DD')
+    });
     let startWeek = payload.clone().startOf('month').week();
     let endWeek = payload.clone().endOf('month').week() === 1 ? 53 : payload.clone().endOf('month').week();
     let dates = utils.getCalendarDates(startWeek, endWeek);
-    const labels = yield LocalForage.getSome(dates).then(res => {
-      return utils.getUniqueItem(res);
-    })
+
+    const datas = yield call(firestore.getWorkouts,
+      { uid: userState.uid, start: dates[0], end: dates[dates.length - 1] });
+    const labels = utils.getUniqueItem(datas);
     yield put(updateSelectedDateSuccess({ date: payload, data: data, labels: labels }))
   } catch (e) {
     //yield put(updateSelectedDate(e));
@@ -87,7 +91,6 @@ function* updateData({ payload }: any) {
   try {
     const workoutState = yield select(WORKOUT_STATE);
     const userState = yield select(USER_STATE);
-    console.log(payload);
     const data = yield LocalForage.update(
       workoutState.selectedDate.format('YYYY-MM-DD'),
       { ...payload }
@@ -96,7 +99,6 @@ function* updateData({ payload }: any) {
         return res;
       })
     });
-    console.log(data);
     yield call(firestore.setWorkout, {
       uid: userState.uid,
       date: workoutState.selectedDate.format('YYYY-MM-DD'),
@@ -134,7 +136,6 @@ function* removeData({ payload }: any) {
         return res;
       })
     });
-    console.log(data);
     yield call(firestore.removeWorkout,
       {
         uid: userState.uid,
@@ -153,6 +154,21 @@ function* removeDataSaga() {
   yield takeLatest(DATA_REMOVE, removeData);
 }
 
+function* initData({ payload }: any) {
+  try {
+    const userState = yield select(USER_STATE);
+    const datas = yield call(firestore.getWorkouts,
+      { uid: userState.uid, start: payload.start, end: payload.end });
+    yield put(initDataSuccess(datas))
+
+  } catch (e) {
+
+  }
+}
+
+function* initDataSaga() {
+  yield takeLatest(INIT_DATA, initData);
+}
 
 
 
@@ -162,5 +178,6 @@ export default function* workoutSaga() {
     updateDataSaga(),
     removeDataSaga(),
     addDataSaga(),
+    initDataSaga(),
   ])
 }

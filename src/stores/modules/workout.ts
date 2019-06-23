@@ -10,7 +10,7 @@ selector name: get<Noun>
 import { createAction, handleActions } from 'redux-actions';
 import moment, { Moment as MomentTypes } from 'moment';
 import produce from "immer"
-
+import utils from 'utils';
 
 export const SELECTED_DATE_UPDATE = 'workout/SELECTED_DATE_UPDATE';
 export const updateSelectedDate = createAction(SELECTED_DATE_UPDATE);
@@ -47,6 +47,7 @@ export const initializeData = createAction(INITIALIZE_DATA);
 export const INIT_DATA = 'workout/INIT_DATA';
 export const initData = createAction(INIT_DATA);
 const INIT_DATA_SUCCESS = 'workout/INIT_DATA_SUCCESS';
+export const initDataSuccess = createAction(INIT_DATA_SUCCESS);
 
 
 export interface WorkoutState {
@@ -119,9 +120,9 @@ export default handleActions({
   },
   [INIT_DATA_SUCCESS]: (state, action: any) => {
     return produce(state, draft => {
-      draft.data = action.payload.data || [];
-      draft.labels = action.payload.labels;
-    })
+      draft.data = action.payload[state.selectedDate.format('YYYY-MM-DD')]
+      draft.labels = utils.getUniqueItem(action.payload)
+    });
   }
 
 

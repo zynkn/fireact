@@ -35,16 +35,17 @@ class WorkoutContainer extends React.Component<Props> {
     const startWeek = this.props.selectedDate.clone().startOf('month').week();
     const endWeek = this.props.selectedDate.clone().endOf('month').week() === 1 ? 53 : this.props.selectedDate.clone().endOf('month').week();
     let dates = utils.getCalendarDates(startWeek, endWeek);
-    //this.props.initData({ dates });
-    LocalForage.getSome(dates).then((res) => {
-      this.props.initializeData({
-        data: res[this.props.selectedDate.format('YYYY-MM-DD')],
-        labels: utils.getUniqueItem(res),
-      })
-    });
+    this.props.initData({ start: dates[0], end: dates[dates.length - 1] });
+    // LocalForage.getSome(dates).then((res) => {
+    //   console.log(utils.getUniqueItem(res));
+    //   this.props.initializeData({
+    //     data: res[this.props.selectedDate.format('YYYY-MM-DD')],
+    //     labels: utils.getUniqueItem(res),
+    //   })
+    // });
   }
   componentDidMount() {
-    console.log(this.props);
+    //console.log(this.props);
     //signInGoogle();
     if (!this.props.isLogin) {
       this.props.history.replace('/login')
@@ -55,7 +56,7 @@ class WorkoutContainer extends React.Component<Props> {
 
   render() {
     const { props } = this;
-    console.log(props);
+    //console.log(props);
     return (
       <>
         <Calendar selectedDate={props.selectedDate}
