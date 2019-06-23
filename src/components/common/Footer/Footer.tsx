@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.scss';
-import { Calendar, User } from 'components/common/Icons';
+import { Calendar } from 'components/common/Icons';
 import { NavLink } from 'react-router-dom';
 
 const Footer: React.FC = () => {
@@ -11,9 +11,6 @@ const Footer: React.FC = () => {
       <NavLink to="/workout" className="tab">
         <Calendar width={'24px'} fill='#fff' />
       </NavLink>
-      {/* <span className="tab">
-        <Calendar width={'24px'} fill='#fff' />
-      </span> */}
     </footer>
   )
 }

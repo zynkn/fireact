@@ -1,5 +1,4 @@
 import { createAction, handleActions } from 'redux-actions';
-import moment, { Moment as MomentTypes } from 'moment';
 import produce from "immer"
 
 export const GOOGLE_LOGIN = 'user/GOOGLE_LOGIN';

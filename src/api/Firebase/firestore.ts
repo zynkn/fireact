@@ -1,11 +1,11 @@
 import { fire } from 'fire';
-import firebase, { firestore } from 'firebase';
+import firebase from 'firebase';
 import 'firebase/firestore';
 
 fire();
 
 const db = firebase.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true };
+const settings = {};
 db.settings(settings);
 
 export const getWorkout = async (payload: any) => {
@@ -14,6 +14,10 @@ export const getWorkout = async (payload: any) => {
     return res.data();
   });
   console.log(datas);
+}
+export const getWorkouts = async (payload: any) => {
+  console.log(payload);
+  const datas: any = await db.collection("workout").doc(payload.uid)
 }
 
 export const setWorkout = (payload: any) => {

@@ -1,4 +1,4 @@
-import React, { ReactComponentElement, ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import './ListView.scss';
 import { ArrowRight } from 'components/common/Icons';
 import ReactTransitionGroup from 'react-addons-css-transition-group'; // ES6

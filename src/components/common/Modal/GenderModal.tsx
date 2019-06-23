@@ -1,14 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import ReactTransitionGroup from 'react-addons-css-transition-group'; // ES6
-import moment from 'moment';
 import './common.scss';
 import './GenderModal.scss';
-import IconBtn from 'components/common/IconBtn';
-import Input from 'components/common/Input';
-import { ArrowRight, ArrowUp, Cancel } from 'components/common/Icons';
-import { LABELS } from 'CONSTANTS';
-
+import { ArrowRight } from 'components/common/Icons';
 
 
 const Modal: React.FC<any> = React.memo((props: any) => {

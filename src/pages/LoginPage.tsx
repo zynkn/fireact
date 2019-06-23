@@ -1,11 +1,11 @@
 import React from 'react';
-import { Route, Switch, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import Pane from 'components/common/Pane';
 import LoginBtn from 'components/login/LoginBtn';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { StoreState } from 'stores/modules';
-import { UserState, loginGoogle } from 'stores/modules/user';
+import { loginGoogle } from 'stores/modules/user';
 
 interface Props extends RouteComponentProps {
   isLogin: boolean,

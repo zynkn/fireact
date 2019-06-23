@@ -11,7 +11,6 @@ import { DATA_ADD, addDataSuccess } from 'stores/modules/workout';
 import { DATA_UPDATE, updateDataSuccess } from 'stores/modules/workout';
 
 import { DATA_REMOVE, removeDataSuccess } from 'stores/modules/workout';
-import { INIT_DATA } from 'stores/modules/workout';
 
 import LocalForage from 'api/LocalForage';
 import utils from 'utils';

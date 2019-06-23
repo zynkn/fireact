@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-css-transition-group'; // ES6
 import moment from 'moment';

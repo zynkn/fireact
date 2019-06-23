@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import Calendar from 'components/calendar/Calendar';
 import WorkoutList from 'components/calendar/WorkoutList';
 import { Moment as MomentTypes } from "moment";
@@ -35,7 +35,7 @@ class WorkoutContainer extends React.Component<Props> {
     const startWeek = this.props.selectedDate.clone().startOf('month').week();
     const endWeek = this.props.selectedDate.clone().endOf('month').week() === 1 ? 53 : this.props.selectedDate.clone().endOf('month').week();
     let dates = utils.getCalendarDates(startWeek, endWeek);
-    this.props.initData({ dates });
+    //this.props.initData({ dates });
     LocalForage.getSome(dates).then((res) => {
       this.props.initializeData({
         data: res[this.props.selectedDate.format('YYYY-MM-DD')],

@@ -3,9 +3,7 @@ import {
   GOOGLE_LOGIN,
   loginGoogleSuccess
 } from 'stores/modules/user';
-import LocalForage from 'api/LocalForage';
 import * as auth from 'api/Firebase/authentication';
-import * as firestore from 'api/Firebase/firestore';
 
 function* loginGoogle({ payload }: any) {
   try {
