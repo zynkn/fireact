@@ -23,17 +23,27 @@ const USER_STATE = (state: any) => state.user
 function* updateSelectedDate({ payload }: any) {
   try {
     const userState = yield select(USER_STATE);
-    const data = yield firestore.getWorkout({
-      uid: userState.uid,
-      date: payload.format('YYYY-MM-DD')
-    });
+    /* firestore에서 데이터 불러올 때  */
+    // const data = yield firestore.getWorkout({
+    //   uid: userState.uid,
+    //   date: payload.format('YYYY-MM-DD')
+    // });
+    // let startWeek = payload.clone().startOf('month').week();
+    // let endWeek = payload.clone().endOf('month').week() === 1 ? 53 : payload.clone().endOf('month').week();
+    // let dates = utils.getCalendarDates(startWeek, endWeek);
+
+    // const datas = yield call(firestore.getWorkouts,
+    //   { uid: userState.uid, start: dates[0], end: dates[dates.length - 1] });
+    // const labels = utils.getUniqueItem(datas);
+
+    /* indexedDB에서 데이터 불러올 때, */
+    const data = yield LocalForage.get(payload.format('YYYY-MM-DD')).then(res => (res || {}));
     let startWeek = payload.clone().startOf('month').week();
     let endWeek = payload.clone().endOf('month').week() === 1 ? 53 : payload.clone().endOf('month').week();
     let dates = utils.getCalendarDates(startWeek, endWeek);
-
-    const datas = yield call(firestore.getWorkouts,
-      { uid: userState.uid, start: dates[0], end: dates[dates.length - 1] });
-    const labels = utils.getUniqueItem(datas);
+    const labels = yield LocalForage.getSome(dates).then(res => {
+      return utils.getUniqueItem(res);
+    })
     yield put(updateSelectedDateSuccess({ date: payload, data: data, labels: labels }))
   } catch (e) {
     //yield put(updateSelectedDate(e));
@@ -157,8 +167,16 @@ function* removeDataSaga() {
 function* initData({ payload }: any) {
   try {
     const userState = yield select(USER_STATE);
-    const datas = yield call(firestore.getWorkouts,
-      { uid: userState.uid, start: payload.start, end: payload.end });
+    const workoutState = yield select(WORKOUT_STATE);
+    const dates = utils.getCalendarDates(payload.startWeek, payload.endWeek);
+    /*firestore 데이터 불러올 때 */
+    // const datas = yield call(firestore.getWorkouts,
+    //   { uid: userState.uid, start: dates[0], end: dates[dates.length-1] });
+
+    /*indexedDb 데이터 불러올 때 */
+    const datas = yield LocalForage.getSome(dates).then((res) => {
+      return res;
+    });
     yield put(initDataSuccess(datas))
 
   } catch (e) {

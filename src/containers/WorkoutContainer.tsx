@@ -35,7 +35,7 @@ class WorkoutContainer extends React.Component<Props> {
     const startWeek = this.props.selectedDate.clone().startOf('month').week();
     const endWeek = this.props.selectedDate.clone().endOf('month').week() === 1 ? 53 : this.props.selectedDate.clone().endOf('month').week();
     let dates = utils.getCalendarDates(startWeek, endWeek);
-    this.props.initData({ start: dates[0], end: dates[dates.length - 1] });
+    this.props.initData({ startWeek: startWeek, endWeek: endWeek });
     // LocalForage.getSome(dates).then((res) => {
     //   console.log(utils.getUniqueItem(res));
     //   this.props.initializeData({

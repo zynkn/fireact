@@ -119,6 +119,7 @@ export default handleActions({
     })
   },
   [INIT_DATA_SUCCESS]: (state, action: any) => {
+    console.log(action.payload);
     return produce(state, draft => {
       draft.data = action.payload[state.selectedDate.format('YYYY-MM-DD')]
       draft.labels = utils.getUniqueItem(action.payload)
