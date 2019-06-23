@@ -9,9 +9,6 @@ import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import LocalForage from 'api/LocalForage';
-
-import utils from 'utils';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface Props extends RouteComponentProps {
@@ -30,23 +27,13 @@ interface Props extends RouteComponentProps {
 class WorkoutContainer extends React.Component<Props> {
 
   initialize = () => {
-
-
     const startWeek = this.props.selectedDate.clone().startOf('month').week();
     const endWeek = this.props.selectedDate.clone().endOf('month').week() === 1 ? 53 : this.props.selectedDate.clone().endOf('month').week();
-    let dates = utils.getCalendarDates(startWeek, endWeek);
     this.props.initData({ startWeek: startWeek, endWeek: endWeek });
-    // LocalForage.getSome(dates).then((res) => {
-    //   console.log(utils.getUniqueItem(res));
-    //   this.props.initializeData({
-    //     data: res[this.props.selectedDate.format('YYYY-MM-DD')],
-    //     labels: utils.getUniqueItem(res),
-    //   })
-    // });
+
   }
   componentDidMount() {
-    //console.log(this.props);
-    //signInGoogle();
+
     if (!this.props.isLogin) {
       this.props.history.replace('/login')
     }

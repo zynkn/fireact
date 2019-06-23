@@ -112,6 +112,7 @@ export default handleActions({
       draft.data = action.payload
     })
   },
+  // 삭제 요망
   [INITIALIZE_DATA]: (state, action: any) => {
     return produce(state, draft => {
       draft.data = action.payload.data || [];
