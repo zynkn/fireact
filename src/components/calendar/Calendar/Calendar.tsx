@@ -12,15 +12,23 @@ interface Props {
   selectDate: Function
   addData: Function
   labels: { [key: string]: Array<string> }
+  history: any
 }
 
 const Calendar: React.FC<Props> = (props) => {
   const [isShowing, setIsShowing] = useState(false);
+  React.useEffect(() => {
+    if (props.history.action === "POP" && isShowing) {
+      setIsShowing(false);
+    }
+  })
   const handleClick = () => {
     setIsShowing(true);
+    props.history.push("/workout");
   }
   const handleHide = () => {
     setIsShowing(false);
+    props.history.goBack();
   }
   return (
     <div className="Calendar">

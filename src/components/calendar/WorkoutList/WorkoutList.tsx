@@ -5,24 +5,27 @@ import { WorkoutDataProps } from 'stores/modules/workout';
 import { NEW_LABELS, getLabelIndex } from 'CONSTANTS';
 
 import WorkoutAddModal from 'components/common/Modal/WorkoutAddModal';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface Props {
   data: { [key: string]: WorkoutDataProps }
   updateData: Function
   removeData: Function
   addData: Function
+  history: any
   //[key: string]: any
 }
-const WorkoutList: React.FC<Props> = ({ data, addData, updateData, removeData }) => {
+const WorkoutList: React.FC<Props> = ({ data, addData, updateData, removeData, history }) => {
   const renderCount = useRef(0);
   console.log('<WorkoutList />', ++renderCount.current);
+  console.log(history);
   const generateList = useMemo(() => {
     let arr = [];
     for (let i in data) {
-      arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} {...data[i]} />)
+      arr.push(<ListItem key={i} id={i} addData={addData} updateData={updateData} removeData={removeData} history={history} action={history.action} {...data[i]} />)
     }
     return arr;
-  }, [data])
+  }, [data, history.action])
   return (
     <div className="WorkoutList">
       {generateList}
@@ -39,6 +42,7 @@ interface ItemProps extends WorkoutDataProps {
 const ListItem: React.FC<ItemProps> = React.memo((props) => {
   const renderCount = useRef(0);
   console.log('<ListItem />' + props.name, ++renderCount.current);
+  console.log(props);
   let lastTimestamp: any = Object.keys(props.sets).pop();
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [timestamp, setTimestamp] = useState(-1);
@@ -50,7 +54,30 @@ const ListItem: React.FC<ItemProps> = React.memo((props) => {
     id: props.id,
     sets: props.sets,
   };
-  const toggle = () => setIsModalOpened(!isModalOpened)
+  // React.useCallback(() => {
+  //   console.log(props.history.action);
+  // }, [setIsModalOpened]);
+  React.useEffect(() => {
+    console.log(props.action);
+    if (props.action === "POP" && isModalOpened) {
+      setIsModalOpened(false);
+    }
+
+  });
+  const toggle = () => {
+    if (isModalOpened) {
+      // 닫기
+      console.log('닫기')
+      props.history.goBack();
+      //console.log(props.history);
+    } else {
+      // 열기
+      console.log('열기')
+      props.history.push('/workout', 'opend');
+      //console.log(props.history);
+    }
+    setIsModalOpened(!isModalOpened)
+  }
   const handleClickListItem = () => {
     setTimestamp(lastTimestamp);
     setIsLabelClicked(false);

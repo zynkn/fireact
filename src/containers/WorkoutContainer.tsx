@@ -50,11 +50,13 @@ class WorkoutContainer extends React.Component<Props> {
           labels={props.labels}
           selectDate={props.selectDate}
           addData={props.addData}
+          history={props.history}
         />
         <WorkoutList data={props.data}
           removeData={props.removeData}
           updateData={props.updateData}
-          addData={props.addData} />
+          addData={props.addData}
+          history={props.history} />
       </>
     )
   }
