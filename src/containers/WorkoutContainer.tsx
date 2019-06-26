@@ -4,6 +4,7 @@ import WorkoutList from 'components/calendar/WorkoutList';
 import { Moment as MomentTypes } from "moment";
 
 import { WorkoutDataProps } from 'stores/modules/workout';
+import { } from 'stores/modules/user';
 import { updateSelectedDate, removeData, updateData, initializeData, addData, initData } from 'stores/modules/workout';
 import { StoreState } from 'stores/modules';
 import { connect } from 'react-redux';
@@ -22,7 +23,6 @@ interface Props extends RouteComponentProps {
   addData: Function
   removeData: Function
   initData: Function
-
 }
 class WorkoutContainer extends React.Component<Props> {
 
@@ -30,7 +30,6 @@ class WorkoutContainer extends React.Component<Props> {
     const startWeek = this.props.selectedDate.clone().startOf('month').week();
     const endWeek = this.props.selectedDate.clone().endOf('month').week() === 1 ? 53 : this.props.selectedDate.clone().endOf('month').week();
     this.props.initData({ startWeek: startWeek, endWeek: endWeek });
-
   }
   componentDidMount() {
 

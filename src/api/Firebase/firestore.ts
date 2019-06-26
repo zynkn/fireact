@@ -8,6 +8,17 @@ const db = firebase.firestore();
 const settings = {};
 db.settings(settings);
 
+export const getAsyncToken = async (payload: any) => {
+  const TOKEN: any = await db.collection('workout').doc(payload.uid).get().then((doc) => {
+    if (doc.exists) {
+      return doc.data()
+    } else {
+      return { 'ASYNC_TOKEN': null }
+    }
+  });
+  return TOKEN;
+}
+
 export const getWorkout = async (payload: any) => {
   console.log(payload);
   const datas: any = await db.collection("workout").doc(payload.uid).collection("dates")
@@ -29,28 +40,40 @@ export const getWorkouts = async (payload: any) => {
   const datas: any = await db.collection("workout").doc(payload.uid).collection("dates")
     .where("date", ">=", payload.start).where("date", "<=", payload.end)
     .orderBy("date", "asc").get().then((querySnapshot: any) => {
-      //let map: any = new Map();
       let map: any = {};
-      //let obj: any = {};
       querySnapshot.forEach((doc: any) => {
-        //obj = {[doc.id]: doc.data()};
         let temp: any = doc.data();
         delete temp.date;
         map = { ...map, [doc.id]: temp }
-        //map.set(doc.id, doc.data());
-        // console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
       });
-      //delete map.date;
       console.log(map);
       return map;
     });
-  //console.log(datas);
+  return datas;
+}
+export const getAllWorkout = async (payload: any) => {
+  //console.log('GET ALL');
+  const datas: any = await db.collection("workout").doc(payload.uid).collection("dates")
+    .get().then((querySnapshot: any) => {
+      let obj: any = {};
+      querySnapshot.forEach((doc: any) => {
+        //console.log(doc.data());
+        let temp = doc.data();
+        let date = temp.date;
+        delete temp.date;
+        if (doc.exists) {
+          obj[date] = temp;
+        }
+      })
+      //console.log(obj);
+      return obj;
+    })
   return datas;
 }
 
 export const setWorkout = (payload: any) => {
   console.log(payload);
-
+  const token = payload.token || payload.workoutId;
   return db.collection("workout").doc(payload.uid).collection("dates").doc(payload.date)
     .set(
       {
@@ -64,23 +87,63 @@ export const setWorkout = (payload: any) => {
       }
       , { merge: true }).then((res: any) => {
         console.log(res);
+        db.collection("workout").doc(payload.uid).set({
+          ASYNC_TOKEN: token
+        }).then((res) => console.log('ASYNC_TOKEN IS INPUTTED.'));
         return res;
       })
 
 }
 
 export const removeWorkout = async (payload: any) => {
+
+  /*TODO: 삭제 로직 짜야합니다. */
+
+
+  // const datas: any = await db.collection("workout").doc(payload.uid).collection('dates').where("date", "==", payload.date)
+  //   .get().then((querySnapshot: any) => {
+  //     querySnapshot.forEach((doc: any) => {
+  //       let temp = doc.data();
+
+  //       console.log(temp[payload.workoutId].sets[payload.timestamp]);
+  //     });
+  //   });
+  // console.log(datas);
+  console.log(payload.workoutId, payload.timestamp);
+  const res: any = await db.collection('workout').doc(payload.uid).collection('dates').doc(payload.date).update({
+    [payload.workoutId]: {
+      sets: {
+        [payload.timestamp]: firebase.firestore.FieldValue.delete()
+      }
+    }
+  }).then(() => {
+    return db.collection("workout").doc(payload.uid).set({
+      ASYNC_TOKEN: payload.token
+    }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
+  })
+  console.log(res);
+
   const hasOne: any = await db.collection("workout").doc(payload.uid).get().then((res) => {
     return res.data();
   })
+  console.log('REMOVE WORKOUT', hasOne);
   if (Object.keys(hasOne[payload.date][payload.workoutId].sets).length > 1) {
-    db.collection("workout").doc(payload.uid).update({
+    const res = await db.collection("workout").doc(payload.uid).update({
       [payload.date + "." + payload.workoutId + ".sets." + payload.timestamp]: firebase.firestore.FieldValue.delete()
+    }).then((res) => {
+      return db.collection("workout").doc(payload.uid).set({
+        ASYNC_TOKEN: payload.token
+      }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
     })
   } else {
-    db.collection("workout").doc(payload.uid).update({
+    const res = await db.collection("workout").doc(payload.uid).update({
       [payload.date + '.' + payload.workoutId]: firebase.firestore.FieldValue.delete()
+    }).then((res) => {
+      return db.collection("workout").doc(payload.uid).set({
+        ASYNC_TOKEN: payload.token
+      }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
     })
   }
+
 }
 

@@ -55,7 +55,6 @@ export default (function () {
     },
 
     getSome: async (keys: Array<string>) => {
-
       let promises = keys.map(async (key) => {
         return workoutStore.getItem(key).then((res) => {
           return { [key]: res };
@@ -74,11 +73,15 @@ export default (function () {
         return Promise.all(promises).then(res => { console.log(res); return res; });
       });
     },
+    setAsyncToken: (token: any) => {
+      return workoutStore.setItem('ASYNC_TOKEN', token);
+    },
     set: (key: any, data: any) => {
       const uid = Object.keys(data)[0];
       //console.log(data[uid]);
       return workoutStore.getItem(key).then((item: any) => {
         /*Empty */
+        workoutStore.setItem('ASYNC_TOKEN', uid);
         if (item === null) {
           return workoutStore.setItem(key, data).then(res => res);
         }
@@ -90,11 +93,17 @@ export default (function () {
 
       })
     },
+    setAll: async (data: any) => {
+      for (let [key, value] of Object.entries(data)) {
+        await workoutStore.setItem(key, value);
+      }
+      return 'setALL finshed';
+    },
     update: (key: any, data: any) => {
       const uid = data.workoutId.toString();
       console.log(uid, data);
       return workoutStore.getItem(key).then((item: any) => {
-
+        workoutStore.setItem('ASYNC_TOKEN', data.token);
         if (!data.isLabelClicked) {
           return workoutStore.setItem(key, {
             ...item, [uid]: { ...item[uid], sets: { ...item[uid].sets, [data.index]: { weight: data.weight, reps: data.reps } } }
@@ -119,6 +128,8 @@ export default (function () {
     remove: (key: any, data: any) => {
       const workoutId = data.workoutId.toString();
       return workoutStore.getItem(key).then((item: any) => {
+        workoutStore.setItem('ASYNC_TOKEN', data.token);
+        console.log('ASYNCTOKENSET')
         if (Object.keys(item[workoutId].sets).length > 1) {
           delete item[workoutId].sets[data.timestamp];
           return workoutStore.setItem(key, { ...item });
