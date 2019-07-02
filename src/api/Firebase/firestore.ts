@@ -109,41 +109,54 @@ export const removeWorkout = async (payload: any) => {
   //     });
   //   });
   // console.log(datas);
-  console.log(payload.workoutId, payload.timestamp);
-  const res: any = await db.collection('workout').doc(payload.uid).collection('dates').doc(payload.date).update({
-    [payload.workoutId]: {
-      sets: {
-        [payload.timestamp]: firebase.firestore.FieldValue.delete()
-      }
-    }
-  }).then(() => {
-    return db.collection("workout").doc(payload.uid).set({
-      ASYNC_TOKEN: payload.token
-    }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
-  })
-  console.log(res);
+  // console.log(payload.workoutId, payload.timestamp);
+  // console.log(payload.uid);
+  // console.log(payload.date);
+  // console.log(payload.workoutId);
 
-  const hasOne: any = await db.collection("workout").doc(payload.uid).get().then((res) => {
+  const hasOne: any = await db.collection("workout").doc(payload.uid).collection('dates').doc(payload.date).get().then((res) => {
     return res.data();
-  })
-  console.log('REMOVE WORKOUT', hasOne);
-  if (Object.keys(hasOne[payload.date][payload.workoutId].sets).length > 1) {
-    const res = await db.collection("workout").doc(payload.uid).update({
-      [payload.date + "." + payload.workoutId + ".sets." + payload.timestamp]: firebase.firestore.FieldValue.delete()
+  });
+  if (Object.keys(hasOne[payload.workoutId].sets).length === 1) {
+    await db.collection('workout').doc(payload.uid).collection('dates').doc(payload.date).update({
+      [payload.workoutId]: firebase.firestore.FieldValue.delete()
     }).then((res) => {
       return db.collection("workout").doc(payload.uid).set({
         ASYNC_TOKEN: payload.token
       }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
     })
   } else {
-    const res = await db.collection("workout").doc(payload.uid).update({
-      [payload.date + '.' + payload.workoutId]: firebase.firestore.FieldValue.delete()
+    await db.collection('workout').doc(payload.uid).collection('dates').doc(payload.date).update({
+      [payload.workoutId + '.sets.' + payload.timestamp]: firebase.firestore.FieldValue.delete()
+
     }).then((res) => {
       return db.collection("workout").doc(payload.uid).set({
         ASYNC_TOKEN: payload.token
       }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
     })
   }
+
+  // const hasOne: any = await db.collection("workout").doc(payload.uid).get().then((res) => {
+  //   return res.data();
+  // })
+  // console.log('REMOVE WORKOUT', hasOne);
+  // if (Object.keys(hasOne[payload.date][payload.workoutId].sets).length > 1) {
+  //   const res = await db.collection("workout").doc(payload.uid).update({
+  //     [payload.date + "." + payload.workoutId + ".sets." + payload.timestamp]: firebase.firestore.FieldValue.delete()
+  //   }).then((res) => {
+  //     return db.collection("workout").doc(payload.uid).set({
+  //       ASYNC_TOKEN: payload.token
+  //     }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
+  //   })
+  // } else {
+  //   const res = await db.collection("workout").doc(payload.uid).update({
+  //     [payload.date + '.' + payload.workoutId]: firebase.firestore.FieldValue.delete()
+  //   }).then((res) => {
+  //     return db.collection("workout").doc(payload.uid).set({
+  //       ASYNC_TOKEN: payload.token
+  //     }).then((res) => ('ASYNC_TOKEN IS INPUTTED.'));
+  //   })
+  // }
 
 }
 
