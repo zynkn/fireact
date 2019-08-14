@@ -17,9 +17,9 @@ export interface UserState {
   weight: object,
 }
 const initialState: UserState = {
-  uid: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
-  //uid: '',
-  isLogin: true,
+  //uid: 'VcZblxmPQdhe23FjXjlmg7vm90K3',
+  uid: '',
+  isLogin: false,
   gender: 'Male',
   weight: {},
 }

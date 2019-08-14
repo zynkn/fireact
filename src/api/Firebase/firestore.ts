@@ -97,22 +97,6 @@ export const setWorkout = (payload: any) => {
 
 export const removeWorkout = async (payload: any) => {
 
-  /*TODO: 삭제 로직 짜야합니다. */
-
-
-  // const datas: any = await db.collection("workout").doc(payload.uid).collection('dates').where("date", "==", payload.date)
-  //   .get().then((querySnapshot: any) => {
-  //     querySnapshot.forEach((doc: any) => {
-  //       let temp = doc.data();
-
-  //       console.log(temp[payload.workoutId].sets[payload.timestamp]);
-  //     });
-  //   });
-  // console.log(datas);
-  // console.log(payload.workoutId, payload.timestamp);
-  // console.log(payload.uid);
-  // console.log(payload.date);
-  // console.log(payload.workoutId);
 
   const hasOne: any = await db.collection("workout").doc(payload.uid).collection('dates').doc(payload.date).get().then((res) => {
     return res.data();
