@@ -58,16 +58,16 @@ const Calendar: React.FC<any> = () => {
             <span className="td ">13</span>
             <span className="td added">
               <div className="label-box">
-                <span className="label" />
-                <span className="label" />
-                <span className="label" />
-                <span className="label" />
+                <span className="label blue" />
+                <span className="label yellow" />
+                <span className="label green" />
+                <span className="label purple" />
               </div>
               14</span>
             <span className="td added">15</span>
             <span className="td added">
               <div className="label-box">
-                <span className="label" />
+                <span className="label red" />
               </div>
               <span className="today">16</span>
             </span>
@@ -196,6 +196,24 @@ const Calendar: React.FC<any> = () => {
             height: 1vw;
             border-radius: 100%;
             background: red;
+          }
+          .label.red{
+            background: #e33a3d
+          }
+          .label.orange{
+            background: #ff9648
+          }
+          .label.yellow{
+            background: #fed042
+          }
+          .label.green{
+            background: #009441
+          }
+          .label.blue{
+            background: #3871f7
+          }
+          .label.purple{
+            background: #8c48f7
           }
           .label + .label{
             margin-left: 2px;
