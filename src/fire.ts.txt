@@ -1,0 +1,17 @@
+// import * as firebase from 'firebase';
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBsya0z5xuYVWJ1jR9KnF584YW3XZNjkeM",
+//   authDomain: "fireact-b8dc7.firebaseapp.com",
+//   databaseURL: "https://fireact-b8dc7.firebaseio.com",
+//   projectId: "fireact-b8dc7",
+//   storageBucket: "fireact-b8dc7.appspot.com",
+//   messagingSenderId: "825868651410",
+//   appId: "1:825868651410:web:f9f97237a0b04180"
+// };  
+ 
+// export const fire = () => {
+//   if(!firebase.apps.length){
+//     firebase.initializeApp(firebaseConfig);
+//   }
+// }

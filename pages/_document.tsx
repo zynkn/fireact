@@ -20,7 +20,7 @@ class FireactDocument extends Document {
         font-size: 14px;
         min-width: 100vw;
         min-height: 100vh;
-        //height: 150vh;
+        
       }
       main {
         

@@ -1,18 +1,53 @@
 import React from 'react';
 import Arrow from './icons/Arrow';
+import moment from 'moment';
 
+
+function generate(today:any){
+  //const today = moment();
+  console.log(today);
+  const startWeek = today.clone().startOf('month').week()-1;
+  const endWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week()+1;
+  let calendar = [];
+  for (let week = startWeek; week <= endWeek; week++) {
+    calendar.push(
+      <div className="row" key={week}>
+        {
+          Array(7).fill(0).map((n, i) => {
+            let current = today.clone().week(week).startOf('week').add(n + i, 'day')
+            let isSelected = today.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'today' : '';
+            let isGrayed = current.format('MM') === today.format('MM') ? '' : 'gray';
+            return (
+              <span className={`td ${isGrayed}`} key={i}>
+                <span className={`${isSelected}`}>{current.format('D')}</span>
+              </span>
+            )
+          })
+        }
+      </div>
+    )
+  }
+  return calendar;
+}
 
 const Calendar: React.FC<any> = () => {
+  const [now, setNow]:any = React.useState(moment());
+  React.useEffect(()=>{
+    // ComponentDidMount()
+  },[]);
+  console.log(now);
+
+
   return (
     <>
       <div className="Calendar">
         <div className="head">
-          <button>
+          <button onClick={()=>setNow(now.clone().subtract(1,'months'))}>
             <Arrow style={{ transform: 'rotate(-90deg)', width: '24px' }} />
           </button>
 
-          <span className="title">August 2019</span>
-          <button>
+          <span className="title">{now.format('MMMM YYYY')}</span>
+          <button onClick={()=>setNow(now.clone().add(1,'months'))}>
             <Arrow style={{ transform: 'rotate(90deg)', width: '24px' }} />
           </button>
         </div>
@@ -26,7 +61,7 @@ const Calendar: React.FC<any> = () => {
             <span className="th">Fri</span>
             <span className="th">Sat</span>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <span className="td gray">22</span>
             <span className="td gray">23</span>
             <span className="td gray">24</span>
@@ -91,10 +126,11 @@ const Calendar: React.FC<any> = () => {
             <span className="td ">30</span>
             <span className="td ">31</span>
             <span className="td gray">1</span>
-          </div>
+          </div> */}
+          {generate(now)}
         </div>
       </div>
-      <style jsx>
+      <style jsx global>
         {`
           .Calendar{
             font-family: 'Noto Sans KR', sans-serif;
@@ -107,7 +143,7 @@ const Calendar: React.FC<any> = () => {
             padding: 8px;
             user-select: none;
           }
-          .head{
+          .Calendar > .head{
             display: flex;
             justify-content: space-between;
             box-sizing: border-box;
@@ -115,28 +151,28 @@ const Calendar: React.FC<any> = () => {
             font-size: 1em;
             text-align: center;
           }
-          .head > button{
+          .Calendar > .head > button{
             display: flex;
             align-items: center;
             background: transparent;
             border: 0;
           }
-          .head > .title {
+          .Calendar > .head > .title {
             display: inline-block;
             padding: 8px 12px;
             font-weight: bold;
           }
-          .head > .title:hover{
+          .Calendar > .head > .title:hover{
             background-color: #f1f1f1;
           }
-          .body{
+          .Calendar > .body{
 
           }
-          .body > .row{
+          .Calendar > .body > .row{
             display: flex;
           }
-          .body > .row > .th,
-          .body > .row > .td
+          .Calendar > .body > .row > .th,
+          .Calendar > .body > .row > .td
           {
             font-size: 0.8em;
             display: flex;
@@ -148,28 +184,28 @@ const Calendar: React.FC<any> = () => {
             text-transform: uppercase;
             font-weight: bold;
           }
-          .body > .row > .th:nth-child(1),
-          .body > .row > .td:nth-child(1){
+          .Calendar > .body > .row > .th:nth-child(1),
+          .Calendar > .body > .row > .td:nth-child(1){
             color: red;
           }
-          .body > .row > .th:last-child,
-          .body > .row > .td:last-child{
+          .Calendar > .body > .row > .th:last-child,
+          .Calendar > .body > .row > .td:last-child{
             color: blue;
           }
-          .body > .row > .th::before,
-          .body > .row > .td::before{
+          .Calendar > .body > .row > .th::before,
+          .Calendar > .body > .row > .td::before{
             content: '';
             float: left;
             padding-top: 100%;
           }
-          .td.gray{
+          .Calendar > .body > .row > .td.gray{
             color: #919191 !important;
           }
-          .td.added{
+          .Calendar > .body > .row > .td.added{
             background-color: #f6f6f6;
 
           }
-          .td > .today{
+          .Calendar > .body > .row > .td > .today{
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -178,24 +214,24 @@ const Calendar: React.FC<any> = () => {
             background: #F64A65;;
             color: white;
           }
-          .td > .today::before{
+          .Calendar > .body > .row > .td > .today::before{
             content: ''; 
             float: left;
             padding-top: 100%;
 
           }
 
-          .label-box{
+          .Calendar > .body > .row > .td > .label-box{
             display: flex;
             position: absolute;
             top: 1vw;
           }
-          .label{
+          .Calendar > .body > .row > .td > .label-box >.label{
             display: inline-block;
             width: 1vw;
             height: 1vw;
             border-radius: 100%;
-            background: red;
+            
           }
           .label.red{
             background: #e33a3d
