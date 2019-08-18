@@ -11,13 +11,13 @@ class FireactDocument extends Document {
           <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet" />
 
         </Head>
-        
+
         <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
       body { 
         margin: 0;
         padding: 0;
-        background: linear-gradient(120deg, #F08349 25%, #F64A65 75%);
+        background: linear-gradient(90deg, #F08349 25%, #F64A65 75%);
         font-size: 14px;
         min-width: 100vw;
         min-height: 100vh;
@@ -43,7 +43,7 @@ class FireactDocument extends Document {
               });
         `}
 
-        </script>
+          </script>
         </body>
       </html>
     )

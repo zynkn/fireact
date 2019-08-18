@@ -1,11 +1,15 @@
-const withPlugins = require('next-compose-plugins')
+// const withPlugins = require('next-compose-plugins');
 
-const withSass = require('@zeit/next-sass')
-const withPWA = require('next-pwa')
+// const withSass = require('@zeit/next-sass');
+// const withPWA = require('next-pwa');
 
-module.exports = withPlugins([
-    [ withSass, { cssModules: true }],
-    [ withPWA, { }]
-], {
+// module.exports = withPlugins([
+//     [withSass, { cssModules: true }],
+//     [withPWA, {}]
+// ], {
 
-})
+//     })
+
+export default {
+
+}

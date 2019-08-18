@@ -2,6 +2,7 @@ import React from 'react';
 import Arrow from '../icons/Arrow';
 import Plus from '../icons/Plus';
 
+
 const Header: React.FC<any> = () => {
 
   return (
@@ -31,22 +32,22 @@ const Header: React.FC<any> = () => {
         font-size: 1.2em;
         //padding: 8px 0;
         box-sizing: border-box;
-
+        background: linear-gradient(90deg, #F08349 25%, #F64A65 75%);
         color: white;
         font-family: 'Patua One', cursive;
         overflow: hidden;
       }
-      .Header::after{
-        z-index: -1;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
+      // .Header::after{
+      //   z-index: -1;
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   right: 0;
  
-        min-height: 100vh;
-        content: "";
-        background: linear-gradient(120deg,#F08349 25%,#F64A65 75%);
-      }
+      //   min-height: 100vh;
+      //   content: "";
+      //   background: linear-gradient(120deg,#F08349 25%,#F64A65 75%);
+      // }
       .Header > button{
         height: 100%;
         width: 48px;

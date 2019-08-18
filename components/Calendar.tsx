@@ -3,51 +3,51 @@ import Arrow from './icons/Arrow';
 import moment from 'moment';
 
 
-function generate(today:any){
-  //const today = moment();
-  console.log(today);
-  const startWeek = today.clone().startOf('month').week()-1;
-  const endWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
-  let calendar = [];
-  for (let week = startWeek; week <= endWeek; week++) {
-    calendar.push(
-      <div className="row" key={week}>
-        {
-          Array(7).fill(0).map((n, i) => {
-            let current = today.clone().week(week).startOf('week').add(n + i, 'day')
-            let isSelected = today.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'today' : '';
-            let isGrayed = current.format('MM') === today.format('MM') ? '' : 'gray';
-            return (
-              <span className={`td ${isGrayed}`} key={i}>
-                <span className={`${isSelected}`}>{current.format('D')}</span>
-              </span>
-            )
-          })
-        }
-      </div>
-    )
-  }
-  return calendar;
-}
+
 
 const Calendar: React.FC<any> = () => {
-  const [now, setNow]:any = React.useState(moment());
-  React.useEffect(()=>{
+  const [now, setNow]: any = React.useState(moment());
+  React.useEffect(() => {
     // ComponentDidMount()
-  },[]);
+  }, []);
   console.log(now);
-
+  function generate(today: any) {
+    //const today = moment();
+    console.log(today);
+    const startWeek = today.clone().startOf('month').week() - 1;
+    const endWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
+    let calendar = [];
+    for (let week = startWeek; week <= endWeek; week++) {
+      calendar.push(
+        <div className="row" key={week}>
+          {
+            Array(7).fill(0).map((n, i) => {
+              let current = today.clone().week(week).startOf('week').add(n + i, 'day')
+              let isSelected = today.format('YYYYMMDD') === current.format('YYYYMMDD') ? 'today' : '';
+              let isGrayed = current.format('MM') === today.format('MM') ? '' : 'gray';
+              return (
+                <span className={`td ${isGrayed}`} key={i} onClick={() => setNow(current)}>
+                  <span className={`${isSelected}`}>{current.format('D')}</span>
+                </span>
+              )
+            })
+          }
+        </div>
+      )
+    }
+    return calendar;
+  }
 
   return (
     <>
       <div className="Calendar">
         <div className="head">
-          <button onClick={()=>setNow(now.clone().subtract(1,'months'))}>
+          <button onClick={() => setNow(now.clone().subtract(1, 'months'))}>
             <Arrow style={{ transform: 'rotate(-90deg)', width: '24px' }} />
           </button>
 
           <span className="title">{now.format('MMMM YYYY')}</span>
-          <button onClick={()=>setNow(now.clone().add(1,'months'))}>
+          <button onClick={() => setNow(now.clone().add(1, 'months'))}>
             <Arrow style={{ transform: 'rotate(90deg)', width: '24px' }} />
           </button>
         </div>
@@ -183,6 +183,7 @@ const Calendar: React.FC<any> = () => {
             text-align: center;
             text-transform: uppercase;
             font-weight: bold;
+            transition: background 1s;
           }
           .Calendar > .body > .row > .th:nth-child(1),
           .Calendar > .body > .row > .td:nth-child(1){
@@ -203,6 +204,27 @@ const Calendar: React.FC<any> = () => {
           }
           .Calendar > .body > .row > .td.added{
             background-color: #f6f6f6;
+          }
+          .Calendar > .body > .row > .td:active{
+            background-color: #f0f0f0;
+            border-radius: 3px;
+          }
+          .Calendar > .body > .row > .td >span{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            flex:0 0 60%;
+            transition: background 1s, color 1s;
+          }
+          .Calendar > .body > .row > .td >span::before{
+            content: ''; 
+            float: left;
+            padding-top: 100%;
+          }
+          .Calendar > .body > .row > .td:active >span{
+            display: inline-flex;
+            background-color: rgba(246,74,101, 0.6);
 
           }
           .Calendar > .body > .row > .td > .today{
@@ -211,7 +233,7 @@ const Calendar: React.FC<any> = () => {
             justify-content: center;
             flex:0 0 60%;
             border-radius: 100%;
-            background: #F64A65;;
+            background: #F64A65;
             color: white;
           }
           .Calendar > .body > .row > .td > .today::before{
