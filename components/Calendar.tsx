@@ -7,7 +7,7 @@ function generate(today:any){
   //const today = moment();
   console.log(today);
   const startWeek = today.clone().startOf('month').week()-1;
-  const endWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week()+1;
+  const endWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
   let calendar = [];
   for (let week = startWeek; week <= endWeek; week++) {
     calendar.push(

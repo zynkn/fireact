@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import Head from 'next/head'
 import Header from './common/Header';
+import Tabbar from './common/Tabbar';
 
 type Props = {
   title?: string
@@ -21,7 +22,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <main>
         {children}
       </main>
-
+      <Tabbar />
 
       <style jsx>{
         `

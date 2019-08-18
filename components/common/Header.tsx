@@ -1,6 +1,6 @@
 import React from 'react';
 import Arrow from '../icons/Arrow';
-
+import Plus from '../icons/Plus';
 
 const Header: React.FC<any> = () => {
 
@@ -8,11 +8,11 @@ const Header: React.FC<any> = () => {
     <>
       <header className="Header">
         <button>
-          <Arrow style={{ transform: 'rotate(-90deg)', width: '24px' }} />
+          <Arrow style={{ transform: 'rotate(-90deg)', width: '28px', fill: 'white' }} />
         </button>
-        Fireact
+        August 14 2019
         <button>
-          <Arrow style={{ transform: 'rotate(90deg)', width: '24px' }} />
+          <Plus style={{ transform: 'rotate(90deg)', width: '16px', fill: 'white' }} />
         </button>
       </header>
       <style jsx>{`
@@ -28,7 +28,7 @@ const Header: React.FC<any> = () => {
         z-index: 999;
         text-align: center;
         height: 48px;
-        font-size: 1.5em;
+        font-size: 1.2em;
         //padding: 8px 0;
         box-sizing: border-box;
 
