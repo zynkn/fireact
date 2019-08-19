@@ -5,7 +5,7 @@ import { NextPage } from 'next'
 // import MiniCalendar from '../components/MiniCalendar';
 import WorkoutList from '../components/WorkoutList';
 import Calendar from '../components/Calendar';
-// import WorkoutModal from '../components/WorkoutModal';
+import WorkoutModal from '../components/WorkoutModal';
 
 const IndexPage: NextPage = () => {
   
@@ -20,7 +20,7 @@ const IndexPage: NextPage = () => {
 
       <Calendar />
       <WorkoutList />
-      {/* <WorkoutModal /> */}
+      <WorkoutModal />
       <style jsx>
         {`
 

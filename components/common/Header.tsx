@@ -11,13 +11,21 @@ const Header: React.FC<any> = () => {
         <button>
           <Arrow style={{ transform: 'rotate(-90deg)', width: '28px', fill: 'white' }} />
         </button>
-        August 14 2019
+        Fireact
         <button>
           <Plus style={{ transform: 'rotate(90deg)', width: '16px', fill: 'white' }} />
         </button>
       </header>
       <style jsx>{`
       @import url('https://fonts.googleapis.com/css?family=Patua+One&display=swap');
+      @font-face{
+        font-family: "Digitalt";
+        src: url('/static/assets/fonts/Digitalt-04no.ttf');
+      }
+      @font-face{
+        font-family: "TVA";
+        src: url('/static/assets/fonts/TVA_2012.otf');
+      }
       header.Header {
         display: flex;
         justify-content: space-between;
@@ -29,13 +37,14 @@ const Header: React.FC<any> = () => {
         z-index: 999;
         text-align: center;
         height: 48px;
-        font-size: 1.2em;
+        font-size: 2em;
         //padding: 8px 0;
         box-sizing: border-box;
         background: linear-gradient(90deg, #F08349 25%, #F64A65 75%);
         color: white;
         font-family: 'Patua One', cursive;
         overflow: hidden;
+        font-family: 'Digitalt';
       }
       // .Header::after{
       //   z-index: -1;
