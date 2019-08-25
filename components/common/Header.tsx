@@ -1,6 +1,6 @@
 import React from 'react';
-import Arrow from '../icons/Arrow';
-import Plus from '../icons/Plus';
+// import Arrow from '../icons/Arrow';
+import User from '../icons/User';
 
 
 const Header: React.FC<any> = () => {
@@ -8,66 +8,38 @@ const Header: React.FC<any> = () => {
   return (
     <>
       <header className="Header">
-        <button>
-          <Arrow style={{ transform: 'rotate(-90deg)', width: '28px', fill: 'white' }} />
-        </button>
-        Fireact
-        <button>
-          <Plus style={{ transform: 'rotate(90deg)', width: '16px', fill: 'white' }} />
+        <button className="icon-btn">1</button>
+        <h1>Fireact</h1>
+        <button className="icon-btn">
+          <User style={{height: '20px', fill: 'white'}} />
         </button>
       </header>
       <style jsx>{`
-      @import url('https://fonts.googleapis.com/css?family=Patua+One&display=swap');
-      @font-face{
-        font-family: "Digitalt";
-        src: url('/static/assets/fonts/Digitalt-04no.ttf');
-      }
-      @font-face{
-        font-family: "TVA";
-        src: url('/static/assets/fonts/TVA_2012.otf');
-      }
-      header.Header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 999;
-        text-align: center;
-        height: 48px;
-        font-size: 2em;
-        //padding: 8px 0;
-        box-sizing: border-box;
-        background: linear-gradient(90deg, #F08349 25%, #F64A65 75%);
-        color: white;
-        font-family: 'Patua One', cursive;
-        overflow: hidden;
-        font-family: 'Digitalt';
-      }
-      // .Header::after{
-      //   z-index: -1;
-      //   position: absolute;
-      //   top: 0;
-      //   left: 0;
-      //   right: 0;
- 
-      //   min-height: 100vh;
-      //   content: "";
-      //   background: linear-gradient(120deg,#F08349 25%,#F64A65 75%);
-      // }
-      .Header > button{
-        height: 100%;
-        width: 48px;
-        background-color: transparent;
-        border: 0;
-        color: white;
-      }
-      .Header > button >svg{
-        fill: white;
-      }
-    `}</style>
+        header.Header{
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 999;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 52px;
+          max-height: 52px;
+          background-color: #382A58;
+          color: white;
+          font-size: 14px;
+        }
+        header.Header > h1{
+          font-size: 18px;
+        }
+        header.Header > .icon-btn{
+          height: 100%;
+          width: 52px;
+          border: 0;
+          background: transparent;
+        }
+      `}</style>
     </>
   )
 
