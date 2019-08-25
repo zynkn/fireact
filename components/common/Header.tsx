@@ -2,20 +2,20 @@ import React from 'react';
 // import Arrow from '../icons/Arrow';
 import User from '../icons/User';
 
-
 const Header: React.FC<any> = () => {
 
   return (
     <>
       <header className="Header">
-        <button className="icon-btn">1</button>
-        <h1>Fireact</h1>
+        <button className="icon-btn"></button>
+        <h1><img src={'../../static/assets/images/emoji_fire.png'} width={24} />  Fireact</h1>
         <button className="icon-btn">
-          <User style={{height: '20px', fill: 'white'}} />
+          <User style={{ height: '20px', fill: 'white' }} />
         </button>
       </header>
       <style jsx>{`
         header.Header{
+          user-select: none;
           position: fixed;
           top: 0;
           left: 0;
@@ -31,6 +31,8 @@ const Header: React.FC<any> = () => {
           font-size: 14px;
         }
         header.Header > h1{
+          display: flex;
+          align-items: center;
           font-size: 18px;
         }
         header.Header > .icon-btn{

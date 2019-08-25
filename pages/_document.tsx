@@ -5,7 +5,7 @@ class FireactDocument extends Document {
     return (
       <html>
         <Head>
-          <meta name="theme-color" content="#fff" />
+          <meta name="theme-color" content="#382A58" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
           <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet" />
@@ -13,6 +13,9 @@ class FireactDocument extends Document {
 
         <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+        *{
+          user-select: none;
+        }
       body { 
         margin: 0;
         padding: 0;
@@ -24,8 +27,7 @@ class FireactDocument extends Document {
         
       }
       main {
-        //padding: 0 1em;
-        padding-top: 52px; // header Height
+        //padding-top: 52px; // header Height
         box-sizing: border-box;
         padding-bottom: 52px;
       }

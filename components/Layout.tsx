@@ -25,7 +25,7 @@ const Layout: React.FunctionComponent<Props> = ({
       <style jsx>{
         `
           main{
-            margin-top: 52px;
+            margin-top: 54px;
           }
         `
       }
