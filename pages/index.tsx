@@ -1,19 +1,21 @@
 import * as React from 'react'
 import Layout from '../components/Layout'
 import { NextPage } from 'next'
-import WorkoutList from '../components/WorkoutList';
+// import WorkoutList from '../components/WorkoutList';
+import Calendar from '../components/Calendar';
 
 
 const IndexPage: NextPage = () => {
-  
-  React.useEffect(()=>{
-    window.addEventListener('scroll', ()=>{
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', () => {
       console.log(window.pageYOffset);
     })
-  },[])
+  }, [])
   return (
     <Layout title="Fire!">
-      <WorkoutList />
+      {/* <WorkoutList /> */}
+      <Calendar />
       <style jsx>
         {`
 

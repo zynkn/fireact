@@ -94,7 +94,7 @@ const WorkoutList: React.FC<any> = () => {
       <div className="WorkoutList">
         {
           datas.map((data: any) => {
-            return <ListItem {...data} />
+            return <ListItem key={data.name} {...data} />
           })
         }
       </div>
