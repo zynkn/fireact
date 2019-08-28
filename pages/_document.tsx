@@ -9,9 +9,7 @@ class FireactDocument extends Document {
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
           <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet" />
-        </Head>
-
-        <style jsx global>{`
+          <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
         *{
           user-select: none;
@@ -36,6 +34,9 @@ class FireactDocument extends Document {
         margin: 0;
       }
     `}</style>
+                  </Head>
+
+        
         <body>
           <Main />
           <NextScript />

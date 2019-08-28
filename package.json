@@ -1,15 +1,16 @@
 {
-  "name": "with-typescript",
+  "name": "zynkn",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production nodemon server.js",
     "type-check": "tsc"
   },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
+    "aws-serverless-express": "^3.3.6",
     "axios": "^0.19.0",
     "express": "^4.17.1",
     "i18next": "^17.0.11",
@@ -30,6 +31,11 @@
     "@types/node": "^11.13.9",
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.0.11",
+    "nodemon": "^1.19.1",
+    "serverless": "^1.50.1",
+    "serverless-api-cloudfront": "^0.9.5",
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-offline": "^5.10.1",
     "typescript": "3.5.2"
   },
   "license": "ISC"
