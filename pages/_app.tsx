@@ -30,6 +30,7 @@ class FireactApp extends App {
         box-sizing: border-box;
         padding-bottom: 52px;
         max-width: 768px;
+        margin: auto;
       }
       h1, h2, h3, h4, h5, p {
         padding: 0;

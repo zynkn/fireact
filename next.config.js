@@ -15,6 +15,6 @@ const withConfig = require("next-config");
 module.exports = withPlugins([
   [withSass, {}],
   // [withPWA, {}],
-  [withImages],
-  [withConfig],
+  // [withImages],
+  // [withConfig],
 ], {})
