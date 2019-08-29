@@ -2,8 +2,7 @@ import React from 'react';
 import './WorkoutAddModal.scss';
 import Plus from '../../components/icons/Plus';
 
-
-const WorkoutAddModal:React.FC<any> = () => {
+const WorkoutAddModal: React.FC<any> = () => {
 
   return (
     <>
@@ -39,15 +38,24 @@ const WorkoutAddModal:React.FC<any> = () => {
         </div>
 
         <div className="row">
-          <button><Plus style={{ height: '16px', fill: 'white' }}  /></button>
-          <div className="input-wrapper">
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
+          <div className="input-wrapper" style={{ flex: '0 0 60%' }}>
             <input type="text" />
           </div>
 
-          <button><Plus style={{ height: '16px', fill: 'white' }}  /></button>
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
         </div>
+        <div className="row">
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
+          <div className="input-wrapper" style={{ flex: '0 0 60%' }}>
+            <input type="text" />
+          </div>
 
-
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
+        </div>
+        <button className="add-btn">
+          ADD
+        </button>
       </div>
     </>
   )
