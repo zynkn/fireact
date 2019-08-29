@@ -1,0 +1,64 @@
+
+
+.overlay{
+  position: fixed;
+  top: 52px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.WorkoutAddModal{
+  position: fixed;
+  top: 60px;
+  left: 8px;
+  right: 8px;
+  height: 340px;
+  background: #46356B;
+  z-index: 1000;
+  border-radius: 3px;
+  overflow: hidden;
+  .category-tabs{
+    display: flex;
+
+    .tab{
+      flex: 0 0 calc(100%/7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1em 0;
+      color: white;
+      
+      &.--checked{
+        &.chest{
+          background-color: #FF965B;
+        }
+      }
+    }
+  }
+
+  .row{
+    display: flex;
+    padding: 0.5em;
+    &.--gray{
+      background-color: #524574;
+    }
+    
+    .input-wrapper{
+
+      flex: 1 1 0 ;
+      input{
+        color: white;
+        width: 100%;
+        padding: 0.5em 1em;
+        box-sizing: border-box;
+        font-size: 1.2em;
+        background-color: rgba(0,0,0,0.1);
+        border: 0;
+        border-radius: 3px;
+      }
+    }
+  }
+}

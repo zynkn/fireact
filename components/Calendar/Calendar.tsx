@@ -13,7 +13,7 @@ const Calendar: React.FC<any> = () => {
   function generate(){
     const today = clickedDay || moment();
     //const clicked = clickedDay || today;
-    const startWeek = today.clone().startOf('month').week();
+    const startWeek = today.clone().startOf('month').week()-1;
     const endWeek = today.clone().endOf('month').week() === 1 ? 53 : today.clone().endOf('month').week();
     let calendar = [];
     for (let week = startWeek; week <= endWeek; week++) {
@@ -26,6 +26,7 @@ const Calendar: React.FC<any> = () => {
               let isGray = current.format('MM') === today.format('MM') ? '' : '--gray';
               return (
                 <div onClick={()=>setClickedDay(current)} className={`box --square   ${isGray}`} key={i}>
+                  <div className="label-box"></div>
                   <span className={`circle ${isClicked}`}>
                     <span className={`text`}>{current.format('D')}</span>
                   </span>

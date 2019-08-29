@@ -1,6 +1,6 @@
 import React from 'react';
 // import Arrow from '../icons/Arrow';
-import User from '../icons/User';
+import Plus from '../icons/Plus';
 
 const Header: React.FC<any> = () => {
 
@@ -10,7 +10,7 @@ const Header: React.FC<any> = () => {
         <button className="icon-btn"></button>
         <h1><img src={'../../static/assets/images/emoji_fire.png'} width={24} />  Fireact</h1>
         <button className="icon-btn">
-          <User style={{ height: '20px', fill: 'white' }} />
+          <Plus style={{ height: '16px', fill: 'white' }} />
         </button>
       </header>
       <style jsx>{`
