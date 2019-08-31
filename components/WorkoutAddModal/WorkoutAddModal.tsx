@@ -2,17 +2,16 @@ import React from 'react';
 import './WorkoutAddModal.scss';
 import Plus from '../../components/icons/Plus';
 
-<<<<<<< HEAD
 
-interface IconButtonProps{
+interface IconButtonProps {
   className?: string,
   style?: object,
   children?: any,
   onClick?: Function
 
 }
-const IconSquareButton:React.FC<IconButtonProps> = ({ className, style,children}) => {
-  
+const IconSquareButton: React.FC<IconButtonProps> = ({ className, style, children }) => {
+
   return (
     <button className={`IconSquareButton ${className}`} style={style}>
       {children}
@@ -20,7 +19,7 @@ const IconSquareButton:React.FC<IconButtonProps> = ({ className, style,children}
   )
 }
 
-interface InputProps{
+interface InputProps {
   width?: number | string,
   type?: string,
   style?: object,
@@ -30,30 +29,27 @@ interface InputProps{
 
 }
 
-const Input:React.FC<InputProps>  = ({ type="text", style, suffix,allowClear=false}) => {
+const Input: React.FC<InputProps> = ({ type = "text", style, suffix, allowClear = false }) => {
   return (
     <div className="Input" style={style}>
       {
         <span className="prefix-text">{}</span>
       }
-      <input  type={type} />
+      <input type={type} />
       {
-        suffix && 
+        suffix &&
         <span className="suffix-text">{suffix}</span>
       }
       {
         allowClear &&
-        <IconSquareButton className="clear-btn" style={{ height: '24px', width: '24px'}}><Plus style={{ height: '12px', fill: 'white', transform: 'rotate(45deg)' }}  /></IconSquareButton>
+        <IconSquareButton className="clear-btn" style={{ height: '24px', width: '24px' }}><Plus style={{ height: '12px', fill: 'white', transform: 'rotate(45deg)' }} /></IconSquareButton>
       }
-      
+
     </div>
   )
 }
 
-const WorkoutAddModal:React.FC<any> = () => {
-=======
 const WorkoutAddModal: React.FC<any> = () => {
->>>>>>> ea343c696dde78e5ff3de71d4c09becf2393f7f2
 
   return (
     <>
@@ -83,64 +79,63 @@ const WorkoutAddModal: React.FC<any> = () => {
           </div>
         </div>
         <div className="row --gray">
-          <Input style={{width: "100%"}} allowClear={true}/>
+          <Input style={{ width: "100%" }} allowClear={true} />
         </div>
         <div className="row">
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
 
-          <div style={{position: "relative", alignSelf:"stretch", display: "flex",color: "white",alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)"}}>
-            <input type="number" style={{ background: "transparent",color: "white",border: "0", width: '3em',textAlign: 'center', fontSize: '1.5em'}} />
-            <span style={{position: "absolute", left: "70%"}}>kg</span>
+          <div style={{ position: "relative", alignSelf: "stretch", display: "flex", color: "white", alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)" }}>
+            <input type="number" style={{ background: "transparent", color: "white", border: "0", width: '3em', textAlign: 'center', fontSize: '1.5em' }} />
+            <span style={{ position: "absolute", left: "70%" }}>kg</span>
           </div>
 
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
         </div>
 
         <div className="row">
-<<<<<<< HEAD
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
 
-          <div style={{position: "relative", alignSelf:"stretch", display: "flex",color: "white",alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)"}}>
-            <input type="number" style={{ background: "transparent",color: "white",border: "0", width: '3em',textAlign: 'center', fontSize: '1.5em'}} />
-            <span style={{position: "absolute", left: "70%"}}>reps</span>
+          <div style={{ position: "relative", alignSelf: "stretch", display: "flex", color: "white", alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)" }}>
+            <input type="number" style={{ background: "transparent", color: "white", border: "0", width: '3em', textAlign: 'center', fontSize: '1.5em' }} />
+            <span style={{ position: "absolute", left: "70%" }}>reps</span>
           </div>
 
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
         </div>
         <div className="row">
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
 
-          <div style={{alignSelf:"stretch", display: "flex",color: "white",alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)"}}>
-            <input type="number" style={{ background: "transparent",color: "white",border: "0", width: '3em',textAlign: 'center', fontSize: '1.5em'}} />
+          <div style={{ alignSelf: "stretch", display: "flex", color: "white", alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)" }}>
+            <input type="number" style={{ background: "transparent", color: "white", border: "0", width: '3em', textAlign: 'center', fontSize: '1.5em' }} />
             <span>kg</span>
           </div>
 
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
         </div>
         <div className="row">
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
 
-          <div style={{alignSelf:"stretch", display: "flex",color: "white",alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)"}}>
-            <input type="number" style={{ background: "transparent",color: "white",border: "0", width: '3em',textAlign: 'center', fontSize: '1.5em'}} />
+          <div style={{ alignSelf: "stretch", display: "flex", color: "white", alignItems: "center", justifyContent: "center", width: "50%", background: "rgba(0,0,0,0.2)" }}>
+            <input type="number" style={{ background: "transparent", color: "white", border: "0", width: '3em', textAlign: 'center', fontSize: '1.5em' }} />
             <span>reps</span>
           </div>
 
-          <IconSquareButton style={{width: '32px', height: '32px'}}>
-            <Plus style={{ height: '16px', fill: 'white' }}  />
+          <IconSquareButton style={{ width: '32px', height: '32px' }}>
+            <Plus style={{ height: '16px', fill: 'white' }} />
           </IconSquareButton>
         </div>
 
@@ -153,26 +148,6 @@ const WorkoutAddModal: React.FC<any> = () => {
           <Plus style={{ height: '16px', fill: 'white' }}  />
           </IconSquareButton>
         </div> */}
-=======
-          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
-          <div className="input-wrapper" style={{ flex: '0 0 60%' }}>
-            <input type="text" />
-          </div>
-
-          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
-        </div>
-        <div className="row">
-          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
-          <div className="input-wrapper" style={{ flex: '0 0 60%' }}>
-            <input type="text" />
-          </div>
-
-          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
-        </div>
-        <button className="add-btn">
-          ADD
-        </button>
->>>>>>> ea343c696dde78e5ff3de71d4c09becf2393f7f2
       </div>
     </>
   )
