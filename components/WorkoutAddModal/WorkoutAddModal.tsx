@@ -2,6 +2,7 @@ import React from 'react';
 import './WorkoutAddModal.scss';
 import Plus from '../../components/icons/Plus';
 
+<<<<<<< HEAD
 
 interface IconButtonProps{
   className?: string,
@@ -50,6 +51,9 @@ const Input:React.FC<InputProps>  = ({ type="text", style, suffix,allowClear=fal
 }
 
 const WorkoutAddModal:React.FC<any> = () => {
+=======
+const WorkoutAddModal: React.FC<any> = () => {
+>>>>>>> ea343c696dde78e5ff3de71d4c09becf2393f7f2
 
   return (
     <>
@@ -97,6 +101,7 @@ const WorkoutAddModal:React.FC<any> = () => {
         </div>
 
         <div className="row">
+<<<<<<< HEAD
           <IconSquareButton style={{width: '32px', height: '32px'}}>
             <Plus style={{ height: '16px', fill: 'white' }}  />
           </IconSquareButton>
@@ -148,6 +153,26 @@ const WorkoutAddModal:React.FC<any> = () => {
           <Plus style={{ height: '16px', fill: 'white' }}  />
           </IconSquareButton>
         </div> */}
+=======
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
+          <div className="input-wrapper" style={{ flex: '0 0 60%' }}>
+            <input type="text" />
+          </div>
+
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
+        </div>
+        <div className="row">
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
+          <div className="input-wrapper" style={{ flex: '0 0 60%' }}>
+            <input type="text" />
+          </div>
+
+          <button className="btn"><Plus style={{ height: '16px', fill: 'white' }} /></button>
+        </div>
+        <button className="add-btn">
+          ADD
+        </button>
+>>>>>>> ea343c696dde78e5ff3de71d4c09becf2393f7f2
       </div>
     </>
   )
