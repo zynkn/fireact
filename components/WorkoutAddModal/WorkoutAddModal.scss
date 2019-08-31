@@ -41,24 +41,60 @@
 
   .row{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 0.5em;
     &.--gray{
       background-color: #524574;
     }
-    
-    .input-wrapper{
+  
+  }
+}
 
-      flex: 1 1 0 ;
-      input{
-        color: white;
-        width: 100%;
-        padding: 0.5em 1em;
-        box-sizing: border-box;
-        font-size: 1.2em;
-        background-color: rgba(0,0,0,0.1);
-        border: 0;
-        border-radius: 3px;
-      }
-    }
+.IconSquareButton{
+  font-size: 0;
+  position: relative;
+  background-color: rgba(0,0,0,0.2);
+  border: 0;
+  color: white;
+  border-radius: 3px;
+}
+
+
+.Input{
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  //flex: 1 1 0;
+  color: white;
+  font-size: 1.2em;
+  box-sizing: border-box;
+  background: rgba(0,0,0,0.1);
+  input{
+    text-align: inherit;
+    color: inherit;
+    font-size: inherit;
+    width: 100%;
+    //flex: 1 1 0;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+    border: 0;
+    background: transparent;
+   
+  }
+  .suffix-text{
+    // position: absolute;
+    // right: 20%;
+    // top: 50%;
+    // transform: translateY(-50%);
+  }
+  .clear-btn{
+    margin: 0 12px;
+    // position: absolute;
+    // right: 10px;
+    // top: 50%;
+    // transform: translateY(-50%);
   }
 }

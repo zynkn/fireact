@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Layout from '../components/Layout'
 import { NextPage } from 'next'
-//import WorkoutList from '../components/WorkoutList';
+import WorkoutList from '../components/WorkoutList';
 import Calendar from '../components/Calendar';
 import WorkoutAddModal from '../components/WorkoutAddModal';
 
@@ -17,8 +17,9 @@ const IndexPage: NextPage = () => {
     <Layout title="Fire!">
       <Calendar />
       <WorkoutAddModal />
-      {/* <WorkoutList /> */}
-      
+      <WorkoutList />
+      <br/>
+      <br/>
       <style jsx>
         {`
 
