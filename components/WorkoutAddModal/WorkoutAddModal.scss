@@ -1,3 +1,5 @@
+@import "styles/variables.scss";
+
 .overlay {
   position: fixed;
   top: 52px;
@@ -18,7 +20,7 @@
   z-index: 1000;
   border-radius: 3px;
   overflow: hidden;
-
+  
   .category-tabs {
     display: flex;
 
@@ -29,10 +31,11 @@
       justify-content: center;
       padding: 1em 0;
       color: white;
-
-      &.--checked {
-        &.chest {
-          background-color: #FF965B;
+      cursor: pointer;
+  
+      &.--selected {
+        @each $name, $color in $category-colors {
+          &.#{$name} { background-color: $color; color: white }
         }
       }
     }
@@ -47,6 +50,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5em;
+    height: 42px;
     &.--gray{
       background-color: #524574;
     }
@@ -60,7 +64,7 @@
   background-color: rgba(0,0,0,0.2);
   border: 0;
   color: white;
-  border-radius: 3px;
+  //border-radius: 3px;
 }
 
 
@@ -101,12 +105,49 @@
     // transform: translateY(-50%);
   }
 
-  .add-btn {
-    height: 58px;
-    width: 100%;
-    background: #00BF86;
+}
+
+@each $name, $color in $category-colors {
+  input.#{$name} { color: $color; }
+}
+
+.add-btn {
+  width: 100%;
+  background: #00BF86;
+
+  border: 0;
+  color: white;
+  font-size: 1.2em;
+  align-self: stretch;
+  @each $name, $color in $category-colors {
+    &.#{$name} { background-color: $color; }
+  }
+  
+}
+
+
+
+.NumberInput{
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  color: white; 
+  align-items: center; 
+  justify-content: center;
+  width: 50%; 
+  background: rgba(0,0,0,0.2);
+  
+  input{
+    font-weight: bold;
+    background: transparent;
+    color: #00ffff;
     border: 0;
-    color: white;
-    font-size: 1.2em;
+    width: 3em;
+    text-align: center;
+    font-size: 1.5em;
+  }
+  .suffix{
+    position: absolute;
+    left: 70%;
   }
 }

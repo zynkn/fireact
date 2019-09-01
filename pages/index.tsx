@@ -9,17 +9,25 @@ import WorkoutAddModal from '../components/WorkoutAddModal';
 const IndexPage: NextPage = () => {
 
   React.useEffect(() => {
-    window.addEventListener('scroll', () => {
-      console.log(window.pageYOffset);
-    })
+    window.addEventListener('load',function() {
+      console.log("SCROLL")
+      setTimeout(function(){
+          // This hides the address bar:
+          window.scrollTo(0, 1);
+          console.log("SCROLL")
+      }, 0)
+  });
+    // window.addEventListener('scroll', () => {
+    //   console.log(window.pageYOffset);
+    // })
   }, [])
   return (
     <Layout title="Fire!">
-      <Calendar />
-      <WorkoutAddModal />
-      <WorkoutList />
-      <br/>
-      <br/>
+      <h1>index</h1>
+      {/* <Calendar /> */}
+      {/* <WorkoutAddModal /> */}
+      {/* <WorkoutList /> */}
+
       <style jsx>
         {`
 

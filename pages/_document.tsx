@@ -7,8 +7,9 @@ class FireactDocument extends Document {
         <Head>
           <meta name="theme-color" content="#382A58" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-          <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+          {/* <link href="https://fonts.googleapis.com/css?family=Patua+One&display=swap" rel="stylesheet" /> */}
           <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
         *{
@@ -40,16 +41,7 @@ class FireactDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script>{`
-                window.addEventListener("load",function() {
-                  setTimeout(function(){
-                      // This hides the address bar:
-                      window.scrollTo(0, 1);
-                  }, 0)
-              });
-        `}
 
-          </script>
         </body>
       </html>
     )
