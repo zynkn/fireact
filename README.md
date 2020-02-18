@@ -38,6 +38,6 @@
 
 ## Screenshots
 
-![로그인](./doc/img/login.png)
+![로그인](./doc/img/Login.png)
 
-<img src="./doc/img/calandar1.png" width="90%"></img>
+<img src="./doc/img/Calandar1.png" width="90%"></img>
