@@ -41,5 +41,5 @@
 <img src="./doc/img/Login.png" width="40%"></img>
 <img src="./doc/img/Calandar2.png" width="40%"></img>
 <img src="./doc/img/Workout_list.png" width="40%"></img>
-<img src="./doc/img/Calandar_Log.png" width="40%"></img>
+<img src="./doc/img/Create_Log.png" width="40%"></img>
 <img src="./doc/img/Input_Log.png" width="40%"></img>
