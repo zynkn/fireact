@@ -1,13 +1,7 @@
-/* src/App.js */
 import React from 'react'
-// import { API, graphqlOperation } from 'aws-amplify'
-// import { createTodo } from './graphql/mutations'
-// import { listTodos } from './graphql/queries'
-// import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
-
+import './App.css';
 
 const App = () => {
-
   return (
     <div>
       <h2>Amplify Todos</h2>
@@ -15,5 +9,4 @@ const App = () => {
   )
 }
 
-//export default withAuthenticator(App);
 export default App;
