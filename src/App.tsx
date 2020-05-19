@@ -21,8 +21,8 @@ const App = () => {
 
   async function fetchTodos() {
     try {
-      const todoData:any = await API.graphql(graphqlOperation(listTodos))
-      const todos = todoData.data.listTodos.items
+      //const todoData:any = await API.graphql(graphqlOperation(listTodos))
+      const todos:any = [] // todoData.data.listTodos.items
       setTodos(todos)
     } catch (err) { console.log('error fetching todos') }
   }
@@ -33,7 +33,7 @@ const App = () => {
       const todo = { ...formState }
       setTodos([...todos, todo])
       setFormState(initialState)
-      await API.graphql(graphqlOperation(createTodo, {input: todo}))
+      // await API.graphql(graphqlOperation(createTodo, {input: todo}))
     } catch (err) {
       console.log('error creating todo:', err)
     }
