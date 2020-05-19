@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { API, graphqlOperation } from 'aws-amplify'
 import { createTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries'
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+// import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 const initialState = { name: '', description: '' }
 
@@ -42,7 +42,6 @@ const App = () => {
   return (
     <div style={styles.container}>
       <h2>Amplify Todos</h2>
-      <AmplifySignOut />
       <input
         onChange={event => setInput('name', event.target.value)}
         style={styles.input}
@@ -77,4 +76,5 @@ const styles:any = {
   button: { backgroundColor: 'black', color: 'white', outline: 'none', fontSize: 18, padding: '12px 0px' }
 }
 
-export default withAuthenticator(App);
+//export default withAuthenticator(App);
+export default App;
