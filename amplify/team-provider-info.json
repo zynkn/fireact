@@ -10,6 +10,11 @@
             "StackName": "amplify-fireact-dev-141851",
             "StackId": "arn:aws:cloudformation:ap-northeast-2:116859356360:stack/amplify-fireact-dev-141851/46979120-9990-11ea-b73a-0a9c82f11f34",
             "AmplifyAppId": "d2io4lataa6rvz"
+        },
+        "categories": {
+            "auth": {
+                "fireactbc7af129": {}
+            }
         }
     }
 }

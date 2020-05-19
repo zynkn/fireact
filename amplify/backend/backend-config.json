@@ -16,5 +16,13 @@
 				}
 			}
 		}
+	},
+	"auth": {
+		"fireactbc7af129": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
 	}
 }
