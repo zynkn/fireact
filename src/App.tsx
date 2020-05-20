@@ -41,7 +41,8 @@ const App = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Amplify Todos</h2>
+      <h2>Amplify Todos {process.env.NODE_ENV}</h2>
+      <p>env:{process.env.CUSTOM_TEXT}</p>
       <AmplifySignOut />
       <input
         onChange={event => setInput('name', event.target.value)}
@@ -77,4 +78,4 @@ const styles:any = {
   button: { backgroundColor: 'black', color: 'white', outline: 'none', fontSize: 18, padding: '12px 0px' }
 }
 
-export default withAuthenticator(App);
+export default (App);
