@@ -1,28 +1,28 @@
 {
-	"api": {
-		"fireact": {
-			"service": "AppSync",
-			"providerPlugin": "awscloudformation",
-			"output": {
-				"authConfig": {
-					"additionalAuthenticationProviders": [],
-					"defaultAuthentication": {
-						"authenticationType": "API_KEY",
-						"apiKeyConfig": {
-							"description": "fireact",
-							"apiKeyExpirationDays": 7
-						}
-					}
-				}
-			}
-		}
-	},
-	"auth": {
-		"fireactbc7af129": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"customAuth": false
-		}
-	}
+    "api": {
+        "fireact": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "additionalAuthenticationProviders": [],
+                    "defaultAuthentication": {
+                        "authenticationType": "API_KEY",
+                        "apiKeyConfig": {
+                            "description": "fireact",
+                            "apiKeyExpirationDays": 7
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "auth": {
+        "fireactbc7af129": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false
+        }
+    }
 }

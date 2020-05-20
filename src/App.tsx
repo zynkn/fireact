@@ -1,18 +1,31 @@
 /* src/App.js */
 import React, { useEffect, useState } from 'react'
-import { API, graphqlOperation } from 'aws-amplify'
+import { API, graphqlOperation, Auth, Hub } from 'aws-amplify'
+import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth'
 import { createTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries';
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withOAuth } from 'aws-amplify-react';
 
 const initialState = { name: '', description: '' }
 
 const App = () => {
   const [formState, setFormState] = useState(initialState)
   const [todos, setTodos] = useState<any>([])
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     fetchTodos()
+    Hub.listen("auth", ({ payload: { event, data } }) => {
+      console.log(event);
+      console.log(data);
+      if(event === 'signIn') setUser(data);
+      if(event === 'signOut') setUser(null);
+    });
+    Auth.currentAuthenticatedUser().then(user=>{
+      console.log(user);
+      setUser(user);
+    }).catch(()=>{ console.log("Not Signed In") });
   }, [])
 
   function setInput(key:any, value:any) {
@@ -38,9 +51,13 @@ const App = () => {
       console.log('error creating todo:', err)
     }
   }
+  console.log(user);
   return (
     <div style={styles.container}>
       <h2>Amplify Todos {process.env.NODE_ENV}</h2>
+      {user && <h1>{user.username}</h1>}
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google})}>Open Google</button>
+
       <AmplifySignOut />
       <input
         onChange={event => setInput('name', event.target.value)}
@@ -76,4 +93,4 @@ const styles:any = {
   button: { backgroundColor: 'black', color: 'white', outline: 'none', fontSize: 18, padding: '12px 0px' }
 }
 
-export default withAuthenticator(App);
+export default withOAuth(App);

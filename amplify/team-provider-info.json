@@ -13,7 +13,9 @@
         },
         "categories": {
             "auth": {
-                "fireactbc7af129": {}
+                "fireactbc7af129": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"1041230724845-1ponbgqod4jeo67vd1fcjh8t8lnjuqjq.apps.googleusercontent.com\",\"client_secret\":\"GzJns1nKbTrB_ILIQb5_4byD\"}]"
+                }
             }
         }
     }
