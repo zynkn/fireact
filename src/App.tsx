@@ -9,8 +9,8 @@ import { createTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries';
 import { AmplifySignOut } from '@aws-amplify/ui-react';
 import HomePage from 'pages/HomePage';
-import { ApolloClient, gql, useQuery,InMemoryCache,createHttpLink } from '@apollo/client';
-
+import { ApolloClient, gql, useQuery,InMemoryCache,createHttpLink, useMutation } from '@apollo/client';
+import moment from 'moment-timezone';
 
 const GET_DOGS = gql`
   {
@@ -25,13 +25,22 @@ const GET_DOGS = gql`
     }
   }
 `;
+const CREATE_USER = gql`
+  mutation createUser($id:String!){
+    createFireactUser(input:{id:$id, provider:"react"}) {
+      id
+    }
+  }
+`
 function App(props:any){
   console.log(props);
   const [ user, setUser ] = useState<any>(null);
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
   // const { loading, error, data } = useQuery(GET_DOGS);
+  const [createUser] = useMutation(CREATE_USER);
 
   useEffect(() => {
+    createUser({variables: {id:`ID_${moment().unix()}`}})
     Hub.listen("auth", ({ payload: { event, data } }) => {
       if(event === 'signIn'){ 
         setAuthenticated(true);
@@ -43,6 +52,10 @@ function App(props:any){
         console.log("Not Signed In");
       }
     });
+    Auth.currentUserInfo().then((user)=>{
+      console.log(`user`);
+      console.log(user);
+    })
     Auth.currentAuthenticatedUser().then(user=>{
       setAuthenticated(true);
       setUser(user);
@@ -52,6 +65,7 @@ function App(props:any){
       console.log("Not Signed In");
     });
   }, []);
+  console.log(user);
   return (
     <Router>
       <PublicRoute exact={true} path="/" user={{...user, isAuthenticated}}  component={HomePage} />

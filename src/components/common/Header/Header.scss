@@ -3,5 +3,24 @@
 header.Header{
   width: 100%;
   height: 56px;
-  background-color: #bebebe;
+  display: flex;
+
+  .btn-box{
+    width: 56px;
+    height: 100%;
+    background-color: blue;
+
+  }
+  .app-title{
+    display: inline-flex;
+    align-items: center;
+    padding-left: 24px;
+    flex: 1 0 0;
+    //background-color: red;
+    h1{
+      font-size: 20pt;
+      color: white;
+      font-weight: bold;
+    }
+  }
 }

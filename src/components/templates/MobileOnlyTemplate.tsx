@@ -1,5 +1,5 @@
 import React from 'react';
-//import './Template.scss';
+import './Template.scss';
 
 
 interface TemplateProps{
@@ -10,7 +10,7 @@ interface TemplateProps{
 const MobileOnlyTemplate:React.FC<TemplateProps> = ({ children}) => {
 
   return (
-    <main>
+    <main className="Template --mobileOnly">
       {children}
     </main>
   )

@@ -4,13 +4,15 @@ import {PageProps} from './types';
 import DefaultTemplate from '../components/templates/DefaultTemplate';
 import Header from '../components/common/Header';
 import BottomNav from 'components/common/BottomNav';
+import MobileOnlyTemplate from 'components/templates/MobileOnlyTemplate';
 
 const HomePage:React.FC<PageProps> = (props) => {
   return (
-    <DefaultTemplate>
+    <MobileOnlyTemplate>
       <Header />
       <BottomNav />
-    </DefaultTemplate>
+    </MobileOnlyTemplate>
+
   )
 }
 export default HomePage;
