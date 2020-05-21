@@ -8,14 +8,15 @@
 import React, { useEffect, useState } from 'react';
 import AWSAppSyncClient from 'aws-appsync';
 
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient } from '@apollo/client';
 
 const Rehydrated: React.FC = ({ children }) => {
   const client = useApolloClient();
+  console.log(client);
   const [rehydrated, setRehydrated] = useState(false);
   useEffect(() => {
     (async () => {
-      await (client as AWSAppSyncClient<any>).hydrated();
+      //await (client as AWSAppSyncClient<any>).hydrated();
       setRehydrated(true);
     })();
   }, [client]);

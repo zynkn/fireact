@@ -9,35 +9,30 @@ import { createTodo } from './graphql/mutations'
 import { listTodos } from './graphql/queries';
 import { AmplifySignOut } from '@aws-amplify/ui-react';
 import HomePage from 'pages/HomePage';
+import { ApolloClient, gql, useQuery,InMemoryCache,createHttpLink } from '@apollo/client';
 
 
-function Home({user}:any){
-  console.log(user);
-  return (
-    <main>
-      <h1>HOME</h1>
-      {
-        user.isAuthenticated && <AmplifySignOut />
+const GET_DOGS = gql`
+  {
+    listTodos{
+      items {
+        id
+        name
+        description
+        createdAt
+        updatedAt
       }
-      {
-        user.isAuthenticated && <h2>{user.username}</h2>
-      }
-      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google})}>Open Google</button>
-      {/* <button onClick={() => Auth.federatedSignIn({provider: Test.Google })}>Open Google</button> */}
-
-      
-    </main>
-  )
-}
-function App(){
+    }
+  }
+`;
+function App(props:any){
+  console.log(props);
   const [ user, setUser ] = useState<any>(null);
   const [isAuthenticated, setAuthenticated] = useState<boolean>(false);
+  // const { loading, error, data } = useQuery(GET_DOGS);
 
   useEffect(() => {
-
     Hub.listen("auth", ({ payload: { event, data } }) => {
-      console.log(event);
-      console.log(data);
       if(event === 'signIn'){ 
         setAuthenticated(true);
         setUser(data);
@@ -49,11 +44,14 @@ function App(){
       }
     });
     Auth.currentAuthenticatedUser().then(user=>{
-      console.log(user);
       setAuthenticated(true);
       setUser(user);
-    }).catch(()=>{ setUser(null);setAuthenticated(false); console.log("Not Signed In") });
-  }, [])
+    }).catch(()=>{ 
+      setUser(null);
+      setAuthenticated(false); 
+      console.log("Not Signed In");
+    });
+  }, []);
   return (
     <Router>
       <PublicRoute exact={true} path="/" user={{...user, isAuthenticated}}  component={HomePage} />
@@ -65,8 +63,6 @@ function App(){
 function PublicRoute({component,user, ...rest}:any){
   return (
     <Route {...rest} render={ (props) => {
-      console.log(user);
-      console.log(props);
       return React.createElement(component, { ...props, user })
     }} />
   )
@@ -83,11 +79,11 @@ function PrivateRoute({component,user, ...rest}:any){
 
 // const initialState = { name: '', description: '' }
 
-// const App = () => {
+// const App = (props:any) => {
 //   const [formState, setFormState] = useState(initialState)
 //   const [todos, setTodos] = useState<any>([])
 //   const [user, setUser] = useState<any>(null);
-
+//   console.log(props);
 //   useEffect(() => {
 //     fetchTodos()
 //     Hub.listen("auth", ({ payload: { event, data } }) => {
