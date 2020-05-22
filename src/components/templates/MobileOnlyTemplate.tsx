@@ -10,9 +10,9 @@ interface TemplateProps{
 const MobileOnlyTemplate:React.FC<TemplateProps> = ({ children}) => {
 
   return (
-    <main className="Template --mobileOnly">
+    <div className="Template --mobileOnly">
       {children}
-    </main>
+    </div>
   )
 }
 

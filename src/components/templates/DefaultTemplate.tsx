@@ -10,9 +10,9 @@ interface TemplateProps{
 const DefaultTemplate:React.FC<TemplateProps> = ({ children}) => {
 
   return (
-    <main>
+    <div>
       {children}
-    </main>
+    </div>
   )
 }
 
